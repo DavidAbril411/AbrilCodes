@@ -1,0 +1,40 @@
+.headerShapeInset {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 200vw;
+  border-radius: 100% 100% 0 0;
+  box-shadow:
+    0px -4px 30px 0px rgba(0, 0, 0, 0.25) inset,
+    0px 4px 30px 0px rgba(0, 0, 0, 0.501) inset;
+  z-index: -1;
+  background: linear-gradient(90.11deg, #2626AA -8.93%, #08089D 50.9%, #2626AA 110.73%);
+}
+
+.card {
+  position: relative;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.cardFront,
+.cardBack {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardBack {
+  transform: rotateY(180deg);
+}
+
+@media (max-width: 768px) {
+  .headerShapeInset {
+    width: 250vw;
+  }
+}

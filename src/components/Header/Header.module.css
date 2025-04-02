@@ -1,0 +1,218 @@
+/* components/Header/Header.module.css */
+
+.header {
+  padding: 2vw 3vw;
+  background-color: #f0f0f0;
+  z-index: 1;
+  max-width: 100%;
+  position: relative;
+}
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+  transform: translateY(1vw);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.logoContainer {
+  display: flex;
+  gap: 8px;
+  /* Espacio entre el ícono y el texto del logo */
+  align-items: center;
+  font-size: 16px;
+  /* Base font size */
+}
+
+.logoIcon {
+  width: clamp(10px, 2.9vw, 40px);
+  /* Relative to font size */
+}
+
+.logoText {
+  width: clamp(33px, 9.5vw, 131px);
+  /* Relative to font size */
+}
+
+.menuContainer {
+  flex-grow: 1;
+  /* Permite que el contenedor del menú ocupe el espacio disponible */
+  display: flex;
+  justify-content: center;
+}
+
+.menu {
+  display: flex;
+  gap: clamp(20px, 4vw, 40px);
+}
+
+.menu a {
+  font-size: clamp(13px, 1.3vw, 18px);
+  font-weight: 500;
+  text-decoration: none;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover {
+  color: #000;
+}
+
+/* Añadir esta nueva regla para el enlace activo */
+.menu a.active {
+  font-weight: 700;
+  color: #000;
+}
+
+.downloadCv {
+  padding: clamp(1.8px, 0.5vw, 7px) clamp(7px, 2vw, 27.6px);
+  background-color: #08089D;
+  color: white;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  font-size: clamp(5px, 1.2vw, 16.5px);
+}
+
+.downloadCv:hover {
+  transform: translateY(-2px);
+  background-color: #0606c7;
+}
+
+.headerShape {
+  position: absolute;
+  top: -37.4vw;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200vw;
+  height: 47.8vw;
+  background-color: #f0f0f0;
+  border-radius: 100%;
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.277);
+  z-index: -2;
+}
+
+.hamburgerMenu {
+  display: none;
+  flex-direction: column;
+  gap: 3.2px;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.hamburgerMenu span {
+  display: block;
+  width: 17px;
+  height: 1.6px;
+  background-color: #333333ae;
+  transition: all 0.3s ease-in-out;
+}
+
+@media (max-width: 997px) and (min-width: 769px) {
+  .menu {
+    gap: clamp(15px, 2vw, 20px);
+  }
+}
+
+@media (max-width: 768px) {
+
+  .header{
+    padding: 7px 35px;
+  }
+
+  .logoIcon {
+    width: 24px;
+    /* Relative to font size */
+    height: 22px;
+  }
+
+  .logoText {
+    width: 80px;
+    /* Relative to font size */
+    height: 21px;
+  }
+
+  .headerShape {
+    top: -120px;
+    height: 200px;
+  }
+
+  .headerContent {
+    padding: 12px 0;
+  }
+
+  .hamburgerMenu {
+    display: flex;
+
+  }
+
+  .menuContainer {
+    position: fixed;
+    right: -100%;
+    width: 50vw;
+    height: 100vh;
+    background-color: #f0f0f0;
+    padding: 80px 20px 20px;
+    transition: right 0.3s ease-in-out;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+
+    top: -4vw;
+  }
+
+  .menuContainer.active {
+    right: -7vw;
+  }
+
+  .menu {
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+  }
+
+  .menu a {
+    font-size: 20px;
+  }
+
+  .downloadCv {
+    display: none;
+  }
+
+  /* Estilos para el menú hamburguesa cuando está activo */
+  .hamburgerMenu.active span:first-child {
+    transform: rotate(45deg) translate(3.5px, 3.5px);
+  }
+
+  .hamburgerMenu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburgerMenu.active span:last-child {
+    transform: rotate(-45deg) translate(3.5px, -3.5px);
+  }
+
+  .logoContainer {
+    gap: 5px;
+  }
+
+
+}
+
+@media (min-width: 1400px) {
+
+  .header {
+    background-color: transparent;
+  }
+
+  .headerContent {
+    padding-top: 10px;
+    transform: translateY(0);
+  }
+
+  .headerShape {
+    top: calc(-37.4vw + (1400px - 100vw) * 0.1);
+  }
+}
