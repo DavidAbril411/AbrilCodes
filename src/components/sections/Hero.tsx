@@ -9,12 +9,12 @@ export default function Hero() {
   return (
     <main className="md:h-[calc(100vh-110px)] w-full relative flex items-center justify-center ">
       <img
-        src={BackgroundShape}
+        src={BackgroundShape.src}
         alt="background-shape"
         className="absolute left-[-40%] top-[20%] -z-1 w-[95vw] block md:hidden"
       />
       <img
-        src={BackgroundShape}
+        src={BackgroundShape.src}
         alt="background-shape"
         className="absolute left-[-200px] -z-1 hidden md:block"
       />
