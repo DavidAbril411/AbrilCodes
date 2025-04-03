@@ -121,7 +121,6 @@ function CollapsedCard({
   description,
   iconSrc,
   iconAlt,
-  isExpanded,
   isAnyCardExpanded,
   onExpand
 }: Readonly<{
@@ -135,11 +134,11 @@ function CollapsedCard({
   onExpand: (id: string) => void;
 }>) {
 
-  const [cardHeight, setCardHeight] = useState(450);
+  const [cardHeight, setCardHeight] = useState<string>("450px");
 
   useEffect(() => {
     const updateHeight = () => {
-      setCardHeight(window.innerWidth >= 768 ? 417 : 450);
+      setCardHeight(window.innerWidth >= 768 ? "clamp(300px, 44vw, 450px)" : "450px");
     };
 
     // Set initial height
@@ -154,39 +153,33 @@ function CollapsedCard({
 
   return (
     <motion.div
-      className={`w-full max-w-[322px] ${
-        isAnyCardExpanded ? "h-[230px]" : "h-[450px]"
-      } md:max-w-[417px] md:${
-        isAnyCardExpanded ? "h-[250px]" : "h-[417px]"
-      } mx-auto bg-[#6A6AD00F] border-[#6969EC78] border-[2px] rounded-[25px] transition-all`}
+      className={`w-full max-w-[322px] md:max-w-[417px] mx-auto bg-[#6A6AD00F] border-[#6969EC78] border-[2px] rounded-[25px] transition-all`}
+      style={{height: (isAnyCardExpanded && window.innerWidth < 768) ? 230 : cardHeight,}}
       animate={{
-        opacity: isAnyCardExpanded ? 0 : 1,
-        scale: isAnyCardExpanded && !isExpanded ? 0.95 : 1,
-        filter: isAnyCardExpanded && !isExpanded ? "blur(4px)" : "blur(0px)",
-        height: isAnyCardExpanded ? 230 : cardHeight,
+      opacity: isAnyCardExpanded ? 0 : 1,
       }}
       transition={{ duration: 0.3 }}
     >
       <div className="flex flex-col items-center justify-center gap-3 mt-4 h-full">
-        <div className="w-[90px] h-[90px] md:w-[109px] md:h-[109px] bg-[#06067E] rounded-full flex items-center justify-center p-[20px]">
-          <img
-            src={iconSrc}
-            alt={iconAlt}
-            className="w-full h-full object-contain"
-          />
-        </div>
-        <h3 className="text-[20px] md:text-[24px] text-[#F8F8F8] font-normal text-center">
-          {title}
-        </h3>
-        <p className="text-[14px] md:text-[13.5px] font-light text-[#ffffffbb] w-[80%] text-center leading-[21px] md:leading-[18px] mt-2 md:mt-4">
-          {description}
-        </p>
-        <button
-          onClick={() => onExpand(id)}
-          className="w-[155px] h-[40px] bg-[#06067E] rounded-full flex items-center justify-center mt-[24px] text-white text-[14px]"
-        >
-          Learn more
-        </button>
+      <div className="w-[clamp(75px,9.4vw,109px)] h-[clamp(75px,9.4vw,109px)] bg-[#06067E] rounded-full flex items-center justify-center p-[20px]">
+        <img
+        src={iconSrc}
+        alt={iconAlt}
+        className="w-full h-full object-contain"
+        />
+      </div>
+      <h3 className="text-[20px] md:text-[clamp(16px,2.3vw,24px)] text-[#F8F8F8] font-normal text-center">
+        {title}
+      </h3>
+      <p className="text-[14px] md:text-[clamp(10px,1.2vw,14px)] font-light text-[#ffffffbb] w-[80%] text-center leading-[21px] md:leading-[18px] mt-2 md:mt-4">
+        {description}
+      </p>
+      <button
+        onClick={() => onExpand(id)}
+        className="w-[155px] md:w-[clamp(100px,13.28vw,155px)] h-[40px] md:h-[clamp(25px,3.42vw,40px)] bg-[#06067E] rounded-full flex items-center justify-center mt-[24px] md:mt-[clamp(12px,2vw,24px)] text-white text-[14px] md:text-[clamp(10px,1.2vw,14px)]"
+      >
+        Learn more
+      </button>
       </div>
     </motion.div>
   );
@@ -324,21 +317,17 @@ function ExpandedCardContent({
           {/* Versión desktop */}
           <motion.div
             className="bg-[#6A6AD00F] backdrop-blur-[5px] border-[#6969EC78] border-[2px] rounded-[clamp(15px,2vw,25px)] px-[69px] py-12 z-20 w-[300%] text-[#EEEEEE] shadow-lg h-[clamp(650px,125vw, 750px)] hidden md:flex"
-            style={getExpandedStyles()}
             initial={{
               opacity: 0,
               scale: 0,
-              x: direction === "center" ? "-50%" : 0,
             }}
             animate={{
               opacity: 1,
               scale: 1,
-              x: direction === "center" ? "-50%" : 0,
             }}
             exit={{
               opacity: 0,
               scale: 0,
-              x: direction === "center" ? "-50%" : 0,
             }}
             transition={{ duration: 0.3 }}
           >
