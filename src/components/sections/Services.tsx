@@ -12,15 +12,36 @@ export default function Services() {
   // Array con todos los datos de los servicios
   const servicesData: ServiceItem[] = [
     {
-      id: "design",
-      title: "Custom Design",
+      id: "desing",
+      title: "Diseño Personalizado",
       description:
-        "We develop unique designs that reflect your identity and needs without generic templates. Every detail is considered to make your website truly one of a kind.",
+        "We build responsive websites with clean, efficient code that works flawlessly across all devices.",
       fullDescription:
-        "Our design philosophy centers on creating custom experiences that truly represent your brand. We begin with understanding your vision, audience, and goals before crafting a unique design language specifically for you. Our designers work closely with you throughout the process, ensuring every color, font, and layout element serves your objectives while standing out from template-based solutions. We focus on creating intuitive interfaces that guide users naturally through your content while maintaining visual appeal across all devices.",
+        "Cada negocio o proyecto tiene una identidad única, y tu sitio web debe reflejarla. No utilizamos plantillas genéricas, sino que creamos un diseño exclusivo basado en tu imagen de marca, valores y necesidades específicas.",
+      bottomRightDescription:
+        "A professional development approach ensures your website operates efficiently and without limitations, adapting to your business's present and future needs.",
       direction: "left-to-right",
       iconSrc: DesignIcon.src,
       iconAlt: "Design Icon",
+      items: [
+        {
+          title: "Identidad visual única",
+          description: "Adaptamos cada elemento de la web a tu estilo y mensaje.",
+        },
+        {
+          title: "Experiencia de usuario optimizada",
+          description:
+            "Diseñamos pensando en la navegación intuitiva y atractiva.",
+        },
+        {
+          title: "Diferenciación del mercado",
+          description: "Un diseño a medida te hace destacar entre la competencia.",
+        },
+        {
+          title: "Adaptabilidad",
+          description: "La web se ajusta a distintos dispositivos sin perder calidad ni funcionalidad.",
+        },
+      ],
     },
     {
       id: "development",
