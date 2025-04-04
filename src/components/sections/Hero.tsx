@@ -6,7 +6,11 @@ import DavidTop from "../../images/david-top.png";
 import DavidBottom from "../../images/david-bottom.png";
 import styles from "./Hero.module.css";
 
-export default function Hero() {
+interface HeroProps {
+  scrollToSection: (sectionId: string) => void;
+}
+
+export default function Hero({ scrollToSection }: HeroProps) {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
@@ -33,17 +37,21 @@ export default function Hero() {
     };
   }, []);
 
+  const handleContactClick = () => {
+    scrollToSection("contact");
+  };
+
   return (
-    <main className="md:h-[calc(100vh-110px)] w-full relative flex items-center justify-center ">
+    <main className="h-[clamp(670px,80vh,800px)] sm:h-auto md:h-[clamp(630px,calc(100vh-110px),685px)] w-full relative flex items-center justify-center ">
       <img
         src={BackgroundShape.src}
         alt="background-shape"
-        className="absolute left-[-40%] top-[20%] -z-1 w-[95vw] block md:hidden"
+        className="absolute left-[-40%] top-[20%] -z-[1] w-[95vw] block md:hidden"
       />
       <img
         src={BackgroundShape.src}
         alt="background-shape"
-        className="absolute left-[-200px] -z-1 hidden md:block"
+        className="absolute left-[-200px] -z-[1] hidden md:block"
       />
       <div className="w-full max-w-[1280px] h-full flex">
         <div className="flex flex-col md:flex-row items-center justify-between w-full pl-10 pr-10 pt-20 md:pt-0">
@@ -61,7 +69,7 @@ export default function Hero() {
             </h1>
             <p className="leading-5 pt-[clamp(0px,1vw,12px)] hidden md:block">
               <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] flex-nowrap text-nowrap ">
-                I’m a full-stack web developer
+                I&apos;m a full-stack web developer
               </span>
               <br />
               <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] flex-nowrap text-nowrap">
@@ -77,17 +85,20 @@ export default function Hero() {
               </span>
               <br />
               <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] text-nowrap">
-                Let’s chat!
+                Let&apos;s chat!
               </span>
             </p>
             <p className="text-[clamp(11px,2vw,17.5px)] text-[#332F2B] text-center w-[clamp(228px,40vw,470px)] block md:hidden">
-              I’m a full-stack web developer and <br />
+              I&apos;m a full-stack web developer and <br />
               founder of Abril Codes. I turn ideas into exceptional digital
               experiences. Need a professional website, custom software, or an
               innovative solution?
-              <br /> Let’s chat!
+              <br /> Let&apos;s chat!
             </p>
-            <button className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] hidden md:block">
+            <button
+              className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] hidden md:block cursor-pointer"
+              onClick={handleContactClick}
+            >
               Contact Me
             </button>
           </div>
@@ -119,7 +130,10 @@ export default function Hero() {
               )}
             </div>
           </div>
-          <button className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] block md:hidden translate-y-4 mt-5">
+          <button
+            className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] block md:hidden translate-y-4 mt-5"
+            onClick={handleContactClick}
+          >
             Contact Me
           </button>
         </div>

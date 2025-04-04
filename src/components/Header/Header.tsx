@@ -1,16 +1,20 @@
-// components/Header/Header.tsx
 "use client";
 import { useState } from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation"; // Añadir este import
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 
 import Icon from "../../images/icon-blue.svg";
 import IconText from "../../images/icon-text.svg";
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  scrollToSection: (sectionId: string) => void;
+  activeSection: string;
+}
+
+const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const pathname = usePathname(); // Obtener la ruta actual
+  const pathname = usePathname();
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -18,6 +22,18 @@ const Header: React.FC = () => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
+  };
+
+  const handleNavClick = (sectionId: string) => {
+    closeMenu();
+
+    // If we're on the homepage, scroll to section
+    if (pathname === "/") {
+      scrollToSection(sectionId);
+    } else {
+      // If we're on another page, navigate to homepage and then scroll
+      router.push(`/#${sectionId}`);
+    }
   };
 
   return (
@@ -34,45 +50,42 @@ const Header: React.FC = () => {
           }`}
         >
           <div className={styles.menu}>
-            <Link
-              href="/"
-              onClick={closeMenu}
-              className={pathname === "/" ? styles.active : ""}
+            <button
+              onClick={() => handleNavClick("home")}
+              className={activeSection === "home" ? styles.active : ""}
             >
               Home
-            </Link>
-            <Link
-              href="/about"
-              onClick={closeMenu}
-              className={pathname === "/about" ? styles.active : ""}
+            </button>
+            <button
+              onClick={() => handleNavClick("about")}
+              className={activeSection === "about" ? styles.active : ""}
             >
               About me
-            </Link>
-            <Link
-              href="/services"
-              onClick={closeMenu}
-              className={pathname === "/services" ? styles.active : ""}
+            </button>
+            <button
+              onClick={() => handleNavClick("services")}
+              className={activeSection === "services" ? styles.active : ""}
             >
               Services
-            </Link>
-            <Link
-              href="/team"
-              onClick={closeMenu}
-              className={pathname === "/team" ? styles.active : ""}
+            </button>
+            <button
+              onClick={() => handleNavClick("team")}
+              className={activeSection === "team" ? styles.active : ""}
             >
               My team
-            </Link>
-            <Link
-              href="/projects"
-              onClick={closeMenu}
-              className={pathname === "/projects" ? styles.active : ""}
+            </button>
+            <button
+              onClick={() => handleNavClick("projects")}
+              className={activeSection === "projects" ? styles.active : ""}
             >
               Projects
-            </Link>
+            </button>
           </div>
         </nav>
-
-        <button className={styles.downloadCv}>Download CV</button>
+        <div className={styles.languageSelector}>
+          <button className="">EN</button>
+          <button className="">ES</button>
+        </div>
 
         <button
           className={`${styles.hamburgerMenu} ${

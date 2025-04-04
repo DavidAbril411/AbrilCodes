@@ -62,12 +62,23 @@
 }
 
 /* Añadir esta nueva regla para el enlace activo */
-.menu a.active {
+
+.menu button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: black;
+  padding: 0;
+  text-align: left;
+  text-decoration: none;
+}
+
+.menu button:hover {
   font-weight: 700;
   color: #000;
 }
 
-.downloadCv {
+/* .downloadCv {
   padding: clamp(1.8px, 0.5vw, 7px) clamp(7px, 2vw, 27.6px);
   background-color: #08089D;
   color: white;
@@ -81,6 +92,32 @@
 .downloadCv:hover {
   transform: translateY(-2px);
   background-color: #0606c7;
+} */
+
+.languageSelector {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  font-size: clamp(10px, 1vw, 15px);
+  color: #33333377;
+  position: relative;
+}
+
+.languageSelector ::after{
+  content: '';
+  position: absolute;
+  border-right: #3333338f solid clamp(1.5px,0.3vw,3px);
+  border-radius: 5px;
+  height: clamp(12px, 1.5vw, 20px);
+  right: calc(50% - clamp(1.5px,0.3vw,3px));
+  top: calc(clamp(10px, 1vw, 15px) / 10);
+
+}
+
+.languageSelector :first-child {
+  cursor: pointer;
+  font-weight: 600;
+  color: #08089D;
 }
 
 .headerShape {
@@ -120,7 +157,7 @@
 
 @media (max-width: 768px) {
 
-  .header{
+  .header {
     padding: 7px 35px;
   }
 
@@ -154,17 +191,19 @@
     position: fixed;
     right: -100%;
     width: 50vw;
-    height: 100vh;
+    height: clamp(740px,100vh,800px);
     background-color: #f0f0f0;
     padding: 80px 20px 20px;
     transition: right 0.3s ease-in-out;
-    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-
+    box-shadow: -2px 0 20px rgba(0, 0, 0, 0.301);
+    font-size: clamp(10px, 2vw, 15px);
     top: -4vw;
+    border-bottom-left-radius: 100%;
+    z-index: 100;
   }
 
   .menuContainer.active {
-    right: -7vw;
+    right: clamp(-120px, -10vw, 0px);
   }
 
   .menu {
