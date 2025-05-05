@@ -85,7 +85,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
               >
-                Abril Perrig
+                Abril Perriggggggg
               </motion.span>
             </motion.h1>
 
