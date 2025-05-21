@@ -327,7 +327,7 @@ const CollapsedCard = React.forwardRef(
           </p>
           <button
             onClick={() => onExpand(id)}
-            className="w-[155px] md:w-[clamp(100px,13.28vw,155px)] h-[40px] md:h-[clamp(25px,3.42vw,40px)] bg-[#06067E] rounded-full flex items-center justify-center mt-[24px] md:mt-[clamp(12px,2vw,24px)] text-white text-[14px] md:text-[clamp(10px,1.2vw,14px)]"
+            className="w-[155px] md:w-[clamp(100px,13.28vw,155px)] h-[40px] md:h-[clamp(25px,3.42vw,40px)] bg-[#06067E] rounded-full flex items-center justify-center mt-[24px] md:mt-[clamp(12px,2vw,24px)] text-white text-[14px] md:text-[clamp(10px,1.2vw,14px)] cursor-pointer"
           >
             Learn more
           </button>

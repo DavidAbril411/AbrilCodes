@@ -37,36 +37,35 @@ export default function Services() {
   const servicesData: ServiceItem[] = [
     {
       id: "desing",
-      title: "Diseño Personalizado",
+      title: "Custom Design",
       description:
-        "We build responsive websites with clean, efficient code that works flawlessly across all devices.",
+        "We create unique, tailored designs that reflect your brand identity and engage your audience effectively across all devices.",
       fullDescription:
-        "Cada negocio o proyecto tiene una identidad única, y tu sitio web debe reflejarla. No utilizamos plantillas genéricas, sino que creamos un diseño exclusivo basado en tu imagen de marca, valores y necesidades específicas.",
+        "Every business or project has a unique identity, and your website should reflect it. We don't use generic templates - instead, we create an exclusive design based on your brand image, values, and specific needs.",
       bottomRightDescription:
-        "A professional development approach ensures your website operates efficiently and without limitations, adapting to your business's present and future needs.",
+        "A personalized design approach ensures your digital presence stands out from competitors, creating memorable experiences that resonate with your target audience and reinforce your brand's unique positioning.",
       direction: "left-to-right",
       iconSrc: DesignIcon.src,
       iconAlt: "Design Icon",
       items: [
         {
-          title: "Identidad visual única",
-          description:
-            "Adaptamos cada elemento de la web a tu estilo y mensaje.",
+          title: "Unique visual identity",
+          description: "We adapt every web element to your style and message.",
         },
         {
-          title: "Experiencia de usuario optimizada",
+          title: "Optimized user experience",
           description:
-            "Diseñamos pensando en la navegación intuitiva y atractiva.",
+            "We design with intuitive and engaging navigation in mind.",
         },
         {
-          title: "Diferenciación del mercado",
+          title: "Market differentiation",
           description:
-            "Un diseño a medida te hace destacar entre la competencia.",
+            "A custom design helps you stand out from the competition.",
         },
         {
-          title: "Adaptabilidad",
+          title: "Responsive adaptability",
           description:
-            "La web se ajusta a distintos dispositivos sin perder calidad ni funcionalidad.",
+            "Your website adjusts to different devices without losing quality or functionality.",
         },
       ],
     },
@@ -107,12 +106,37 @@ export default function Services() {
       id: "support",
       title: "Support & Maintenance",
       description:
-        "We provide ongoing technical support and regular updates to keep your website secure and performing at its best. Our team is always available to help with any issues.",
+        "We provide ongoing technical support and regular updates to ensure your website remains secure, fast, and aligned with your evolving business needs.",
       fullDescription:
-        "Our relationship doesn't end at launch. We offer comprehensive maintenance plans to ensure your website remains secure, up-to-date, and functioning optimally. Our support team provides quick responses to technical issues, regular software updates, security monitoring, and performance optimization. We also offer content management assistance, SEO monitoring, and regular analytics reports to help you understand user behavior and improve your site's effectiveness. As your business grows, we're ready to scale your website with new features and improvements to match your evolving needs.",
+        "Our relationship doesn't end at launch. We provide ongoing maintenance to keep your website secure, up-to-date, and performing optimally. This includes technical support, regular updates, security monitoring, and performance optimization. As your business grows, we scale your website with new features to match your evolving needs.",
+      subtitle: "How does this benefit your business?",
+      bottomRightDescription:
+        "With our support services, you can focus on your core business while we handle the technical aspects of your digital presence. Our proactive approach helps prevent issues before they impact your users, ensuring consistent performance and availability.",
       direction: "right-to-left",
       iconSrc: SupportIcon.src,
       iconAlt: "Support Icon",
+      items: [
+        {
+          title: "Continuous monitoring",
+          description:
+            "Regular checks to prevent issues before they affect users.",
+        },
+        {
+          title: "Security updates",
+          description:
+            "Timely patches and updates to keep your site protected against new threats.",
+        },
+        {
+          title: "Performance optimization",
+          description:
+            "Ongoing improvements to maintain speed and responsiveness.",
+        },
+        {
+          title: "Growth support",
+          description:
+            "Technical assistance as your business scales and evolves.",
+        },
+      ],
     },
   ];
 
