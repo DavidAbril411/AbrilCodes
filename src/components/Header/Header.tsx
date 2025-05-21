@@ -74,11 +74,17 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
             >
               My team
             </button>
-            <button
+            {/* <button
               onClick={() => handleNavClick("projects")}
               className={activeSection === "projects" ? styles.active : ""}
             >
               Projects
+            </button> */}
+            <button
+              onClick={() => handleNavClick("contact")}
+              className={activeSection === "contact" ? styles.active : ""}
+            >
+              Contact
             </button>
           </div>
         </nav>

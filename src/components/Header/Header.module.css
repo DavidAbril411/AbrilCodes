@@ -3,9 +3,13 @@
 .header {
   padding: 2vw 3vw;
   background-color: #f0f0f0;
-  z-index: 1;
+  z-index: 100; /* Increased z-index significantly */
   max-width: 100%;
-  position: relative;
+  position: fixed; /* Change from sticky to fixed */
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
 }
 
 .headerContent {

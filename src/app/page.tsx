@@ -2,7 +2,7 @@
 import { useRef, useState, useEffect } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/sections/Footer";
-import Projects from "@/components/sections/Projects";
+// import Projects from "@/components/sections/Projects";
 import Team from "@/components/sections/Team";
 import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
@@ -23,7 +23,10 @@ export default function Home() {
 
   // Function to scroll to a specific section
   const scrollToSection = (sectionId: string) => {
-    const sectionRefs: Record<string, React.RefObject<HTMLDivElement | null>> = {
+    const sectionRefs: Record<
+      string,
+      React.RefObject<HTMLDivElement | null>
+    > = {
       home: homeRef,
       about: aboutRef,
       services: servicesRef,
@@ -35,8 +38,17 @@ export default function Home() {
     const ref = sectionRefs[sectionId];
 
     if (ref && ref.current) {
-      // Smooth scroll to the section
-      ref.current.scrollIntoView({ behavior: "smooth" });
+      // Get the position of the section
+      const yOffset = -1 * ((4 * window.innerWidth) / 100 + 77); // Calculate 4vw + 60px as negative offset
+      const element = ref.current;
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+      // Smooth scroll to the adjusted position
+      window.scrollTo({
+        top: y,
+        behavior: "smooth",
+      });
     }
   };
 
@@ -48,7 +60,7 @@ export default function Home() {
         { id: "about", ref: aboutRef },
         { id: "services", ref: servicesRef },
         { id: "team", ref: teamRef },
-        { id: "projects", ref: projectsRef },
+        // { id: "projects", ref: projectsRef },
         { id: "contact", ref: contactRef },
       ];
 
@@ -122,9 +134,9 @@ export default function Home() {
         <Team />
       </div>
 
-      <div ref={projectsRef} id="projects">
+      {/* <div ref={projectsRef} id="projects">
         <Projects />
-      </div>
+      </div> */}
 
       <div ref={contactRef} id="contact">
         <Contact />

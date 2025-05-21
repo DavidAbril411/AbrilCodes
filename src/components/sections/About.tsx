@@ -1,100 +1,132 @@
 "use client";
 
-import FondoLaptop from "@/images/fondo-laptop.jpg";
+import { useEffect, useRef, useState } from "react";
+import "./About.css";
 
 export default function About() {
-  return (
-    <section className="w-full h-[800px] relative flex items-center justify-center mt-10 transform translate-y-[7px] -z-10">
-      <div
-        className="absolute -top-[77px] h-[950px] left-0 -z-40 w-full md:w-[70%] "
-        style={{
-          background: "linear-gradient(90deg, #31315D99, #1A1A64)",
-        }}
-      ></div>
-      <div
-        className="absolute -top-[77px] h-[950px] left-[70%] -z-40 w-[30%] hidden md:block"
-        style={{
-          background: "#1A1A64",
-        }}
-      ></div>
-      <div className="absolute -left-[9vw] -z-50 w-[90%] h-[120%]">
-        <img
-          src={FondoLaptop.src}
-          alt=""
-          className=" opacity-30 w-full h-full object-cover"
-        />
-      </div>
-      <div className="w-full max-w-[1200px] h-full flex items-center justify-end">
-        <div className="flex flex-col items-start px-6">
-          <h2 className="text-[clamp(30px,3.3vw,40px)] font-semibold text-[#fff]">
-            About <span className="text-[#8E8EFF]">Me</span>
-          </h2>
-          <p className="leading-tight pt-[clamp(0px,1vw,12px)] hidden md:block">
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              I&apos;m David Abril, a professional developer with an 8.75/10 GPA
-              in
-            </span>
-            <br />
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              Computer Engineering. After 6 months at MindFactory, I ventured
-            </span>
-            <br />
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              out to merge creativity and technology into unique projects.
-            </span>
-            <br />
+  const sectionRef = useRef<HTMLElement>(null);
+  const textElements = useRef<HTMLParagraphElement[]>([]);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              At Abril Codes, I collaborate with a talented team: Valentina
-              Correa
-            </span>
-            <br />
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              (graphic designer) and Francisco Ameri (software engineer and
-            </span>
-            <br />
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              project manager), blending innovative design with robust code. We
-            </span>
-            <br />
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              dream of revolutionizing the digital world while building a
-              balanced
-            </span>
-            <br />
-            <span className="text-[clamp(11px,1.7vw,20px)] font-extralight text-[#FFFFFF] flex-nowrap text-nowrap">
-              life near the ocean.
-            </span>
-          </p>
-          <p className="text-[9px] text-[#fff] text-center w-[clamp(228px,40vw,470px)] block md:hidden">
-            I’m David Abril, a professional developer with an 8.75/10 GPA in
-            Computer Engineering. After 6 months at MindFactory, I ventured out
-            to merge creativity and technology into unique projects. At Abril
-            Codes, I collaborate with a talented team: Valentina Correa (graphic
-            designer) and Francisco Ameri (software engineer and project
-            manager), blending innovative design with robust code. We dream of
-            revolutionizing the digital world while building a balanced life
-            near the ocean.
-          </p>
+  // Add elements to the textElements array
+  const addToRefs = (el: HTMLParagraphElement) => {
+    if (el && !textElements.current.includes(el)) {
+      textElements.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (sectionRef.current) {
+        const { left, top, width, height } =
+          sectionRef.current.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        setMousePosition({ x, y });
+      }
+    };
+
+    // Scroll animation observer
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
+    );
+
+    // Observe all text elements
+    textElements.current.forEach((el) => {
+      observer.observe(el);
+    });
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      textElements.current.forEach((el) => observer.unobserve(el));
+    };
+  }, []);
+
+  return (
+    <div className="relative">
+      <div className="about-background-primary"></div>
+      <div className="about-background-secondary"></div>
+
+      <section className="about-section" id="about" ref={sectionRef}>
+        <div
+          className="about-content-container"
+          style={{
+            transform: `translate(${mousePosition.x * 5}px, ${
+              mousePosition.y * 5
+            }px)`,
+            transition: "transform 0.5s ease-out",
+          }}
+        >
+          <div className="about-text-container">
+            <h2 className="about-heading">
+              About <span className="about-heading-accent">Me</span>
+            </h2>
+
+            <div className="about-bio">
+              <p className="scroll-reveal" ref={addToRefs}>
+                I&apos;m David Abril, a professional developer with an 8.75/10
+                GPA in Computer Engineering. My journey began at MindFactory,
+                where I developed core skills before venturing out to create
+                Abril Codes, blending creativity and technology into unique
+                digital solutions.
+              </p>
+
+              <p className="scroll-reveal" ref={addToRefs}>
+                At Abril Codes, I collaborate with a talented team: Valentina
+                Correa (graphic designer) and Francisco Ameri (software engineer
+                and project manager). Together, we create solutions that balance
+                cutting-edge technology with thoughtful design. I&apos;m particularly
+                proud of our approach that values both technical excellence and
+                the human element in every project we undertake.
+              </p>
+
+              <p
+                className="about-academic-emphasis scroll-reveal"
+                ref={addToRefs}
+              >
+                I firmly believe in the value that academic knowledge brings to
+                software development. When building my team, I prioritize
+                individuals with strong educational backgrounds, as university
+                education provides a solid foundation of theoretical principles
+                and problem-solving methodologies that are essential for
+                creating sophisticated, well-documented solutions that stand the
+                test of time.
+              </p>
+            </div>
+          </div>
+
+          <div
+            className="about-goals"
+            style={{
+              transform: `translate(${mousePosition.x * -7}px, ${
+                mousePosition.y * -7
+              }px)`,
+              transition: "transform 0.5s ease-out",
+            }}
+          >
+            <h3>My AI Philosophy</h3>
+            <p className="scroll-reveal" ref={addToRefs}>
+              My approach to AI in development is pragmatic: it should enhance
+              human creativity, not replace it. While AI can handle syntax and
+              implementation details, developers must retain deep understanding
+              of fundamentals. I don&apos;t believe in memorizing what AI can
+              generate with a simple prompt—instead, I invest my energy in
+              mastering core concepts and problem-solving skills that allow me
+              to effectively direct AI tools while maintaining complete control
+              over architecture and quality.
+            </p>
+          </div>
         </div>
-        {/* <div className="flex flex-col items-center justify-center px-6 w-[clamp(200px,35vw,368px)]">
-                    <span
-                        className="font-light text-[clamp(33px,3.9vw,48px)] text-center"
-                        style={{
-                            background:
-                                "linear-gradient(251.76deg, #03033B 37.6%, #080898 87.25%)",
-                            WebkitBackgroundClip: "text",
-                            WebkitTextFillColor: "transparent",
-                        }}
-                    >
-                        My goal?
-                    </span>
-                    <span className="font-normal text-[clamp(12px,1.7vw,20px)] text-center text-[#6A6AD0B8]">
-                        A franchised company in Singapore, where innovation and
-                        quality are our trademarks.
-                    </span>
-                </div> */}
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }
