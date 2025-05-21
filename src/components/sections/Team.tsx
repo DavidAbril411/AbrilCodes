@@ -1,11 +1,75 @@
+"use client";
+
+import { useRef, useState, useEffect } from "react";
 import DavidImage from "@/images/david-image.png";
 import FranciscoImage from "@/images/francisco-image.png";
 import ValentinaImage from "@/images/valentina-image.png";
 import TeamCard from "../TeamCard";
 
 export default function Team() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  
+  // Track mouse movement for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (sectionRef.current) {
+        const { left, top, width, height } = 
+          sectionRef.current.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        setMousePosition({ x, y });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
+  // Set up scroll reveal animations
+  useEffect(() => {
+    // Reset refs array
+    cardRefs.current = cardRefs.current.slice(0, 3);
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "0px 0px -100px 0px",
+      }
+    );
+
+    // Observe all cards
+    cardRefs.current.forEach((card) => {
+      if (card) {
+        observer.observe(card);
+      }
+    });
+
+    return () => {
+      cardRefs.current.forEach((card) => {
+        if (card) {
+          observer.unobserve(card);
+        }
+      });
+    };
+  }, []);
+
   return (
-    <section className="w-full flex flex-col items-center justify-center pt-10">
+    <section 
+      className="w-full flex flex-col items-center justify-center pt-10"
+      ref={sectionRef}
+    >
       <h2 className="text-[clamp(30px,3.3vw,40px)] text-[#000] font-normal">
         Meet my team
       </h2>
@@ -15,26 +79,47 @@ export default function Team() {
         className="flex flex-col md:flex-row items-center md:items-start 
                 space-y-20 md:space-y-0 md:space-x-[clamp(10px,5.47vw,70px)] mt-14"
       >
-        <TeamCard
-          imageSrc={FranciscoImage.src}
-          name="Francisco Ameri"
-          role="Project Manager & FullStack"
-          linkedinLink="https://www.linkedin.com/in/fran-ameri/"
-          githubLink="https://github.com/franameri"
-        />
-        <TeamCard
-          imageSrc={DavidImage.src}
-          name="David Abril Perrig"
-          role="FullStack Developer"
-          linkedinLink="https://www.linkedin.com/in/david-abril-perrig/"
-          githubLink="https://github.com/DavidAbril"
-        />
-        <TeamCard
-          imageSrc={ValentinaImage.src}
-          name="Valentina Correa"
-          role="UX/UI Designer & Graphic Designer"
-          linkedinLink="https://www.linkedin.com/in/valentinacorreaok/"
-        />
+        <div 
+          ref={el => { cardRefs.current[0] = el; }}
+          className="scroll-reveal-card"
+        >
+          <TeamCard
+            imageSrc={FranciscoImage.src}
+            name="Francisco Ameri"
+            role="Project Manager & FullStack"
+            linkedinLink="https://www.linkedin.com/in/fran-ameri/"
+            githubLink="https://github.com/franameri"
+            mousePosition={mousePosition}
+            moveFactor={1}
+          />
+        </div>
+        <div 
+          ref={el => { cardRefs.current[1] = el; }}
+          className="scroll-reveal-card delay-1"
+        >
+          <TeamCard
+            imageSrc={DavidImage.src}
+            name="David Abril Perrig"
+            role="FullStack Developer"
+            linkedinLink="https://www.linkedin.com/in/david-abril-perrig/"
+            githubLink="https://github.com/DavidAbril"
+            mousePosition={mousePosition}
+            moveFactor={0}
+          />
+        </div>
+        <div 
+          ref={el => { cardRefs.current[2] = el; }}
+          className="scroll-reveal-card delay-2"
+        >
+          <TeamCard
+            imageSrc={ValentinaImage.src}
+            name="Valentina Correa"
+            role="UX/UI Designer & Graphic Designer"
+            linkedinLink="https://www.linkedin.com/in/valentinacorreaok/"
+            mousePosition={mousePosition}
+            moveFactor={-1}
+          />
+        </div>
       </div>
     </section>
   );

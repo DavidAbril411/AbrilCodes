@@ -10,6 +10,8 @@ interface TeamCardProps {
   role: string;
   linkedinLink?: string;
   githubLink?: string;
+  mousePosition?: { x: number; y: number };
+  moveFactor?: number; // -1, 0, or 1 to determine movement direction
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({
@@ -18,10 +20,12 @@ const TeamCard: React.FC<TeamCardProps> = ({
   role,
   linkedinLink,
   githubLink,
+  mousePosition = { x: 0, y: 0 },
+  moveFactor = 0
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen] = useState(false);
 
-  const toggleOpen = () => setIsOpen(!isOpen);
+  // const toggleOpen = () => setIsOpen(!isOpen);
 
   const expandingContentVariants = {
     closed: {
@@ -59,11 +63,19 @@ const TeamCard: React.FC<TeamCardProps> = ({
     },
   };
 
+  // Calculate movement amount based on mouse position and moveFactor
+  const xMovement = mousePosition.x * 10 * moveFactor;
+  const yMovement = mousePosition.y * 10;
+
   return (
     <motion.div
       className=""
       variants={containerVariants}
       animate={isOpen ? "open" : "closed"}
+      style={{
+        transform: `translate(${xMovement}px, ${yMovement}px)`,
+        transition: "transform 0.5s ease-out",
+      }}
     >
       <div className="relative">
         <div
@@ -115,7 +127,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
               )}
             </div>
           </div>
-          <button
+          {/* <button
             onClick={toggleOpen}
             className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-transparent text-white rounded-full p-2"
           >
@@ -149,7 +161,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
                 />
               </defs>
             </svg>
-          </button>
+          </button> */}
         </div>
         <motion.div
           className="absolute bottom-0 left-0 w-full text-center pb-[clamp(20px,4vw,40px)] pt-[clamp(28px,6vw,56px)] rounded-br-[clamp(20px,3vw,54px)] rounded-bl-[clamp(20px,3vw,54px)]"

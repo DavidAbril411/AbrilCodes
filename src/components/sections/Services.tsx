@@ -1,13 +1,37 @@
 "use client";
-import { useRef } from "react";
-import styles from "./sections.module.css";
+import { useRef, useState, useEffect } from "react";
+import styles from "./services.module.css";
 import DesignIcon from "../../images/Web.png";
 import DevelopmentIcon from "../../images/Code.png";
 import SupportIcon from "../../images/Manteinence.png";
-import { ExpandProvider, ServicesCardContainer, ServiceItem } from "../ExpandableCard";
+import {
+  ExpandProvider,
+  ServicesCardContainer,
+  ServiceItem,
+} from "../ExpandableCard";
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null!);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Handle mouse movement for parallax effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (sectionRef.current) {
+        const { left, top, width, height } =
+          sectionRef.current.getBoundingClientRect();
+        const x = (e.clientX - left) / width - 0.5;
+        const y = (e.clientY - top) / height - 0.5;
+        setMousePosition({ x, y });
+      }
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
 
   // Array con todos los datos de los servicios
   const servicesData: ServiceItem[] = [
@@ -26,7 +50,8 @@ export default function Services() {
       items: [
         {
           title: "Identidad visual única",
-          description: "Adaptamos cada elemento de la web a tu estilo y mensaje.",
+          description:
+            "Adaptamos cada elemento de la web a tu estilo y mensaje.",
         },
         {
           title: "Experiencia de usuario optimizada",
@@ -35,11 +60,13 @@ export default function Services() {
         },
         {
           title: "Diferenciación del mercado",
-          description: "Un diseño a medida te hace destacar entre la competencia.",
+          description:
+            "Un diseño a medida te hace destacar entre la competencia.",
         },
         {
           title: "Adaptabilidad",
-          description: "La web se ajusta a distintos dispositivos sin perder calidad ni funcionalidad.",
+          description:
+            "La web se ajusta a distintos dispositivos sin perder calidad ni funcionalidad.",
         },
       ],
     },
@@ -90,13 +117,18 @@ export default function Services() {
   ];
 
   return (
-    <section ref={sectionRef} className="max-w-[100vw] overflow-hidden relative pt-[clamp(50px,5vw,80px)]">
+    <section
+      ref={sectionRef}
+      className="max-w-[100vw] overflow-hidden relative pt-[clamp(50px,5vw,80px)]"
+    >
       <div className="flex flex-col items-center justify-center pb-[clamp(20px,10vw,200px)] px-4 gap-14">
-        <h2 className="text-[30px] font-semibold text-[#fff]">
-          My Services
-        </h2>
+        <h2 className="text-[30px] font-semibold text-[#fff]">My Services</h2>
         <ExpandProvider>
-          <ServicesCardContainer services={servicesData} sectionRef={sectionRef} />
+          <ServicesCardContainer
+            services={servicesData}
+            sectionRef={sectionRef}
+            mousePosition={mousePosition}
+          />
         </ExpandProvider>
       </div>
       <div

@@ -59,6 +59,27 @@ body {
   /* Permite el scroll vertical */
   margin: 0;
   /* Elimina márgenes predeterminados */
-  }
+}
 
 /* Asegurarse de que los elementos internos no causen desbordamiento horizontal */
+
+/* Add these for team card animations */
+.scroll-reveal-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-reveal-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add a small delay to each consecutive card */
+.scroll-reveal-card.delay-1 {
+  transition-delay: 0.2s;
+}
+
+.scroll-reveal-card.delay-2 {
+  transition-delay: 0.4s;
+}
