@@ -16,6 +16,7 @@ export default function About() {
   };
 
   useEffect(() => {
+    const elementsSnapshot = [...textElements.current];
     const handleMouseMove = (e: MouseEvent) => {
       if (sectionRef.current) {
         const { left, top, width, height } =
@@ -39,15 +40,13 @@ export default function About() {
     );
 
     // Observe all text elements
-    textElements.current.forEach((el) => {
-      observer.observe(el);
-    });
+    elementsSnapshot.forEach((el) => observer.observe(el));
 
     window.addEventListener("mousemove", handleMouseMove);
 
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
-      textElements.current.forEach((el) => observer.unobserve(el));
+      elementsSnapshot.forEach((el) => observer.unobserve(el));
     };
   }, []);
 

@@ -31,9 +31,10 @@ export default function Contact() {
       setName("");
       setEmail("");
       setMessage("");
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Error inesperado";
       setStatus("error");
-      setErrorMsg(err.message || "Error inesperado");
+      setErrorMsg(message);
     } finally {
       setTimeout(() => {
         setStatus("idle");
