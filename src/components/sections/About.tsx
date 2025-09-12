@@ -83,9 +83,9 @@ export default function About() {
                 At Abril Codes, I collaborate with a talented team: Valentina
                 Correa (graphic designer) and Francisco Ameri (software engineer
                 and project manager). Together, we create solutions that balance
-                cutting-edge technology with thoughtful design. I&apos;m particularly
-                proud of our approach that values both technical excellence and
-                the human element in every project we undertake.
+                cutting-edge technology with thoughtful design. I&apos;m
+                particularly proud of our approach that values both technical
+                excellence and the human element in every project we undertake.
               </p>
 
               <p

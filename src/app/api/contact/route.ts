@@ -54,6 +54,9 @@ export async function POST(req: NextRequest) {
         const port = process.env.SMTP_PORT
             ? parseInt(process.env.SMTP_PORT, 10)
             : 587;
+        const secure = process.env.SMTP_SECURE
+            ? /^(true|1)$/i.test(process.env.SMTP_SECURE)
+            : port === 465;
         const user = process.env.SMTP_USER;
         const pass = process.env.SMTP_PASS;
         const to = process.env.CONTACT_TO || "davidabril411@gmail.com";
@@ -71,8 +74,11 @@ export async function POST(req: NextRequest) {
         const transporter = nodemailer.createTransport({
             host,
             port,
-            secure: port === 465,
+            secure,
             auth: { user, pass },
+            connectionTimeout: 15000, // 15s
+            greetingTimeout: 10000,
+            socketTimeout: 20000,
         });
 
         const combined =
@@ -84,14 +90,33 @@ export async function POST(req: NextRequest) {
                 sMessage.replace(/\n/g, "<br/>")
             }</p>`;
 
-        await transporter.sendMail({
-            to,
-            from,
-            subject: `Nuevo mensaje: ${sName}`,
-            replyTo: sEmail,
-            text,
-            html,
-        });
+        try {
+            await transporter.sendMail({
+                to,
+                from,
+                subject: `Nuevo mensaje: ${sName}`,
+                replyTo: sEmail,
+                text,
+                html,
+            });
+        } catch (mailErr: unknown) {
+            const errObj = mailErr as Record<string, unknown> | undefined;
+            const code = errObj && typeof errObj.code === 'string' ? errObj.code : undefined;
+            const command = errObj && typeof errObj.command === 'string' ? errObj.command : undefined;
+            const message = errObj && typeof errObj.message === 'string' ? errObj.message : 'Unknown mail error';
+            console.error("[contact] sendMail failed", {
+                code,
+                command,
+                message,
+                host,
+                port,
+                secure,
+            });
+            if (code === "ETIMEDOUT") {
+                return NextResponse.json({ ok: false, error: "Timeout conectando al servidor SMTP" }, { status: 504 });
+            }
+            return NextResponse.json({ ok: false, error: "Error enviando correo" }, { status: 502 });
+        }
 
         return NextResponse.json({ ok: true });
     } catch (e) {
