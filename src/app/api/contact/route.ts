@@ -101,9 +101,15 @@ export async function POST(req: NextRequest) {
             });
         } catch (mailErr: unknown) {
             const errObj = mailErr as Record<string, unknown> | undefined;
-            const code = errObj && typeof errObj.code === 'string' ? errObj.code : undefined;
-            const command = errObj && typeof errObj.command === 'string' ? errObj.command : undefined;
-            const message = errObj && typeof errObj.message === 'string' ? errObj.message : 'Unknown mail error';
+            const code = errObj && typeof errObj.code === "string"
+                ? errObj.code
+                : undefined;
+            const command = errObj && typeof errObj.command === "string"
+                ? errObj.command
+                : undefined;
+            const message = errObj && typeof errObj.message === "string"
+                ? errObj.message
+                : "Unknown mail error";
             console.error("[contact] sendMail failed", {
                 code,
                 command,
@@ -113,9 +119,15 @@ export async function POST(req: NextRequest) {
                 secure,
             });
             if (code === "ETIMEDOUT") {
-                return NextResponse.json({ ok: false, error: "Timeout conectando al servidor SMTP" }, { status: 504 });
+                return NextResponse.json({
+                    ok: false,
+                    error: "Timeout conectando al servidor SMTP",
+                }, { status: 504 });
             }
-            return NextResponse.json({ ok: false, error: "Error enviando correo" }, { status: 502 });
+            return NextResponse.json({
+                ok: false,
+                error: "Error enviando correo",
+            }, { status: 502 });
         }
 
         return NextResponse.json({ ok: true });
