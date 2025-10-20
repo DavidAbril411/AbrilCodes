@@ -72,9 +72,9 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
       ? pathWithoutLocale
       : `/${pathWithoutLocale}`;
 
-  const targetPathname = sanitizedPath === "" ? "/" : sanitizedPath;
+    const targetPathname = sanitizedPath === "" ? "/" : sanitizedPath;
 
-  router.replace(targetPathname, { locale: targetLocale });
+    router.replace(targetPathname, { locale: targetLocale });
 
     if (hash) {
       const normalizedHash = hash.startsWith("#") ? hash : `#${hash}`;
