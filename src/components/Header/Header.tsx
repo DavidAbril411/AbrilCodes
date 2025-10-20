@@ -51,12 +51,37 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
     const hash = window.location.hash ?? "";
     const basePath = pathname || "/";
     const normalizedPath = basePath.startsWith("/") ? basePath : `/${basePath}`;
-    const targetPath =
-      normalizedPath === "/"
-        ? `/${targetLocale}`
-        : `/${targetLocale}${normalizedPath}`;
 
-    router.replace(`${targetPath}${hash}`);
+    const stripLocalePrefix = (path: string, currentLocale: string) => {
+      const prefix = `/${currentLocale}`;
+
+      if (path === prefix) {
+        return "/";
+      }
+
+      if (path.startsWith(`${prefix}/`)) {
+        const trimmed = path.slice(prefix.length);
+        return trimmed.length > 0 ? trimmed : "/";
+      }
+
+      return path;
+    };
+
+    const pathWithoutLocale = stripLocalePrefix(normalizedPath, locale);
+    const sanitizedPath = pathWithoutLocale.startsWith("/")
+      ? pathWithoutLocale
+      : `/${pathWithoutLocale}`;
+
+  const targetPathname = sanitizedPath === "" ? "/" : sanitizedPath;
+
+  router.replace(targetPathname, { locale: targetLocale });
+
+    if (hash) {
+      const normalizedHash = hash.startsWith("#") ? hash : `#${hash}`;
+      requestAnimationFrame(() => {
+        window.location.hash = normalizedHash;
+      });
+    }
     closeMenu();
   };
 
