@@ -1,11 +1,13 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import BackgroundShape from "../../images/background-shape.svg";
 import DavidTop from "../../images/david-top.png";
 import DavidBottom from "../../images/david-bottom.png";
 import styles from "./Hero.module.css";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface HeroProps {
   scrollToSection: (sectionId: string) => void;
@@ -13,6 +15,11 @@ interface HeroProps {
 
 export default function Hero({ scrollToSection }: HeroProps) {
   const [imagesLoaded, setImagesLoaded] = useState(false);
+  const t = useTranslations("Hero");
+  const descriptionLinesRaw = t.raw("description.lines");
+  const descriptionLines = Array.isArray(descriptionLinesRaw)
+    ? (descriptionLinesRaw as string[])
+    : [String(descriptionLinesRaw)];
 
   useEffect(() => {
     const topImg = new Image();
@@ -71,7 +78,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: "easeOut" }}
                 >
-                  Hello
+                  {t("title.greeting")}
                 </motion.span>
                 <motion.span
                   className="block font-normal text-[#0A0AE4] text-[clamp(40px,8vw,80px)]"
@@ -79,7 +86,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: "easeOut", delay: 0.15 }}
                 >
-                  I&apos;m David
+                  {t("title.intro")}
                 </motion.span>
                 <motion.span
                   className="block font-semibold text-[#08089D] text-[clamp(40px,8vw,80px)]"
@@ -87,7 +94,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
                 >
-                  Abril Perrig
+                  {t("title.name")}
                 </motion.span>
               </motion.h1>
 
@@ -97,25 +104,14 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
-                <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] flex-nowrap text-nowrap ">
-                  I&apos;m a full-stack web developer
-                </span>
-                <br />
-                <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] flex-nowrap text-nowrap">
-                  and founder of Abril Codes. I turn ideas into
-                </span>
-                <br />
-                <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] text-nowrap">
-                  exceptional digital experiences. Need a professional
-                </span>
-                <br />
-                <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] text-nowrap">
-                  website, custom software, or an innovative solution?
-                </span>
-                <br />
-                <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] text-nowrap">
-                  Let&apos;s chat!
-                </span>
+                {descriptionLines.map((line, index) => (
+                  <Fragment key={line}>
+                    <span className="text-[clamp(12px,1.7vw,17.5px)] font-normal text-[#332F2B] flex-nowrap text-nowrap ">
+                      {line}
+                    </span>
+                    {index < descriptionLines.length - 1 ? <br /> : null}
+                  </Fragment>
+                ))}
               </motion.p>
 
               <motion.p
@@ -124,11 +120,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
               >
-                I&apos;m a full-stack web developer and <br />
-                founder of Abril Codes. I turn ideas into exceptional digital
-                experiences. Need a professional website, custom software, or an
-                innovative solution?
-                <br /> Let&apos;s chat!
+                {t("description.mobile")}
               </motion.p>
 
               <motion.button
@@ -140,7 +132,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Contact Me
+                {t("cta")}
               </motion.button>
             </motion.div>
 
@@ -182,7 +174,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Contact Me
+              {t("cta")}
             </motion.button>
           </div>
         </div>

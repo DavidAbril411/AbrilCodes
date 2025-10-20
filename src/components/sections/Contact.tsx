@@ -2,6 +2,7 @@
 
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -11,6 +12,8 @@ export default function Contact() {
     "idle" | "sending" | "success" | "error"
   >("idle");
   const [errorMsg, setErrorMsg] = useState("");
+  const t = useTranslations("Contact");
+  const defaultErrorMessage = t("error");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -25,16 +28,20 @@ export default function Contact() {
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
-        throw new Error(data.error || "Error");
+        throw new Error((data && data.error) || defaultErrorMessage);
       }
       setStatus("success");
       setName("");
       setEmail("");
       setMessage("");
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Error inesperado";
+      const message = err instanceof Error ? err.message : defaultErrorMessage;
       setStatus("error");
-      setErrorMsg(message);
+      const normalizedMessage =
+        message && message !== "Error" && message !== "Error inesperado"
+          ? message
+          : defaultErrorMessage;
+      setErrorMsg(normalizedMessage);
     } finally {
       setTimeout(() => {
         setStatus("idle");
@@ -57,19 +64,19 @@ export default function Contact() {
             WebkitTextFillColor: "transparent",
           }}
         >
-          Get in touch with me
+          {t("title")}
         </h2>
         <div className="flex flex-col items-start mt-4 md:mt-6 space-y-3 md:space-y-4 w-full">
           <div className="flex items-center space-x-3 md:space-x-4">
             <FaPhoneAlt className="text-white text-[18px] md:text-[24px] bg-[#06067E] w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
             <span className="text-[#08089D] text-[clamp(14px,1.5vw,18px)]">
-              (+54) 351 236 2542
+              {t("phone")}
             </span>
           </div>
           <div className="flex items-center space-x-3 md:space-x-4">
             <FaEnvelope className="text-white text-[18px] md:text-[24px] bg-[#06067E] w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
             <span className="text-[#08089D] text-[clamp(14px,1.5vw,18px)]">
-              davidabril411@gmail.com
+              {t("email")}
             </span>
           </div>
         </div>
@@ -90,7 +97,7 @@ export default function Contact() {
           />
           <input
             type="text"
-            placeholder="Full Name"
+            placeholder={t("placeholders.name")}
             value={name}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setName(e.target.value)
@@ -104,7 +111,7 @@ export default function Contact() {
           />
           <input
             type="email"
-            placeholder="Email"
+            placeholder={t("placeholders.email")}
             value={email}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setEmail(e.target.value)
@@ -117,7 +124,7 @@ export default function Contact() {
             }}
           />
           <textarea
-            placeholder="Comment or Message"
+            placeholder={t("placeholders.message")}
             value={message}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setMessage(e.target.value)
@@ -135,18 +142,16 @@ export default function Contact() {
             className="w-full h-[45px] md:h-[50px] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-[30px] text-[14px] md:text-base mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {status === "sending"
-              ? "Sending..."
+              ? t("sending")
               : status === "success"
-              ? "Sent!"
-              : "Submit"}
+              ? t("sent")
+              : t("submit")}
           </button>
           {status === "error" && (
             <p className="text-red-600 text-sm">{errorMsg}</p>
           )}
           {status === "success" && (
-            <p className="text-green-600 text-sm">
-              Mensaje enviado correctamente.
-            </p>
+            <p className="text-green-600 text-sm">{t("success")}</p>
           )}
         </form>
       </div>

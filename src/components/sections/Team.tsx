@@ -5,11 +5,18 @@ import DavidImage from "@/images/david-image.png";
 import FranciscoImage from "@/images/francisco-image.png";
 import ValentinaImage from "@/images/valentina-image.png";
 import TeamCard from "../TeamCard";
+import { useTranslations } from "next-intl";
 
 export default function Team() {
   const sectionRef = useRef<HTMLElement>(null);
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const t = useTranslations("Team");
+  type MemberKey = "francisco" | "david" | "valentina";
+  const members = t.raw("members") as Record<
+    MemberKey,
+    { name: string; role: string }
+  >;
   
   // Track mouse movement for parallax effect
   useEffect(() => {
@@ -71,7 +78,7 @@ export default function Team() {
       ref={sectionRef}
     >
       <h2 className="text-[clamp(30px,3.3vw,40px)] text-[#000] font-normal">
-        Meet my team
+        {t("title")}
       </h2>
 
       {/* Cambiamos de flex-row a flex-col en móviles, y cambiamos espaciado */}
@@ -85,8 +92,8 @@ export default function Team() {
         >
           <TeamCard
             imageSrc={FranciscoImage.src}
-            name="Francisco Ameri"
-            role="Project Manager & FullStack"
+            name={members.francisco.name}
+            role={members.francisco.role}
             linkedinLink="https://www.linkedin.com/in/fran-ameri/"
             githubLink="https://github.com/franameri"
             mousePosition={mousePosition}
@@ -99,8 +106,8 @@ export default function Team() {
         >
           <TeamCard
             imageSrc={DavidImage.src}
-            name="David Abril Perrig"
-            role="FullStack Developer"
+            name={members.david.name}
+            role={members.david.role}
             linkedinLink="https://www.linkedin.com/in/david-abril-perrig/"
             githubLink="https://github.com/DavidAbril"
             mousePosition={mousePosition}
@@ -113,8 +120,8 @@ export default function Team() {
         >
           <TeamCard
             imageSrc={ValentinaImage.src}
-            name="Valentina Correa"
-            role="UX/UI Designer & Graphic Designer"
+            name={members.valentina.name}
+            role={members.valentina.role}
             linkedinLink="https://www.linkedin.com/in/valentinacorreaok/"
             mousePosition={mousePosition}
             moveFactor={-1}

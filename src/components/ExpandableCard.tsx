@@ -51,6 +51,7 @@ export interface ServiceItem {
   iconSrc: string | undefined;
   iconAlt: string;
   items?: { title: string; description: string }[];
+  actionLabel?: string;
 }
 
 interface ExpandableCardProps {
@@ -64,6 +65,7 @@ interface ExpandableCardProps {
   iconSrc: string | undefined;
   iconAlt: string;
   items?: { title: string; description: string }[];
+  actionLabel?: string;
 }
 
 interface ServicesCardContainerProps {
@@ -249,6 +251,7 @@ const CollapsedCard = React.forwardRef(
       onExpand,
       mousePosition,
       index,
+      actionLabel,
     }: Readonly<{
       id: string;
       title: string;
@@ -260,6 +263,7 @@ const CollapsedCard = React.forwardRef(
       onExpand: (id: string) => void;
       mousePosition: { x: number; y: number };
       index: number;
+      actionLabel?: string;
     }>,
     ref: React.ForwardedRef<HTMLDivElement>
   ) => {
@@ -329,7 +333,7 @@ const CollapsedCard = React.forwardRef(
             onClick={() => onExpand(id)}
             className="w-[155px] md:w-[clamp(100px,13.28vw,155px)] h-[40px] md:h-[clamp(25px,3.42vw,40px)] bg-[#06067E] rounded-full flex items-center justify-center mt-[24px] md:mt-[clamp(12px,2vw,24px)] text-white text-[14px] md:text-[clamp(10px,1.2vw,14px)] cursor-pointer"
           >
-            Learn more
+            {actionLabel ?? "Learn more"}
           </button>
         </div>
       </div>
@@ -442,9 +446,11 @@ function ExpandedCardContent({
 
               {/* Columna derecha */}
               <div className="flex-1 flex flex-col gap-4">
-                <p className="text-[clamp(12px,4vw,20px)] font-light text-[#EEEEEE] mt-4 leading-6">
-                  {bottomRightDescription}
-                </p>
+                {bottomRightDescription ? (
+                  <p className="text-[clamp(12px,4vw,20px)] font-light text-[#EEEEEE] mt-4 leading-6">
+                    {bottomRightDescription}
+                  </p>
+                ) : null}
               </div>
             </div>
           </motion.div>
@@ -488,9 +494,11 @@ function ExpandedCardContent({
                 <p className="text-[clamp(12px,2vw,16px)] font-light text-[#EEEEEE] leading-6 mb-4 pr-11">
                   {fullDescription}
                 </p>
-                <h4 className="font-medium text-[clamp(14px,2vw,18px)] text-[#1391FF]">
-                  {subtitle}
-                </h4>
+                {subtitle ? (
+                  <h4 className="font-medium text-[clamp(14px,2vw,18px)] text-[#1391FF]">
+                    {subtitle}
+                  </h4>
+                ) : null}
                 {/* Primeros dos ítems */}
                 {items.slice(0, 2).map((item, index) => (
                   <div
@@ -525,9 +533,11 @@ function ExpandedCardContent({
                 ))}
 
                 {/* Descripción inferior derecha */}
-                <p className="text-[clamp(12px,2vw,16px)] font-light text-[#EEEEEE] mt-4 leading-6">
-                  {bottomRightDescription}
-                </p>
+                {bottomRightDescription ? (
+                  <p className="text-[clamp(12px,2vw,16px)] font-light text-[#EEEEEE] mt-4 leading-6">
+                    {bottomRightDescription}
+                  </p>
+                ) : null}
               </div>
             </div>
           </motion.div>
@@ -547,6 +557,7 @@ export default function ExpandableCard(props: Readonly<ExpandableCardProps>) {
         description={props.description}
         iconSrc={props.iconSrc}
         iconAlt={props.iconAlt}
+        actionLabel={props.actionLabel}
         isExpanded={false}
         isAnyCardExpanded={false}
         onExpand={function (): void {

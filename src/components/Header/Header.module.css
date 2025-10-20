@@ -67,19 +67,26 @@
 
 /* Añadir esta nueva regla para el enlace activo */
 
-.menu button {
+.navButton {
   background: none;
   border: none;
   cursor: pointer;
-  color: black;
+  color: #333;
   padding: 0;
   text-align: left;
   text-decoration: none;
+  font-size: clamp(13px, 1.3vw, 18px);
+  font-weight: 500;
+  transition: color 0.3s ease;
 }
 
-.menu button:hover {
-  font-weight: 700;
+.navButton:hover {
   color: #000;
+}
+
+.navButtonActive {
+  color: #08089D;
+  font-weight: 700;
 }
 
 /* .downloadCv {
@@ -101,27 +108,31 @@
 .languageSelector {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 12px;
   font-size: clamp(10px, 1vw, 15px);
   color: #33333377;
-  position: relative;
 }
 
-.languageSelector ::after{
-  content: '';
-  position: absolute;
-  border-right: #3333338f solid clamp(1.5px,0.3vw,3px);
-  border-radius: 5px;
+.languageDivider {
+  width: clamp(1.5px, 0.3vw, 3px);
   height: clamp(12px, 1.5vw, 20px);
-  right: calc(50% - clamp(1.5px,0.3vw,3px));
-  top: calc(clamp(10px, 1vw, 15px) / 10);
-
+  background-color: #3333338f;
+  border-radius: 5px;
 }
 
-.languageSelector :first-child {
+.languageButton {
+  background: none;
+  border: none;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
+  color: #33333377;
+  padding: 0;
+}
+
+.languageButton:hover,
+.languageButtonActive {
   color: #08089D;
+  font-weight: 600;
 }
 
 .headerShape {

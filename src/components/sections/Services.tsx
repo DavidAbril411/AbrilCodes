@@ -9,10 +9,12 @@ import {
   ServicesCardContainer,
   ServiceItem,
 } from "../ExpandableCard";
+import { useTranslations } from "next-intl";
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null!);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const t = useTranslations("Services");
 
   // Handle mouse movement for parallax effect
   useEffect(() => {
@@ -33,112 +35,62 @@ export default function Services() {
     };
   }, []);
 
-  // Array con todos los datos de los servicios
-  const servicesData: ServiceItem[] = [
+  type CardKey = "design" | "development" | "support";
+  type CardContent = {
+    title: string;
+    description: string;
+    fullDescription: string;
+    subtitle?: string;
+    bottomRightDescription?: string;
+    items?: { title: string; description: string }[];
+  };
+
+  const cardsMessages = t.raw("cards") as Record<CardKey, CardContent>;
+  const learnMoreLabel = t("learnMore");
+
+  const cardConfigs: Array<{
+    key: CardKey;
+    direction: ServiceItem["direction"];
+    iconSrc: string | undefined;
+    iconAlt: string;
+  }> = [
     {
-      id: "desing",
-      title: "Custom Design",
-      description:
-        "We create unique, tailored designs that reflect your brand identity and engage your audience effectively across all devices.",
-      fullDescription:
-        "Every business or project has a unique identity, and your website should reflect it. We don't use generic templates - instead, we create an exclusive design based on your brand image, values, and specific needs.",
-      bottomRightDescription:
-        "A personalized design approach ensures your digital presence stands out from competitors, creating memorable experiences that resonate with your target audience and reinforce your brand's unique positioning.",
+      key: "design",
       direction: "left-to-right",
       iconSrc: DesignIcon.src,
-      iconAlt: "Design Icon",
-      items: [
-        {
-          title: "Unique visual identity",
-          description: "We adapt every web element to your style and message.",
-        },
-        {
-          title: "Optimized user experience",
-          description:
-            "We design with intuitive and engaging navigation in mind.",
-        },
-        {
-          title: "Market differentiation",
-          description:
-            "A custom design helps you stand out from the competition.",
-        },
-        {
-          title: "Responsive adaptability",
-          description:
-            "Your website adjusts to different devices without losing quality or functionality.",
-        },
-      ],
+      iconAlt: t("cards.design.title"),
     },
     {
-      id: "development",
-      title: "Web Development",
-      description:
-        "We build responsive websites with clean, efficient code that works flawlessly across all devices.",
-      fullDescription:
-        "We don't just design we build websites using modern technology, prioritizing speed, security, and scalability. We use tools such as Next.js, Node.js, and Docker to deliver superior performance.",
-      subtitle: "What does this mean for your business?",
-      bottomRightDescription:
-        "A professional development approach ensures your website operates efficiently and without limitations, adapting to your business's present and future needs.",
+      key: "development",
       direction: "center",
       iconSrc: DevelopmentIcon.src,
-      iconAlt: "Development Icon",
-      items: [
-        {
-          title: "Faster speed",
-          description: "Websites up to 4 times faster than traditional ones.",
-        },
-        {
-          title: "Advanced security",
-          description:
-            "Protection against common vulnerabilities in outdated systems.",
-        },
-        {
-          title: "Scalability",
-          description: "Handles high traffic without compromising performance.",
-        },
-        {
-          title: "Total flexibility",
-          description: "No reliance on third-party templates or plugins.",
-        },
-      ],
+      iconAlt: t("cards.development.title"),
     },
     {
-      id: "support",
-      title: "Support & Maintenance",
-      description:
-        "We provide ongoing technical support and regular updates to ensure your website remains secure, fast, and aligned with your evolving business needs.",
-      fullDescription:
-        "Our relationship doesn't end at launch. We provide ongoing maintenance to keep your website secure, up-to-date, and performing optimally. This includes technical support, regular updates, security monitoring, and performance optimization. As your business grows, we scale your website with new features to match your evolving needs.",
-      subtitle: "How does this benefit your business?",
-      bottomRightDescription:
-        "With our support services, you can focus on your core business while we handle the technical aspects of your digital presence. Our proactive approach helps prevent issues before they impact your users, ensuring consistent performance and availability.",
+      key: "support",
       direction: "right-to-left",
       iconSrc: SupportIcon.src,
-      iconAlt: "Support Icon",
-      items: [
-        {
-          title: "Continuous monitoring",
-          description:
-            "Regular checks to prevent issues before they affect users.",
-        },
-        {
-          title: "Security updates",
-          description:
-            "Timely patches and updates to keep your site protected against new threats.",
-        },
-        {
-          title: "Performance optimization",
-          description:
-            "Ongoing improvements to maintain speed and responsiveness.",
-        },
-        {
-          title: "Growth support",
-          description:
-            "Technical assistance as your business scales and evolves.",
-        },
-      ],
+      iconAlt: t("cards.support.title"),
     },
   ];
+
+  const servicesData: ServiceItem[] = cardConfigs.map(({ key, direction, iconSrc, iconAlt }) => {
+    const content = cardsMessages[key];
+
+    return {
+      id: key,
+      title: content.title,
+      description: content.description,
+      fullDescription: content.fullDescription,
+      subtitle: content.subtitle,
+      bottomRightDescription: content.bottomRightDescription,
+      direction,
+      iconSrc,
+      iconAlt,
+      items: content.items ?? [],
+      actionLabel: learnMoreLabel,
+    } satisfies ServiceItem;
+  });
 
   return (
     <section
@@ -146,7 +98,9 @@ export default function Services() {
       className="max-w-[100vw] overflow-hidden relative pt-[clamp(50px,5vw,80px)]"
     >
       <div className="flex flex-col items-center justify-center pb-[clamp(20px,10vw,200px)] px-4 gap-14">
-        <h2 className="text-[30px] font-semibold text-[#fff]">My Services</h2>
+        <h2 className="text-[30px] font-semibold text-[#fff]">
+          {t("title")}
+        </h2>
         <ExpandProvider>
           <ServicesCardContainer
             services={servicesData}

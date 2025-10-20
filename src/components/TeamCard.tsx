@@ -1,8 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import Instagram from "@/images/instagram.svg";
 import Linkedin from "@/images/linkedin.svg";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 interface TeamCardProps {
   imageSrc: string | undefined;
@@ -24,6 +26,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
   moveFactor = 0
 }) => {
   const [isOpen] = useState(false);
+  const t = useTranslations("TeamCard");
 
   // const toggleOpen = () => setIsOpen(!isOpen);
 
@@ -174,12 +177,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
           animate={isOpen ? "open" : "closed"}
         >
           <p className="text-[clamp(7px,1.2vw,14px)] font-normal px-[clamp(20px,6vw,40px)] text-justify">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur.
+            {t("about")}
           </p>
         </motion.div>
       </div>

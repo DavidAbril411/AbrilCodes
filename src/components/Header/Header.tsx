@@ -1,6 +1,8 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { Fragment, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { usePathname, useRouter } from "@/i18n/routing";
 import styles from "./Header.module.css";
 
 import Icon from "../../images/icon-blue.svg";
@@ -15,6 +17,8 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations("Header");
+  const locale = useLocale();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,13 +32,47 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
     closeMenu();
 
     // If we're on the homepage, scroll to section
-    if (pathname === "/") {
+    const normalizedPath = pathname || "/";
+    const isHome =
+      normalizedPath === "/" || normalizedPath === `/${locale}`;
+
+    if (isHome) {
       scrollToSection(sectionId);
     } else {
       // If we're on another page, navigate to homepage and then scroll
-      router.push(`/#${sectionId}`);
+      router.push(`/${locale}#${sectionId}`);
     }
   };
+
+  const handleLanguageChange = (targetLocale: "en" | "es") => {
+    if (targetLocale === locale) {
+      return;
+    }
+
+    const hash = window.location.hash ?? "";
+    const basePath = pathname || "/";
+    const normalizedPath = basePath.startsWith("/") ? basePath : `/${basePath}`;
+    const targetPath =
+      normalizedPath === "/"
+        ? `/${targetLocale}`
+        : `/${targetLocale}${normalizedPath}`;
+
+    router.replace(`${targetPath}${hash}`);
+    closeMenu();
+  };
+
+  const navItems: Array<{ id: string; label: string }> = [
+    { id: "home", label: t("nav.home") },
+    { id: "about", label: t("nav.about") },
+    { id: "services", label: t("nav.services") },
+    { id: "team", label: t("nav.team") },
+    { id: "contact", label: t("nav.contact") },
+  ];
+
+  const languageOptions: Array<{ locale: "en" | "es"; label: string }> = [
+    { locale: "en", label: t("language.en") },
+    { locale: "es", label: t("language.es") },
+  ];
 
   return (
     <header className={styles.header}>
@@ -50,47 +88,36 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
           }`}
         >
           <div className={styles.menu}>
-            <button
-              onClick={() => handleNavClick("home")}
-              className={activeSection === "home" ? styles.active : ""}
-            >
-              Home
-            </button>
-            <button
-              onClick={() => handleNavClick("about")}
-              className={activeSection === "about" ? styles.active : ""}
-            >
-              About me
-            </button>
-            <button
-              onClick={() => handleNavClick("services")}
-              className={activeSection === "services" ? styles.active : ""}
-            >
-              Services
-            </button>
-            <button
-              onClick={() => handleNavClick("team")}
-              className={activeSection === "team" ? styles.active : ""}
-            >
-              My team
-            </button>
-            {/* <button
-              onClick={() => handleNavClick("projects")}
-              className={activeSection === "projects" ? styles.active : ""}
-            >
-              Projects
-            </button> */}
-            <button
-              onClick={() => handleNavClick("contact")}
-              className={activeSection === "contact" ? styles.active : ""}
-            >
-              Contact
-            </button>
+            {navItems.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => handleNavClick(item.id)}
+                className={`${styles.navButton} ${
+                  activeSection === item.id ? styles.navButtonActive : ""
+                }`}
+              >
+                {item.label}
+              </button>
+            ))}
           </div>
         </nav>
         <div className={styles.languageSelector}>
-          <button className="">EN</button>
-          <button className="">ES</button>
+          {languageOptions.map((option, index) => (
+            <Fragment key={option.locale}>
+              <button
+                type="button"
+                onClick={() => handleLanguageChange(option.locale)}
+                aria-label={t("language.aria")}
+                aria-pressed={locale === option.locale}
+                className={`${styles.languageButton} ${
+                  locale === option.locale ? styles.languageButtonActive : ""
+                }`}
+              >
+                {option.label}
+              </button>
+              {index === 0 ? <span className={styles.languageDivider} /> : null}
+            </Fragment>
+          ))}
         </div>
 
         <button
