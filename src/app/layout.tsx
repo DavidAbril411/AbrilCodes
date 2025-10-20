@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getLocale } from "next-intl/server";
+import { routing } from "@/i18n/routing";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,7 +20,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const locale = await getLocale();
+  let locale: (typeof routing.locales)[number] = routing.defaultLocale;
+
+  try {
+    const detectedLocale = await getLocale();
+    if (routing.locales.includes(detectedLocale as (typeof routing.locales)[number])) {
+      locale = detectedLocale as (typeof routing.locales)[number];
+    }
+  } catch {
+    // If locale isn't available (e.g., unmatched route), fall back to default
+  }
 
   return (
     <html lang={locale}>
