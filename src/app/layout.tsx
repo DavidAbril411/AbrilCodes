@@ -24,7 +24,11 @@ export default async function RootLayout({
 
   try {
     const detectedLocale = await getLocale();
-    if (routing.locales.includes(detectedLocale as (typeof routing.locales)[number])) {
+    if (
+      routing.locales.includes(
+        detectedLocale as (typeof routing.locales)[number]
+      )
+    ) {
       locale = detectedLocale as (typeof routing.locales)[number];
     }
   } catch {
