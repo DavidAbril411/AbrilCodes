@@ -19,13 +19,16 @@ export default function Home() {
   const contactRef = useRef<HTMLDivElement>(null);
 
   const scrollToSection = (sectionId: string) => {
-    const sectionRefs: Record<string, React.RefObject<HTMLDivElement | null>> = {
+    const sectionRefs: Record<
+      string,
+      React.RefObject<HTMLDivElement | null>
+    > = {
       home: homeRef,
       about: aboutRef,
       services: servicesRef,
       team: teamRef,
       projects: projectsRef,
-      contact: contactRef
+      contact: contactRef,
     };
 
     const ref = sectionRefs[sectionId];
@@ -33,11 +36,12 @@ export default function Home() {
     if (ref && ref.current) {
       const yOffset = -1 * ((4 * window.innerWidth) / 100 + 77);
       const element = ref.current;
-      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      const y =
+        element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
       window.scrollTo({
         top: y,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
@@ -49,7 +53,7 @@ export default function Home() {
         { id: "about", ref: aboutRef },
         { id: "services", ref: servicesRef },
         { id: "team", ref: teamRef },
-        { id: "contact", ref: contactRef }
+        { id: "contact", ref: contactRef },
       ];
 
       let currentSection = "home";
@@ -60,7 +64,8 @@ export default function Home() {
           const rect = ref.current.getBoundingClientRect();
           const windowHeight = window.innerHeight;
 
-          const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+          const visibleHeight =
+            Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
           const visibilityRatio = visibleHeight / rect.height;
 
           if (visibilityRatio > 0 && visibilityRatio > maxVisibility) {

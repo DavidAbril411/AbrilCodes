@@ -33,8 +33,7 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
 
     // If we're on the homepage, scroll to section
     const normalizedPath = pathname || "/";
-    const isHome =
-      normalizedPath === "/" || normalizedPath === `/${locale}`;
+    const isHome = normalizedPath === "/" || normalizedPath === `/${locale}`;
 
     if (isHome) {
       scrollToSection(sectionId);

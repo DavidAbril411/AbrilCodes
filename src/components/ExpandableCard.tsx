@@ -159,7 +159,7 @@ export function ServicesCardContainer({
   // Function to close expanded card
   const handleCloseExpandedCard = () => {
     setExpandedCardId(null);
-    
+
     // Add small delay to ensure cards reappear after expanded card animates out
     setTimeout(() => {
       cardRefs.current.forEach((card) => {
@@ -185,7 +185,12 @@ export function ServicesCardContainer({
       function animation(currentTime: number) {
         if (startTime === null) startTime = currentTime;
         const timeElapsed = currentTime - startTime;
-        const run = easeInOutQuad(timeElapsed, startPosition, distance, duration);
+        const run = easeInOutQuad(
+          timeElapsed,
+          startPosition,
+          distance,
+          duration
+        );
         window.scrollTo(0, run);
         if (timeElapsed < duration) requestAnimationFrame(animation);
       }
@@ -193,9 +198,9 @@ export function ServicesCardContainer({
       // Easing function for smoother animation
       function easeInOutQuad(t: number, b: number, c: number, d: number) {
         t /= d / 2;
-        if (t < 1) return c / 2 * t * t + b;
+        if (t < 1) return (c / 2) * t * t + b;
         t--;
-        return -c / 2 * (t * (t - 2) - 1) + b;
+        return (-c / 2) * (t * (t - 2) - 1) + b;
       }
 
       requestAnimationFrame(animation);
@@ -300,7 +305,9 @@ const CollapsedCard = React.forwardRef(
     return (
       <div
         ref={ref}
-        className={`w-full max-w-[322px] md:max-w-[417px] mx-auto bg-[#08089db2] border-[#6969EC78] border-[2px] rounded-[25px] transition-all ${styles.scrollReveal} ${
+        className={`w-full max-w-[322px] md:max-w-[417px] mx-auto bg-[#08089db2] border-[#6969EC78] border-[2px] rounded-[25px] transition-all ${
+          styles.scrollReveal
+        } ${
           isAnyCardExpanded ? "opacity-0" : wasExpanded ? styles.visible : ""
         }`}
         style={{

@@ -73,7 +73,10 @@ export default function About() {
         >
           <div className="about-text-container">
             <h2 className="about-heading">
-              {t("heading.primary")} <span className="about-heading-accent">{t("heading.accent")}</span>
+              {t("heading.primary")}{" "}
+              <span className="about-heading-accent">
+                {t("heading.accent")}
+              </span>
             </h2>
 
             <div className="about-bio">
@@ -81,7 +84,9 @@ export default function About() {
                 <p
                   key={index}
                   className={`scroll-reveal ${
-                    index === paragraphs.length - 1 ? "about-academic-emphasis" : ""
+                    index === paragraphs.length - 1
+                      ? "about-academic-emphasis"
+                      : ""
                   }`}
                   ref={addToRefs}
                 >

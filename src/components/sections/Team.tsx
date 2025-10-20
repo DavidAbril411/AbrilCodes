@@ -17,12 +17,12 @@ export default function Team() {
     MemberKey,
     { name: string; role: string }
   >;
-  
+
   // Track mouse movement for parallax effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (sectionRef.current) {
-        const { left, top, width, height } = 
+        const { left, top, width, height } =
           sectionRef.current.getBoundingClientRect();
         const x = (e.clientX - left) / width - 0.5;
         const y = (e.clientY - top) / height - 0.5;
@@ -31,7 +31,7 @@ export default function Team() {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-    
+
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
     };
@@ -41,7 +41,7 @@ export default function Team() {
   useEffect(() => {
     // Reset refs array
     cardRefs.current = cardRefs.current.slice(0, 3);
-    
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -73,7 +73,7 @@ export default function Team() {
   }, []);
 
   return (
-    <section 
+    <section
       className="w-full flex flex-col items-center justify-center pt-10"
       ref={sectionRef}
     >
@@ -86,8 +86,10 @@ export default function Team() {
         className="flex flex-col md:flex-row items-center md:items-start 
                 space-y-20 md:space-y-0 md:space-x-[clamp(10px,5.47vw,70px)] mt-14"
       >
-        <div 
-          ref={el => { cardRefs.current[0] = el; }}
+        <div
+          ref={(el) => {
+            cardRefs.current[0] = el;
+          }}
           className="scroll-reveal-card"
         >
           <TeamCard
@@ -100,8 +102,10 @@ export default function Team() {
             moveFactor={1}
           />
         </div>
-        <div 
-          ref={el => { cardRefs.current[1] = el; }}
+        <div
+          ref={(el) => {
+            cardRefs.current[1] = el;
+          }}
           className="scroll-reveal-card delay-1"
         >
           <TeamCard
@@ -114,8 +118,10 @@ export default function Team() {
             moveFactor={0}
           />
         </div>
-        <div 
-          ref={el => { cardRefs.current[2] = el; }}
+        <div
+          ref={(el) => {
+            cardRefs.current[2] = el;
+          }}
           className="scroll-reveal-card delay-2"
         >
           <TeamCard

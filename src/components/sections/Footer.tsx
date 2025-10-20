@@ -30,7 +30,11 @@ export default function Footer() {
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <div className={styles.logoContainer}>
             <img src={Icon.src} alt="Icon" className={styles.logoIcon} />
-            <img src={IconText.src} alt="IconText" className={styles.logoText} />
+            <img
+              src={IconText.src}
+              alt="IconText"
+              className={styles.logoText}
+            />
           </div>
           <p className="text-[clamp(12px,1.2vw,16px)] max-w-[300px] mt-4">
             {t("description")}

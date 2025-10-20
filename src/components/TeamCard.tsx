@@ -23,7 +23,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
   linkedinLink,
   githubLink,
   mousePosition = { x: 0, y: 0 },
-  moveFactor = 0
+  moveFactor = 0,
 }) => {
   const [isOpen] = useState(false);
   const t = useTranslations("TeamCard");
@@ -113,7 +113,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src={Instagram.src} alt="Instagram"/>
+                    <img src={Instagram.src} alt="Instagram" />
                   </a>
                 </button>
               )}
@@ -124,7 +124,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src={Linkedin.src} alt="Linkedin"/>
+                    <img src={Linkedin.src} alt="Linkedin" />
                   </a>
                 </button>
               )}

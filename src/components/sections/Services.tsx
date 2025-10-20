@@ -74,23 +74,25 @@ export default function Services() {
     },
   ];
 
-  const servicesData: ServiceItem[] = cardConfigs.map(({ key, direction, iconSrc, iconAlt }) => {
-    const content = cardsMessages[key];
+  const servicesData: ServiceItem[] = cardConfigs.map(
+    ({ key, direction, iconSrc, iconAlt }) => {
+      const content = cardsMessages[key];
 
-    return {
-      id: key,
-      title: content.title,
-      description: content.description,
-      fullDescription: content.fullDescription,
-      subtitle: content.subtitle,
-      bottomRightDescription: content.bottomRightDescription,
-      direction,
-      iconSrc,
-      iconAlt,
-      items: content.items ?? [],
-      actionLabel: learnMoreLabel,
-    } satisfies ServiceItem;
-  });
+      return {
+        id: key,
+        title: content.title,
+        description: content.description,
+        fullDescription: content.fullDescription,
+        subtitle: content.subtitle,
+        bottomRightDescription: content.bottomRightDescription,
+        direction,
+        iconSrc,
+        iconAlt,
+        items: content.items ?? [],
+        actionLabel: learnMoreLabel,
+      } satisfies ServiceItem;
+    }
+  );
 
   return (
     <section
@@ -98,9 +100,7 @@ export default function Services() {
       className="max-w-[100vw] overflow-hidden relative pt-[clamp(50px,5vw,80px)]"
     >
       <div className="flex flex-col items-center justify-center pb-[clamp(20px,10vw,200px)] px-4 gap-14">
-        <h2 className="text-[30px] font-semibold text-[#fff]">
-          {t("title")}
-        </h2>
+        <h2 className="text-[30px] font-semibold text-[#fff]">{t("title")}</h2>
         <ExpandProvider>
           <ServicesCardContainer
             services={servicesData}

@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
 
 // Removed `output: 'export'` so API routes (like /api/contact) can work in production.
 // If you need a fully static export again, you'll have to remove the email API route or move
@@ -10,4 +11,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const withNextIntl = createNextIntlPlugin();
+
+export default withNextIntl(nextConfig);
