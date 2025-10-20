@@ -3,7 +3,7 @@
 import Instagram from "@/images/instagram.svg";
 import Linkedin from "@/images/linkedin.svg";
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { useTranslations } from "next-intl";
 
 interface TeamCardProps {
@@ -30,38 +30,38 @@ const TeamCard: React.FC<TeamCardProps> = ({
 
   // const toggleOpen = () => setIsOpen(!isOpen);
 
-  const expandingContentVariants = {
+  const expandingContentVariants: Variants = {
     closed: {
       y: "0%",
       transition: {
         duration: 0.3,
-        ease: "easeInOut",
-        boxShadow: "none",
+        ease: "easeInOut" as const,
       },
+      boxShadow: "none",
     },
     open: {
       y: "87%",
       transition: {
         duration: 0.3,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
       boxShadow: "0px 4px 10px 0px rgba(0, 0, 0, 0.15)",
     },
   };
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     closed: {
       height: "clamp(300px, 40vw, 420px)",
       transition: {
         duration: 0.3,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     },
     open: {
       height: "clamp(400px, 65vw, 700px)",
       transition: {
         duration: 0.3,
-        ease: "easeInOut",
+        ease: "easeInOut" as const,
       },
     },
   };
