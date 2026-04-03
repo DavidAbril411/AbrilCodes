@@ -8,6 +8,7 @@ export default function Contact() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [website, setWebsite] = useState(""); // honeypot
   const [status, setStatus] = useState<
     "idle" | "sending" | "success" | "error"
   >("idle");
@@ -24,7 +25,7 @@ export default function Contact() {
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, message }),
+        body: JSON.stringify({ name, email, message, website }),
       });
       const data = await res.json();
       if (!res.ok || !data.ok) {
@@ -34,6 +35,7 @@ export default function Contact() {
       setName("");
       setEmail("");
       setMessage("");
+      setWebsite("");
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : defaultErrorMessage;
       setStatus("error");
@@ -86,7 +88,7 @@ export default function Contact() {
           onSubmit={handleSubmit}
           className="w-full flex flex-col space-y-3 md:space-y-4"
         >
-          {/* Honeypot */}
+          {/* Honeypot — must stay empty; bots fill it, humans don't see it */}
           <input
             type="text"
             name="website"
@@ -94,6 +96,8 @@ export default function Contact() {
             autoComplete="off"
             className="hidden"
             aria-hidden="true"
+            value={website}
+            onChange={(e) => setWebsite(e.target.value)}
           />
           <input
             type="text"
