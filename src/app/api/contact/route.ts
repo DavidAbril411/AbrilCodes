@@ -1,53 +1,86 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer"; // Fallback si no hay MAILERSEND_TOKEN
+import nodemailer from "nodemailer";
+import { z } from "zod";
 
 // Ensure this route is always executed (no static optimization caching issues)
 export const dynamic = "force-dynamic";
 
+// ── Rate limiting (in-memory, per IP, resets every 60 s) ─────────────────────
+const RATE_WINDOW_MS = 60_000;
+const RATE_LIMIT = 5;
+const rateLimitMap = new Map<string, { count: number; resetAt: number }>();
+
+function checkRateLimit(ip: string): boolean {
+    const now = Date.now();
+    const entry = rateLimitMap.get(ip);
+    if (!entry || now > entry.resetAt) {
+        rateLimitMap.set(ip, { count: 1, resetAt: now + RATE_WINDOW_MS });
+        return true;
+    }
+    if (entry.count >= RATE_LIMIT) return false;
+    entry.count++;
+    return true;
+}
+
+// ── Input schema (Zod) ────────────────────────────────────────────────────────
+const contactSchema = z.object({
+    name: z.string().min(1).max(200),
+    email: z.string().email().max(200),
+    message: z.string().min(1).max(5000),
+    website: z.string().optional(), // honeypot field
+});
+
+// ── Sanitizer (HTML entities) ─────────────────────────────────────────────────
+const sanitize = (str: string) =>
+    String(str).replace(
+        /[&<>"']/g,
+        (ch) =>
+            ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+            }[ch] as string),
+    );
+
 /**
  * POST /api/contact
- * Expects: { name: string, email: string, message: string }
+ * Expects: { name: string, email: string, message: string, website?: string }
  */
 export async function POST(req: NextRequest) {
     try {
+        // ── Rate limit ────────────────────────────────────────────────────────
+        const ip =
+            req.headers.get("x-forwarded-for")?.split(",")[0].trim() ?? "unknown";
+        if (!checkRateLimit(ip)) {
+            return NextResponse.json(
+                { ok: false, error: "Demasiadas solicitudes. Intenta en un minuto." },
+                { status: 429 },
+            );
+        }
+
+        // ── Parse & validate with Zod ─────────────────────────────────────────
         const body = await req.json();
-        const { name, email, message, website } = body || {};
+        const parsed = contactSchema.safeParse(body);
+        if (!parsed.success) {
+            return NextResponse.json(
+                { ok: false, error: "Datos inválidos" },
+                { status: 400 },
+            );
+        }
+
+        const { name, email, message, website } = parsed.data;
 
         // Honeypot field (should stay empty). If filled => possible bot
         if (website) {
             return NextResponse.json({ ok: true, skipped: true });
         }
 
-        if (!name || !email || !message) {
-            return NextResponse.json({ ok: false, error: "Campos faltantes" }, {
-                status: 400,
-            });
-        }
-
-        // Basic validation
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(email)) {
-            return NextResponse.json({ ok: false, error: "Email inválido" }, {
-                status: 400,
-            });
-        }
-
-        // Sanitizer to avoid HTML injection in the email
-        const sanitize = (str: string) =>
-            String(str).replace(
-                /[&<>"']/g,
-                (ch) => ({
-                    "&": "&amp;",
-                    "<": "&lt;",
-                    ">": "&gt;",
-                    '"': "&quot;",
-                    "'": "&#39;",
-                }[ch] as string),
-            );
-        const sName = sanitize(name).slice(0, 200);
-        const sEmail = sanitize(email).slice(0, 200);
-        const sMessage = sanitize(message).slice(0, 5000);
+        const sName = sanitize(name);
+        const sEmail = sanitize(email);
+        const sMessage = sanitize(message);
 
         const to = process.env.CONTACT_TO || "davidabril411@gmail.com";
         const mailerSendToken = process.env.MAILERSEND_TOKEN;
@@ -63,7 +96,7 @@ export async function POST(req: NextRequest) {
             process.env.MAILERSEND_FROM_NAME ||
             "Web Contact";
 
-        // Si hay token de MailerSend usamos la API HTTP (más fiable en hosting serverless) y evitamos timeout SMTP.
+        // Si hay token de MailerSend usamos la API HTTP (más fiable en hosting serverless).
         if (mailerSendToken) {
             const combined =
                 `Nombre: ${sName} | Email: ${sEmail} | Mensaje: ${sMessage}`;
@@ -124,7 +157,7 @@ export async function POST(req: NextRequest) {
             }
         }
 
-        // ---- Fallback SMTP (nodemailer) ----
+        // ── Fallback SMTP (nodemailer) ────────────────────────────────────────
         const host = process.env.SMTP_HOST;
         const port = process.env.SMTP_PORT
             ? parseInt(process.env.SMTP_PORT, 10)
@@ -141,7 +174,8 @@ export async function POST(req: NextRequest) {
             console.warn(
                 "[contact] Missing SMTP_* env vars. Email will be mocked to console.",
             );
-            console.log({ name, email, message });
+            // Log only sanitized values to avoid leaking raw user input
+            console.log({ name: sName, email: sEmail, message: sMessage });
             return NextResponse.json({ ok: true, mocked: true });
         }
 
@@ -150,7 +184,7 @@ export async function POST(req: NextRequest) {
             port,
             secure,
             auth: { user, pass },
-            connectionTimeout: 15000, // 15s
+            connectionTimeout: 15000,
             greetingTimeout: 10000,
             socketTimeout: 20000,
         });
@@ -184,14 +218,8 @@ export async function POST(req: NextRequest) {
             const message = errObj && typeof errObj.message === "string"
                 ? errObj.message
                 : "Unknown mail error";
-            console.error("[contact] sendMail failed", {
-                code,
-                command,
-                message,
-                host,
-                port,
-                secure,
-            });
+            // Do not log server config (host/port/secure) to avoid leaking infrastructure details
+            console.error("[contact] sendMail failed", { code, command, message });
             if (code === "ETIMEDOUT") {
                 return NextResponse.json({
                     ok: false,
@@ -207,7 +235,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ ok: true });
     } catch (e) {
         const err = e instanceof Error ? e : new Error("Unknown error");
-        console.error("[contact] error", err);
+        console.error("[contact] error", err.message);
         return NextResponse.json({ ok: false, error: "Server error" }, {
             status: 500,
         });
