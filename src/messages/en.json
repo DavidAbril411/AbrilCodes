@@ -22,13 +22,10 @@
         },
         "description": {
             "lines": [
-                "I'm a full-stack web developer",
-                "and founder of Abril Codes. I turn ideas into",
-                "exceptional digital experiences. Need a professional",
-                "website, custom software, or an innovative solution?",
-                "Let's chat!"
+                "High-performance web development.",
+                "We turn ideas into digital products that scale."
             ],
-            "mobile": "I'm a full-stack web developer and founder of Abril Codes. I turn ideas into exceptional digital experiences. Need a professional website, custom software, or an innovative solution? Let's chat!"
+            "mobile": "High-performance web development. We turn ideas into digital products that scale."
         },
         "cta": "Contact Me"
     },
@@ -38,12 +35,11 @@
             "accent": "Me"
         },
         "paragraphs": [
-            "I'm David Abril, a professional developer with an 8.75/10 GPA in Computer Engineering. My journey began at MindFactory, where I developed core skills before venturing out to create Abril Codes, blending creativity and technology into unique digital solutions.",
-            "At Abril Codes, I collaborate with a talented team: Valentina Correa (graphic designer) and Francisco Ameri (software engineer and project manager). Together, we create solutions that balance cutting-edge technology with thoughtful design. I'm particularly proud of our approach that values both technical excellence and the human element in every project we undertake.",
-            "I firmly believe in the value that academic knowledge brings to software development. When building my team, I prioritize individuals with strong educational backgrounds, as university education provides a solid foundation of theoretical principles and problem-solving methodologies that are essential for creating sophisticated, well-documented solutions that stand the test of time."
+            "I'm David Abril, a full-stack developer with a 8.75/10 GPA in Computer Science. I founded Abril Codes to build real software: no templates, no shortcuts.",
+            "We work with Dana and Teo, mobile and frontend developers. We cover every front to deliver complete products."
         ],
-        "aiTitle": "My AI Philosophy",
-        "aiBody": "My approach to AI in development is pragmatic: it should enhance human creativity, not replace it. While AI can handle syntax and implementation details, developers must retain deep understanding of fundamentals. I don't believe in memorizing what AI can generate with a simple prompt—instead, I invest my energy in mastering core concepts and problem-solving skills that allow me to effectively direct AI tools while maintaining complete control over architecture and quality."
+        "aiTitle": "Our AI Philosophy",
+        "aiBody": "We use AI as a tool, not a crutch. Every technical decision is ours. AI handles implementation details; architectural judgment and quality always remain with us."
     },
     "Services": {
         "title": "My Services",
@@ -51,34 +47,34 @@
         "cards": {
             "design": {
                 "title": "Custom Design",
-                "description": "We create unique, tailored designs that reflect your brand identity and engage your audience effectively across all devices.",
-                "fullDescription": "Every business or project has a unique identity, and your website should reflect it. We don't use generic templates - instead, we create an exclusive design based on your brand image, values, and specific needs.",
-                "bottomRightDescription": "A personalized design approach ensures your digital presence stands out from competitors, creating memorable experiences that resonate with your target audience and reinforce your brand's unique positioning.",
+                "description": "Unique designs that reflect your brand and engage your audience across every device.",
+                "fullDescription": "We don't use generic templates. We create an exclusive experience based on your brand image, values, and specific needs.",
+                "bottomRightDescription": "Your digital presence stands out from competitors with memorable experiences that reinforce your brand's unique positioning.",
                 "items": [
                     {
                         "title": "Unique visual identity",
-                        "description": "We adapt every web element to your style and message."
+                        "description": "Every web element adapted to your style and message."
                     },
                     {
-                        "title": "Optimized user experience",
-                        "description": "We design with intuitive and engaging navigation in mind."
+                        "title": "Optimized experience",
+                        "description": "Intuitive and visually engaging navigation."
                     },
                     {
                         "title": "Market differentiation",
                         "description": "A custom design helps you stand out from the competition."
                     },
                     {
-                        "title": "Responsive adaptability",
-                        "description": "Your website adjusts to different devices without losing quality or functionality."
+                        "title": "Responsive",
+                        "description": "Your site adapts to every device without losing quality."
                     }
                 ]
             },
             "development": {
                 "title": "Web Development",
-                "description": "We build responsive websites with clean, efficient code that works flawlessly across all devices.",
-                "fullDescription": "We don't just design; we build websites using modern technology, prioritizing speed, security, and scalability. We use tools such as Next.js, Node.js, and Docker to deliver superior performance.",
+                "description": "Responsive websites with clean, efficient code that works flawlessly across all devices.",
+                "fullDescription": "We build with modern technology, prioritizing speed, security, and scalability. No reliance on third-party templates or plugins.",
                 "subtitle": "What does this mean for your business?",
-                "bottomRightDescription": "A professional development approach ensures your website operates efficiently and without limitations, adapting to your business's present and future needs.",
+                "bottomRightDescription": "Professional development ensures your site operates without limitations and adapts to present and future needs.",
                 "items": [
                     {
                         "title": "Faster speed",
@@ -86,7 +82,7 @@
                     },
                     {
                         "title": "Advanced security",
-                        "description": "Protection against common vulnerabilities in outdated systems."
+                        "description": "Protection against common vulnerabilities."
                     },
                     {
                         "title": "Scalability",
@@ -94,16 +90,16 @@
                     },
                     {
                         "title": "Total flexibility",
-                        "description": "No reliance on third-party templates or plugins."
+                        "description": "No dependence on external templates or plugins."
                     }
                 ]
             },
             "support": {
                 "title": "Support & Maintenance",
-                "description": "We provide ongoing technical support and regular updates to ensure your website remains secure, fast, and aligned with your evolving business needs.",
-                "fullDescription": "Our relationship doesn't end at launch. We provide ongoing maintenance to keep your website secure, up-to-date, and performing optimally. This includes technical support, regular updates, security monitoring, and performance optimization. As your business grows, we scale your website with new features to match your evolving needs.",
+                "description": "Ongoing technical support and updates to keep your site secure, fast, and aligned with your goals.",
+                "fullDescription": "Our relationship doesn't end at launch. We provide ongoing maintenance: technical support, updates, security monitoring, and continuous optimization.",
                 "subtitle": "How does this benefit your business?",
-                "bottomRightDescription": "With our support services, you can focus on your core business while we handle the technical aspects of your digital presence. Our proactive approach helps prevent issues before they impact your users, ensuring consistent performance and availability.",
+                "bottomRightDescription": "Focus on your business while we handle the technical side. We prevent issues before they impact your users.",
                 "items": [
                     {
                         "title": "Continuous monitoring",
@@ -111,15 +107,15 @@
                     },
                     {
                         "title": "Security updates",
-                        "description": "Timely patches and updates to keep your site protected against new threats."
+                        "description": "Timely patches to protect against new threats."
                     },
                     {
                         "title": "Performance optimization",
-                        "description": "Ongoing improvements to maintain speed and responsiveness."
+                        "description": "Ongoing improvements to speed and responsiveness."
                     },
                     {
                         "title": "Growth support",
-                        "description": "Technical assistance as your business scales and evolves."
+                        "description": "Technical assistance as your business scales."
                     }
                 ]
             }
@@ -128,17 +124,17 @@
     "Team": {
         "title": "Meet my team",
         "members": {
-            "francisco": {
-                "name": "Francisco Ameri",
-                "role": "Project Manager & FullStack"
+            "dana": {
+                "name": "Dana Perrig Ragona",
+                "role": "Mobile & Frontend Developer"
             },
             "david": {
                 "name": "David Abril Perrig",
                 "role": "FullStack Developer"
             },
-            "valentina": {
-                "name": "Valentina Correa",
-                "role": "UX/UI Designer & Graphic Designer"
+            "teo": {
+                "name": "Teo Abril Perrig",
+                "role": "Mobile & Frontend Developer"
             }
         }
     },
@@ -170,10 +166,10 @@
             "team": "My team",
             "projects": "Projects"
         },
-        "copyright": "© 2025 - David Ignacio Abril Perrig - Responsive design & frontend"
+        "copyright": "© 2026 - David Ignacio Abril Perrig - Responsive design & frontend"
     },
     "Projects": {
         "title": "My Projects",
-        "viajeando": "Viajeando.com"
+        "empty": "Projects coming soon"
     }
 }

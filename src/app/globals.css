@@ -83,3 +83,77 @@ body {
 .scroll-reveal-card.delay-2 {
   transition-delay: 0.4s;
 }
+
+/* ─── TeamCard shimmer effect ────────────────────────────────── */
+.team-card-shimmer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    120deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.18) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  transition: background-position 0s;
+}
+
+.team-card-wrapper:hover .team-card-shimmer {
+  background-position: -200% 0;
+  transition: background-position 0.6s ease;
+}
+
+/* ─── Floating particles (Hero / About backgrounds) ──────────── */
+.float-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(8, 8, 157, 0.35);
+  pointer-events: none;
+  will-change: transform;
+  animation: floatUp var(--dur, 8s) ease-in-out infinite var(--delay, 0s);
+}
+
+@keyframes floatUp {
+  0%   { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+  33%  { transform: translateY(-18px) translateX(6px); opacity: 1; }
+  66%  { transform: translateY(-10px) translateX(-6px); opacity: 0.7; }
+  100% { transform: translateY(0px) translateX(0px); opacity: 0.6; }
+}
+
+/* ─── Aurora gradient mesh (Hero background) ─────────────────── */
+.hero-aurora {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(ellipse 70% 60% at 30% 40%, rgba(8,8,157,0.10) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 70% 60%, rgba(10,10,228,0.07) 0%, transparent 70%);
+  animation: auroraShift 10s ease-in-out infinite alternate;
+}
+
+@keyframes auroraShift {
+  0%   { background-position: 0% 50%; opacity: 0.8; }
+  100% { background-position: 100% 50%; opacity: 1; }
+}
+
+/* ─── Section glow blobs ─────────────────────────────────────── */
+.glow-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── Respect reduced-motion preference ──────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .float-particle,
+  .hero-aurora {
+    animation: none;
+  }
+  .team-card-wrapper:hover .team-card-shimmer {
+    transition: none;
+  }
+}

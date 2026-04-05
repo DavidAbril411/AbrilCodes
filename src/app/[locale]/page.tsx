@@ -7,6 +7,7 @@ import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
 import Hero from "@/components/sections/Hero";
 import Contact from "@/components/sections/Contact";
+import Projects from "@/components/sections/Projects";
 
 export default function Home() {
   const [activeSection, setActiveSection] = useState("home");
@@ -53,6 +54,7 @@ export default function Home() {
         { id: "about", ref: aboutRef },
         { id: "services", ref: servicesRef },
         { id: "team", ref: teamRef },
+        { id: "projects", ref: projectsRef },
         { id: "contact", ref: contactRef },
       ];
 
@@ -118,6 +120,10 @@ export default function Home() {
 
       <div ref={teamRef} id="team">
         <Team />
+      </div>
+
+      <div ref={projectsRef} id="projects">
+        <Projects />
       </div>
 
       <div ref={contactRef} id="contact">

@@ -53,6 +53,29 @@ export default function Hero({ scrollToSection }: HeroProps) {
     <>
       <div className="h-[calc(4vw+60px)]"></div>
       <main className="h-[clamp(670px,80vh,800px)] sm:h-auto md:h-[clamp(630px,calc(100vh-110px),685px)] w-full relative flex items-center justify-center ">
+        {/* Aurora gradient mesh */}
+        <div className="hero-aurora" />
+        {/* Floating particles */}
+        {[
+          { w: 8, h: 8, top: "15%", left: "8%", dur: "9s", delay: "0s" },
+          { w: 5, h: 5, top: "60%", left: "5%", dur: "12s", delay: "2s" },
+          { w: 10, h: 10, top: "30%", left: "88%", dur: "7s", delay: "1s" },
+          { w: 6, h: 6, top: "75%", left: "80%", dur: "10s", delay: "3s" },
+          { w: 4, h: 4, top: "50%", left: "50%", dur: "8s", delay: "1.5s" },
+        ].map((p, i) => (
+          <span
+            key={i}
+            className="float-particle"
+            style={{
+              width: p.w,
+              height: p.h,
+              top: p.top,
+              left: p.left,
+              ["--dur" as string]: p.dur,
+              ["--delay" as string]: p.delay,
+            }}
+          />
+        ))}
         <img
           src={BackgroundShape.src}
           alt="background-shape"
