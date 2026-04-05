@@ -22,13 +22,10 @@
         },
         "description": {
             "lines": [
-                "Soy desarrollador web full-stack",
-                "y fundador de Abril Codes. Transformo ideas en",
-                "experiencias digitales excepcionales. ¿Necesitás un sitio",
-                "profesional, software a medida o una solución innovadora?",
-                "¡Conversemos!"
+                "Desarrollo web de alto rendimiento.",
+                "Convertimos ideas en productos digitales que escalan."
             ],
-            "mobile": "Soy desarrollador web full-stack y fundador de Abril Codes. Transformo ideas en experiencias digitales excepcionales. ¿Necesitás un sitio profesional, software a medida o una solución innovadora? ¡Conversemos!"
+            "mobile": "Desarrollo web de alto rendimiento. Convertimos ideas en productos digitales que escalan."
         },
         "cta": "Contactame"
     },
@@ -38,12 +35,11 @@
             "accent": "mí"
         },
         "paragraphs": [
-            "Soy David Abril, desarrollador profesional con promedio 8,75/10 en Ingeniería en Computación. Mi camino comenzó en MindFactory, donde fortalecí mis habilidades antes de emprender Abril Codes, combinando creatividad y tecnología para crear soluciones digitales únicas.",
-            "En Abril Codes trabajo junto a un equipo talentoso: Valentina Correa (diseñadora gráfica) y Francisco Ameri (ingeniero de software y project manager). Juntos construimos soluciones que equilibran tecnología de vanguardia con un diseño cuidadoso. Me enorgullece nuestro enfoque que valora tanto la excelencia técnica como el factor humano en cada proyecto.",
-            "Creo firmemente en el valor que el conocimiento académico aporta al desarrollo de software. Al formar mi equipo priorizo personas con sólida formación, porque la universidad brinda fundamentos teóricos y metodologías de resolución de problemas esenciales para crear soluciones robustas, bien documentadas y sostenibles en el tiempo."
+            "Soy David Abril, desarrollador full-stack con promedio 8,75/10 en Ingeniería Informática. Fundé Abril Codes para construir software real: sin plantillas, sin atajos.",
+            "Trabajamos con Dana y Teo, developers mobile y frontend. Cubrimos todos los frentes para entregar productos completos."
         ],
-        "aiTitle": "Mi filosofía sobre IA",
-        "aiBody": "Mi enfoque de la IA en el desarrollo es pragmático: debe potenciar la creatividad humana, no reemplazarla. Mientras la IA resuelve sintaxis y detalles de implementación, los desarrolladores debemos conservar un entendimiento profundo de los fundamentos. No creo en memorizar lo que la IA puede generar con un simple prompt; prefiero invertir mi energía en dominar conceptos clave y habilidades de resolución que me permitan dirigir las herramientas de IA manteniendo el control total sobre la arquitectura y la calidad."
+        "aiTitle": "Nuestra filosofía sobre IA",
+        "aiBody": "Usamos IA como herramienta, no como muleta. Cada decisión técnica la tomamos nosotros. La IA resuelve detalles de implementación; el criterio de arquitectura y calidad es siempre nuestro."
     },
     "Services": {
         "title": "Mis servicios",
@@ -51,34 +47,34 @@
         "cards": {
             "design": {
                 "title": "Diseño a medida",
-                "description": "Creamos diseños únicos y personalizados que reflejan la identidad de tu marca y conectan con tu audiencia en cualquier dispositivo.",
-                "fullDescription": "Cada negocio o proyecto tiene una identidad propia y tu sitio debe reflejarla. No usamos plantillas genéricas: diseñamos una experiencia exclusiva basada en tu imagen, valores y necesidades específicas.",
-                "bottomRightDescription": "Un enfoque personalizado asegura que tu presencia digital se destaque de la competencia, generando experiencias memorables que resuenan con tu audiencia y refuerzan el posicionamiento de tu marca.",
+                "description": "Diseños únicos que reflejan tu marca y conectan con tu audiencia en cualquier dispositivo.",
+                "fullDescription": "No usamos plantillas genéricas. Diseñamos una experiencia exclusiva basada en tu imagen, valores y necesidades específicas.",
+                "bottomRightDescription": "Tu presencia digital se destaca de la competencia con experiencias memorables que refuerzan el posicionamiento de tu marca.",
                 "items": [
                     {
                         "title": "Identidad visual única",
-                        "description": "Adaptamos cada elemento web a tu estilo y mensaje."
+                        "description": "Cada elemento web adaptado a tu estilo y mensaje."
                     },
                     {
                         "title": "Experiencia optimizada",
-                        "description": "Diseñamos pensando en una navegación intuitiva y atractiva."
+                        "description": "Navegación intuitiva y visualmente atractiva."
                     },
                     {
                         "title": "Diferenciación de mercado",
-                        "description": "Un diseño propio te ayuda a destacar frente a la competencia."
+                        "description": "Un diseño propio te destaca frente a la competencia."
                     },
                     {
-                        "title": "Adaptabilidad responsive",
-                        "description": "Tu sitio se ajusta a cada dispositivo sin perder calidad ni funcionalidad."
+                        "title": "Responsive",
+                        "description": "Tu sitio se adapta a cada dispositivo sin perder calidad."
                     }
                 ]
             },
             "development": {
                 "title": "Desarrollo web",
-                "description": "Construimos sitios responsivos con código limpio y eficiente que funciona perfecto en cualquier dispositivo.",
-                "fullDescription": "No solo diseñamos: desarrollamos sitios con tecnología moderna priorizando velocidad, seguridad y escalabilidad. Utilizamos herramientas como Next.js, Node.js y Docker para ofrecer el mejor rendimiento.",
+                "description": "Sitios responsivos con código limpio y eficiente que funciona perfecto en cualquier dispositivo.",
+                "fullDescription": "Desarrollamos con tecnología moderna priorizando velocidad, seguridad y escalabilidad. Sin depender de plantillas o plugins de terceros.",
                 "subtitle": "¿Qué significa esto para tu negocio?",
-                "bottomRightDescription": "Un desarrollo profesional garantiza que tu sitio funcione sin limitaciones y se adapte a las necesidades presentes y futuras de tu negocio.",
+                "bottomRightDescription": "Un desarrollo profesional garantiza que tu sitio funcione sin limitaciones y se adapte a las necesidades presentes y futuras.",
                 "items": [
                     {
                         "title": "Mayor velocidad",
@@ -86,7 +82,7 @@
                     },
                     {
                         "title": "Seguridad avanzada",
-                        "description": "Protección contra vulnerabilidades comunes en sistemas desactualizados."
+                        "description": "Protección contra vulnerabilidades comunes."
                     },
                     {
                         "title": "Escalabilidad",
@@ -94,16 +90,16 @@
                     },
                     {
                         "title": "Flexibilidad total",
-                        "description": "Sin depender de plantillas o plugins de terceros."
+                        "description": "Sin dependencia de plantillas o plugins externos."
                     }
                 ]
             },
             "support": {
                 "title": "Soporte y mantenimiento",
-                "description": "Ofrecemos soporte técnico continuo y actualizaciones periódicas para mantener tu sitio seguro, veloz y alineado a tus objetivos.",
-                "fullDescription": "Nuestra relación no termina en el lanzamiento. Brindamos mantenimiento constante para que tu sitio se mantenga seguro, actualizado y en su máximo rendimiento. Incluye soporte técnico, actualizaciones, monitoreo de seguridad y optimización de performance. Cuando tu negocio crece, escalamos tu sitio con nuevas funcionalidades.",
+                "description": "Soporte técnico continuo y actualizaciones para mantener tu sitio seguro, veloz y alineado a tus objetivos.",
+                "fullDescription": "Nuestra relación no termina en el lanzamiento. Brindamos mantenimiento constante: soporte técnico, actualizaciones, monitoreo de seguridad y optimización continua.",
                 "subtitle": "¿Cómo beneficia esto a tu negocio?",
-                "bottomRightDescription": "Con nuestro soporte podés enfocarte en tu negocio mientras nos ocupamos de la parte técnica. Nuestro enfoque proactivo previene problemas antes de que afecten a tus usuarios, asegurando disponibilidad y rendimiento.",
+                "bottomRightDescription": "Enfocate en tu negocio mientras nos ocupamos de la parte técnica. Prevenimos problemas antes de que afecten a tus usuarios.",
                 "items": [
                     {
                         "title": "Monitoreo continuo",
@@ -111,11 +107,11 @@
                     },
                     {
                         "title": "Actualizaciones de seguridad",
-                        "description": "Parcheos y mejoras a tiempo para protegerte de nuevas amenazas."
+                        "description": "Parcheos a tiempo para protegerte de nuevas amenazas."
                     },
                     {
                         "title": "Optimización constante",
-                        "description": "Mejoras permanentes para mantener velocidad y respuesta."
+                        "description": "Mejoras permanentes de velocidad y respuesta."
                     },
                     {
                         "title": "Acompañamiento al crecimiento",
@@ -128,17 +124,17 @@
     "Team": {
         "title": "Conocé a mi equipo",
         "members": {
-            "francisco": {
-                "name": "Francisco Ameri",
-                "role": "Project Manager y FullStack"
+            "dana": {
+                "name": "Dana Perrig Ragona",
+                "role": "Mobile & Frontend Developer"
             },
             "david": {
                 "name": "David Abril Perrig",
                 "role": "Desarrollador FullStack"
             },
-            "valentina": {
-                "name": "Valentina Correa",
-                "role": "Diseñadora UX/UI y Gráfica"
+            "teo": {
+                "name": "Teo Abril Perrig",
+                "role": "Mobile & Frontend Developer"
             }
         }
     },
@@ -170,10 +166,10 @@
             "team": "Mi equipo",
             "projects": "Proyectos"
         },
-        "copyright": "© 2025 - David Ignacio Abril Perrig - Diseño y frontend responsive"
+        "copyright": "© 2026 - David Ignacio Abril Perrig - Diseño y frontend responsive"
     },
     "Projects": {
         "title": "Mis proyectos",
-        "viajeando": "Viajeando.com"
+        "empty": "Proyectos en camino"
     }
 }

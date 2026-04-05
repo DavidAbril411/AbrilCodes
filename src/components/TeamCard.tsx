@@ -1,10 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import Instagram from "@/images/instagram.svg";
 import Linkedin from "@/images/linkedin.svg";
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { useTranslations } from "next-intl";
+import { FaGithub } from "react-icons/fa";
 
 interface TeamCardProps {
   imageSrc: string | undefined;
@@ -27,8 +27,6 @@ const TeamCard: React.FC<TeamCardProps> = ({
 }) => {
   const [isOpen] = useState(false);
   const t = useTranslations("TeamCard");
-
-  // const toggleOpen = () => setIsOpen(!isOpen);
 
   const expandingContentVariants: Variants = {
     closed: {
@@ -70,11 +68,23 @@ const TeamCard: React.FC<TeamCardProps> = ({
   const xMovement = mousePosition.x * 10 * moveFactor;
   const yMovement = mousePosition.y * 10;
 
+  // Derive initials for the fallback avatar
+  const initials = name
+    .split(" ")
+    .slice(0, 2)
+    .map((w) => w[0])
+    .join("")
+    .toUpperCase();
+
   return (
     <motion.div
-      className=""
+      className="team-card-wrapper"
       variants={containerVariants}
       animate={isOpen ? "open" : "closed"}
+      whileHover={{
+        filter: "drop-shadow(0 0 18px rgba(8,8,157,0.55))",
+        transition: { duration: 0.25 },
+      }}
       style={{
         transform: `translate(${xMovement}px, ${yMovement}px)`,
         transition: "transform 0.5s ease-out",
@@ -89,17 +99,29 @@ const TeamCard: React.FC<TeamCardProps> = ({
           }}
         >
           <div className="flex flex-col items-start p-[clamp(10px,2vw,22px)]">
+            {/* Avatar area */}
             <div
-              className="w-full h-[clamp(170px,24vw,257px)] rounded-tr-[clamp(20px,2.87vw,31px)] rounded-bl-[clamp(20px,2.87vw,31px)] flex items-center justify-center"
+              className="w-full h-[clamp(170px,24vw,257px)] rounded-tr-[clamp(20px,2.87vw,31px)] rounded-bl-[clamp(20px,2.87vw,31px)] flex items-center justify-center overflow-hidden relative"
               style={{
                 background: "linear-gradient(180deg, #08089D 0%, #030337 100%)",
               }}
             >
-              <img
-                src={imageSrc}
-                alt={name}
-                className="w-full transform -translate-y-[10.5%]"
-              />
+              {imageSrc ? (
+                <img
+                  src={imageSrc}
+                  alt={name}
+                  className="w-full transform -translate-y-[10.5%]"
+                />
+              ) : (
+                <span
+                  className="text-white font-bold select-none"
+                  style={{ fontSize: "clamp(36px, 6vw, 72px)" }}
+                >
+                  {initials}
+                </span>
+              )}
+              {/* Shimmer overlay on hover */}
+              <div className="team-card-shimmer" />
             </div>
             <h3 className="text-[clamp(14px,1.5vw,18px)] font-semibold mt-4 text-[#332F2B]">
               {name}
@@ -107,64 +129,31 @@ const TeamCard: React.FC<TeamCardProps> = ({
             <p className="text-[clamp(9px,1.2vw,12px)] text-gray-600">{role}</p>
             <div className="flex space-x-2 mt-2">
               {githubLink && (
-                <button className="w-[clamp(30px,3.7vw,40px)] h-[clamp(30px,3.7vw,40px)] bg-[#08089D] rounded-full text-white flex items-center justify-center">
-                  <a
-                    href={githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img src={Instagram.src} alt="Instagram" />
-                  </a>
-                </button>
+                <motion.a
+                  href={githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-[clamp(30px,3.7vw,40px)] h-[clamp(30px,3.7vw,40px)] bg-[#08089D] rounded-full text-white flex items-center justify-center"
+                  whileHover={{ scale: 1.15, backgroundColor: "#0A0AE4" }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <FaGithub size={18} />
+                </motion.a>
               )}
               {linkedinLink && (
-                <button className="w-[clamp(30px,3.7vw,40px)] h-[clamp(30px,3.7vw,40px)] bg-[#08089D] rounded-full text-white flex items-center justify-center">
-                  <a
-                    href={linkedinLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img src={Linkedin.src} alt="Linkedin" />
-                  </a>
-                </button>
+                <motion.a
+                  href={linkedinLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-[clamp(30px,3.7vw,40px)] h-[clamp(30px,3.7vw,40px)] bg-[#08089D] rounded-full text-white flex items-center justify-center"
+                  whileHover={{ scale: 1.15, backgroundColor: "#0A0AE4" }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <img src={Linkedin.src} alt="LinkedIn" />
+                </motion.a>
               )}
             </div>
           </div>
-          {/* <button
-            onClick={toggleOpen}
-            className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-transparent text-white rounded-full p-2"
-          >
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 20 26"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlnsXlink="http://www.w3.org/1999/xlink"
-            >
-              <rect width="20" height="26" fill="url(#pattern0_242_1493)" />
-              <defs>
-                <pattern
-                  id="pattern0_242_1493"
-                  patternContentUnits="objectBoundingBox"
-                  width="1"
-                  height="1"
-                >
-                  <use
-                    xlinkHref="#image0_242_1493"
-                    transform="matrix(0.01 0 0 0.00769231 0 0.115385)"
-                  />
-                </pattern>
-                <image
-                  id="image0_242_1493"
-                  width="100"
-                  height="100"
-                  preserveAspectRatio="none"
-                  xlinkHref="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAAAXNSR0IArs4c6QAAA95JREFUeF7t3E1rE2EQB/B5nlZ8AavxKwgevAgqeBAUBLE3PfVrNE1jLl5y8WDJtr32UwhefDt4UEFR74L4HdqCPWjcNYsVaslmn83s7DOT/HPJITuTyf+XyRLIxhFuqhJwqqbBMAQQZW8CgABEWQLKxsGGAERZAsrGwYYARFkCysbBhgBEWQLKxsGGAERZAsrGwYYARFkCysbBhgBEWQLKxsGGAERZAsrGwYYARFkCysbBhgBEWQLKxsGGAERZAsrGCdqQLMuccy5TNruZcXZ2dk60Wq10ZWXld9nQE0GSJLlCRE+cc7eJyBPRqzRNH3a73a9ljfE40WAwuOy9T4joLhGlo/v33vteu93+VJRPIUiO4Zx7S0RnjxXveu+X2+32R4RenMD29vaNNE1fENH5Y0cdpGl6q9vtfhlXXQiyubn5nIiWC55yz3t/Dyjj0znEeElE5wrye9PpdO4Eg/T7fb+0tPSDiE5N2AKgjAknACOv+rW/v3+m3+8Pj7eYtCEHo/PH6ZKPJaAcCSgQI6/42el0TgZvSH7g6Bzy1Dn3IOA8AZTRiaICBjnnnq2trd2vBLKxsXFxcXHx85iT0rg+c41SBYOIdofD4fVer/e9Ekh+8NbW1tUsy14T0YWQTcmybHl9ff1DwLEzc8hgMLjmvc8zagW8qNI3bukXQ6AUx1w3Rv5MpSDYlPEgEhjBIED5H0UKoxIIUP6iSGJUBpl3FGmMqUDmFaUJjKlB5g2lKQwWyLygNInBBpl1lKYxagGZVZQYGLWBzBpKLIxaQWYFJSZG7SDWUWJjiIBYRdGAIQZiDUULhiiIFRRNGOIg2lG0YTQCohVFI0ZjINpQtGI0CqIFRTNG4yCxUbRjRAGJhWIBIxpI0yhWMKKCNIViCSM6iDSKNQwVIFIoFjHUgNSNYhVDFUhdKJYx1IFwUaxjqASZFiXLsl91/go9nyPGLejH1jEGq3jNxd7hjEXX9B19CaWXBMR4vf+eUy3IFJsSkqNqDLUfWUeTrXh9yiQU9RgmQGraFBMYZkCYKGYwTIFMiWIKwxxIRRRzGCZBAlFMYpgFyQef8Ocupv8cR/X3kLIvFkmSXHLOPSaim4fHvltYWHi0urr6raxW6+OmQbSGypkLIJz0BGoBIhAqpyVAOOkJ1AJEIFROS4Bw0hOoBYhAqJyWAOGkJ1ALEIFQOS0BwklPoBYgAqFyWgKEk55ALUAEQuW0BAgnPYFagAiEymkJEE56ArUAEQiV0xIgnPQEagEiECqnJUA46QnUAkQgVE5LgHDSE6gFiEConJYA4aQnUAsQgVA5LQHCSU+g9g9uyv+D2yV3aAAAAABJRU5ErkJggg=="
-                />
-              </defs>
-            </svg>
-          </button> */}
         </div>
         <motion.div
           className="absolute bottom-0 left-0 w-full text-center pb-[clamp(20px,4vw,40px)] pt-[clamp(28px,6vw,56px)] rounded-br-[clamp(20px,3vw,54px)] rounded-bl-[clamp(20px,3vw,54px)]"

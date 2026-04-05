@@ -2,8 +2,6 @@
 
 import { useRef, useState, useEffect } from "react";
 import DavidImage from "@/images/david-image.png";
-import FranciscoImage from "@/images/francisco-image.png";
-import ValentinaImage from "@/images/valentina-image.png";
 import TeamCard from "../TeamCard";
 import { useTranslations } from "next-intl";
 
@@ -12,13 +10,12 @@ export default function Team() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const t = useTranslations("Team");
-  type MemberKey = "francisco" | "david" | "valentina";
+  type MemberKey = "dana" | "david" | "teo";
   const members = t.raw("members") as Record<
     MemberKey,
     { name: string; role: string }
   >;
 
-  // Track mouse movement for parallax effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (sectionRef.current) {
@@ -31,15 +28,10 @@ export default function Team() {
     };
 
     window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Set up scroll reveal animations
   useEffect(() => {
-    // Reset refs array
     cardRefs.current = cardRefs.current.slice(0, 3);
 
     const observer = new IntersectionObserver(
@@ -50,62 +42,69 @@ export default function Team() {
           }
         });
       },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -100px 0px",
-      }
+      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
     );
 
-    // Observe all cards
     cardRefs.current.forEach((card) => {
-      if (card) {
-        observer.observe(card);
-      }
+      if (card) observer.observe(card);
     });
 
     return () => {
       cardRefs.current.forEach((card) => {
-        if (card) {
-          observer.unobserve(card);
-        }
+        if (card) observer.unobserve(card);
       });
     };
   }, []);
 
   return (
     <section
-      className="w-full flex flex-col items-center justify-center pt-10"
+      className="w-full flex flex-col items-center justify-center pt-10 relative overflow-hidden"
       ref={sectionRef}
     >
-      <h2 className="text-[clamp(30px,3.3vw,40px)] text-[#000] font-normal">
+      {/* Glow blobs */}
+      <div
+        className="glow-blob"
+        style={{
+          width: "clamp(200px,30vw,420px)",
+          height: "clamp(200px,30vw,420px)",
+          top: "10%",
+          left: "-8%",
+          background: "rgba(8,8,157,0.13)",
+        }}
+      />
+      <div
+        className="glow-blob"
+        style={{
+          width: "clamp(150px,22vw,320px)",
+          height: "clamp(150px,22vw,320px)",
+          top: "30%",
+          right: "-6%",
+          background: "rgba(10,10,228,0.10)",
+        }}
+      />
+
+      <h2 className="text-[clamp(30px,3.3vw,40px)] text-[#000] font-normal relative z-10">
         {t("title")}
       </h2>
 
-      {/* Cambiamos de flex-row a flex-col en móviles, y cambiamos espaciado */}
       <div
-        className="flex flex-col md:flex-row items-center md:items-start 
-                space-y-20 md:space-y-0 md:space-x-[clamp(10px,5.47vw,70px)] mt-14"
+        className="flex flex-col md:flex-row items-center md:items-start
+                space-y-20 md:space-y-0 md:space-x-[clamp(10px,5.47vw,70px)] mt-14 relative z-10"
       >
         <div
-          ref={(el) => {
-            cardRefs.current[0] = el;
-          }}
+          ref={(el) => { cardRefs.current[0] = el; }}
           className="scroll-reveal-card"
         >
           <TeamCard
-            imageSrc={FranciscoImage.src}
-            name={members.francisco.name}
-            role={members.francisco.role}
-            linkedinLink="https://www.linkedin.com/in/fran-ameri/"
-            githubLink="https://github.com/franameri"
+            imageSrc={undefined}
+            name={members.dana.name}
+            role={members.dana.role}
             mousePosition={mousePosition}
             moveFactor={1}
           />
         </div>
         <div
-          ref={(el) => {
-            cardRefs.current[1] = el;
-          }}
+          ref={(el) => { cardRefs.current[1] = el; }}
           className="scroll-reveal-card delay-1"
         >
           <TeamCard
@@ -113,22 +112,19 @@ export default function Team() {
             name={members.david.name}
             role={members.david.role}
             linkedinLink="https://www.linkedin.com/in/david-abril-perrig/"
-            githubLink="https://github.com/DavidAbril"
+            githubLink="https://github.com/DavidAbril411"
             mousePosition={mousePosition}
             moveFactor={0}
           />
         </div>
         <div
-          ref={(el) => {
-            cardRefs.current[2] = el;
-          }}
+          ref={(el) => { cardRefs.current[2] = el; }}
           className="scroll-reveal-card delay-2"
         >
           <TeamCard
-            imageSrc={ValentinaImage.src}
-            name={members.valentina.name}
-            role={members.valentina.role}
-            linkedinLink="https://www.linkedin.com/in/valentinacorreaok/"
+            imageSrc={undefined}
+            name={members.teo.name}
+            role={members.teo.role}
             mousePosition={mousePosition}
             moveFactor={-1}
           />
