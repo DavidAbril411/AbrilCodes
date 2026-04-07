@@ -57,31 +57,35 @@ export default function Team() {
   }, []);
 
   return (
+    // No overflow-hidden here — it clips drop-shadow on cards.
+    // Glow blobs live in their own overflow-hidden wrapper so they stay contained.
     <section
-      className="w-full flex flex-col items-center justify-center pt-10 relative overflow-hidden"
+      className="w-full flex flex-col items-center justify-center pt-10 pb-16 relative"
       ref={sectionRef}
     >
-      {/* Glow blobs */}
-      <div
-        className="glow-blob"
-        style={{
-          width: "clamp(200px,30vw,420px)",
-          height: "clamp(200px,30vw,420px)",
-          top: "10%",
-          left: "-8%",
-          background: "rgba(8,8,157,0.13)",
-        }}
-      />
-      <div
-        className="glow-blob"
-        style={{
-          width: "clamp(150px,22vw,320px)",
-          height: "clamp(150px,22vw,320px)",
-          top: "30%",
-          right: "-6%",
-          background: "rgba(10,10,228,0.10)",
-        }}
-      />
+      {/* Blob wrapper — clips only the decoration, not the card shadows */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="glow-blob"
+          style={{
+            width: "clamp(200px,30vw,420px)",
+            height: "clamp(200px,30vw,420px)",
+            top: "10%",
+            left: "-8%",
+            background: "rgba(8,8,157,0.13)",
+          }}
+        />
+        <div
+          className="glow-blob"
+          style={{
+            width: "clamp(150px,22vw,320px)",
+            height: "clamp(150px,22vw,320px)",
+            top: "30%",
+            right: "-6%",
+            background: "rgba(10,10,228,0.10)",
+          }}
+        />
+      </div>
 
       <h2 className="text-[clamp(30px,3.3vw,40px)] text-[#000] font-normal relative z-10">
         {t("title")}
