@@ -347,8 +347,8 @@ function ProjectLightbox({
 
 /* ─────────────────────────────────────────────────────────────────
    PROJECT CARD
-   Tilt via direct DOM style manipulation — avoids any conflict with
-   Swiper's own CSS transforms on the slide element.
+   Hover: glow + border highlight (no transforms — avoids conflicts
+   with Swiper's own 3D coverflow transforms on the slide element).
 ───────────────────────────────────────────────────────────────── */
 function ProjectCard({
   project,
@@ -357,40 +357,23 @@ function ProjectCard({
   project: Project;
   onOpenLightbox: (index: number) => void;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = cardRef.current;
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 … 0.5
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    el.style.transform = `perspective(900px) rotateX(${y * -8}deg) rotateY(${x * 8}deg)`;
-    el.style.boxShadow =
-      "0 0 40px rgba(8,8,157,0.5), 0 0 80px rgba(8,8,157,0.15)";
-  };
-
-  const handleMouseLeave = () => {
-    const el = cardRef.current;
-    if (!el) return;
-    el.style.transform =
-      "perspective(900px) rotateX(0deg) rotateY(0deg)";
-    el.style.boxShadow = "0 4px 20px rgba(0,0,0,0.2)";
-  };
-
+  const [hovered, setHovered] = useState(false);
   const hasImages = (project.images?.length ?? 0) > 0;
 
   return (
     <div
-      ref={cardRef}
       className="h-full w-full rounded-[25px] overflow-hidden relative"
       style={{
-        transition: "transform 0.35s ease, box-shadow 0.35s ease",
-        boxShadow: "0 4px 20px rgba(0,0,0,0.2)",
-        willChange: "transform",
+        transition: "box-shadow 0.3s ease, outline 0.3s ease",
+        boxShadow: hovered
+          ? "0 0 0 2px rgba(80,80,255,0.55), 0 8px 48px rgba(8,8,157,0.45)"
+          : "0 4px 20px rgba(0,0,0,0.2)",
+        outline: hovered
+          ? "1.5px solid rgba(120,120,255,0.35)"
+          : "1.5px solid transparent",
       }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       {/* ── Image gallery ── */}
       <div className="absolute inset-0">
