@@ -24,9 +24,8 @@
     border-radius: 25px;
 }
 
-/* Estilo para el slide activo */
+/* Active slide: only glow, no scale — card handles its own tilt */
 & :global(.swiper-slide-active > div) {
-    transform: scale(1.05);
     box-shadow: 0px 10px 40px 0px #00000059;
 }
 
