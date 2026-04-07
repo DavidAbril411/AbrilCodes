@@ -110,7 +110,7 @@ const TeamCard: React.FC<TeamCardProps> = ({
                 <img
                   src={imageSrc}
                   alt={name}
-                  className="w-full h-full object-cover object-top"
+                  className="transform translate-y-[15%]"
                 />
               ) : (
                 <span

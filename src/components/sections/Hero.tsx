@@ -177,11 +177,11 @@ export default function Hero({ scrollToSection }: HeroProps) {
                   }}
                 >
                   <div className="w-full h-full bg-gradient-to-b from-[#08089D] to-[#030337] rounded-full absolute overflow-hidden">
-                    <div className="w-full h-full absolute top-[2%] left-[-3%] flex items-center justify-center">
+                    <div className="w-[90%] h-[90%] absolute top-[17.5%] left-[5%] flex items-center justify-center">
                       <img src={DavidBottom.src} alt="David Bottom" />
                     </div>
                   </div>
-                  <div className="w-[131.5%] h-[131.5%] absolute top-[-38.5%] left-[-11.4%] flex items-center justify-center">
+                  <div className="w-[90%] h-[90%] absolute top-[-30.5%] left-[5%] flex items-center justify-center">
                     <img src={DavidTop.src} alt="David Top" />
                   </div>
                 </motion.div>
