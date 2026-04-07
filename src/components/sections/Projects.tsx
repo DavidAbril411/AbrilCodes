@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useTranslations } from "next-intl";
@@ -7,9 +6,12 @@ import CarouselComponent from "@/components/Carousel/Carousel";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { FiExternalLink, FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
+import Image from "next/image";
 
 /* ─────────────────────────────────────────────────────────────────
-   EXPANDED MODAL — left: description, right: image carousel
+   EXPANDED MODAL
+   Mobile:  carousel top (fixed height) → description bottom (scroll)
+   Desktop: description left → carousel right
 ───────────────────────────────────────────────────────────────── */
 function ProjectExpandedModal({
   project,
@@ -32,14 +34,12 @@ function ProjectExpandedModal({
     [images.length]
   );
 
-  // Auto-advance carousel
   useEffect(() => {
     if (paused || images.length <= 1) return;
     const id = setInterval(next, 3500);
     return () => clearInterval(id);
   }, [paused, images.length, next]);
 
-  // Keyboard navigation
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -50,7 +50,7 @@ function ProjectExpandedModal({
     return () => window.removeEventListener("keydown", handler);
   }, [onClose, next, prev]);
 
-  // Scroll active thumbnail into view without affecting parent scroll containers
+  // Scroll thumbnail strip without triggering parent scroll
   useEffect(() => {
     const strip = thumbRef.current;
     if (!strip) return;
@@ -58,11 +58,9 @@ function ProjectExpandedModal({
     if (!el) return;
     const stripRect = strip.getBoundingClientRect();
     const elRect = el.getBoundingClientRect();
-    const offset = elRect.left - stripRect.left - (stripRect.width - elRect.width) / 2;
-    strip.scrollLeft += offset;
+    strip.scrollLeft += elRect.left - stripRect.left - (stripRect.width - elRect.width) / 2;
   }, [active]);
 
-  // Lock body scroll
   useEffect(() => {
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
@@ -72,7 +70,7 @@ function ProjectExpandedModal({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[200] flex items-center justify-center p-4"
+      className="fixed inset-0 z-[200] flex items-center justify-center p-3 md:p-4"
       style={{ backgroundColor: "rgba(2,2,20,0.88)", backdropFilter: "blur(18px)" }}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
@@ -83,7 +81,7 @@ function ProjectExpandedModal({
       <motion.div
         className="relative w-full max-w-6xl rounded-3xl overflow-hidden flex flex-col md:flex-row"
         style={{
-          maxHeight: "88vh",
+          maxHeight: "92vh",
           background: "linear-gradient(135deg, #08082a 0%, #030318 100%)",
           boxShadow: "0 0 0 1px rgba(100,100,255,0.15), 0 32px 80px rgba(0,0,0,0.7)",
         }}
@@ -93,10 +91,10 @@ function ProjectExpandedModal({
         transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* ── Close button ── */}
+        {/* Close */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 z-30 w-9 h-9 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
+          className="absolute top-3 right-3 z-30 w-9 h-9 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
           style={{ background: "rgba(255,255,255,0.08)" }}
           aria-label="Cerrar"
         >
@@ -104,27 +102,125 @@ function ProjectExpandedModal({
         </button>
 
         {/* ══════════════════════════════════════════
-            LEFT — description
+            CAROUSEL — order-1 on mobile (top), order-2 on desktop (right)
+        ══════════════════════════════════════════ */}
+        {images.length > 0 && (
+          <div
+            className="order-1 md:order-2 w-full md:w-[58%] shrink-0 flex flex-col border-b md:border-b-0 md:border-l border-white/10"
+            style={{ height: "45vw", minHeight: 220, maxHeight: "55vh" }}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
+          >
+            {/* Main image */}
+            <div className="flex-1 relative bg-black/20 overflow-hidden min-h-0">
+              {images.map((src, i) => (
+                <div
+                  key={src}
+                  className="absolute inset-3"
+                  style={{
+                    opacity: i === active ? 1 : 0,
+                    transition: "opacity 0.4s ease",
+                    pointerEvents: i === active ? "auto" : "none",
+                  }}
+                >
+                  <Image
+                    src={src}
+                    alt={`Screenshot ${i + 1}`}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 768px) 100vw, 650px"
+                    priority={i === 0}
+                  />
+                </div>
+              ))}
+
+              {/* Counter */}
+              <span
+                className="absolute top-2 right-2 text-white/40 text-xs tabular-nums z-10 px-2 py-0.5 rounded-full"
+                style={{ background: "rgba(0,0,0,0.4)" }}
+              >
+                {active + 1} / {images.length}
+              </span>
+
+              {images.length > 1 && (
+                <>
+                  <button
+                    onClick={prev}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
+                    style={{ background: "rgba(255,255,255,0.1)" }}
+                    aria-label="Anterior"
+                  >
+                    <FiChevronLeft size={16} />
+                  </button>
+                  <button
+                    onClick={next}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
+                    style={{ background: "rgba(255,255,255,0.1)" }}
+                    aria-label="Siguiente"
+                  >
+                    <FiChevronRight size={16} />
+                  </button>
+                </>
+              )}
+            </div>
+
+            {/* Thumbnail strip */}
+            {images.length > 1 && (
+              <div
+                ref={thumbRef}
+                className="shrink-0 flex gap-1.5 px-3 py-2 overflow-x-auto border-t border-white/10"
+                style={{ scrollbarWidth: "none" }}
+              >
+                {images.map((src, i) => (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <button
+                    key={i}
+                    onClick={() => setActive(i)}
+                    className="shrink-0 rounded-lg overflow-hidden transition-all duration-200 hover:scale-105 relative"
+                    style={{
+                      width: 40,
+                      height: 56,
+                      border: `2px solid ${i === active ? "#5555ff" : "transparent"}`,
+                      opacity: i === active ? 1 : 0.4,
+                    }}
+                    aria-label={`Ver imagen ${i + 1}`}
+                  >
+                    <img
+                      src={src}
+                      alt={`thumb-${i + 1}`}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ══════════════════════════════════════════
+            DESCRIPTION — order-2 on mobile (bottom), order-1 on desktop (left)
         ══════════════════════════════════════════ */}
         <div
-          className="w-full md:w-[42%] shrink-0 flex flex-col px-8 py-8 overflow-y-auto"
-          style={{ scrollbarWidth: "none", maxHeight: "88vh" }}
+          className="order-2 md:order-1 w-full md:w-[42%] shrink-0 flex flex-col px-6 py-6 md:px-8 md:py-8 overflow-y-auto"
+          style={{ scrollbarWidth: "none", maxHeight: "92vh" }}
         >
           {/* Logo */}
           {project.logo && (
-            <img
-              src={project.logo}
-              alt={project.title}
-              className="h-12 w-auto object-contain mb-6 self-start"
-              draggable={false}
-            />
+            <div className="relative h-10 w-32 mb-5 self-start">
+              <Image
+                src={project.logo}
+                alt={project.title}
+                fill
+                className="object-contain object-left"
+                sizes="128px"
+              />
+            </div>
           )}
 
           {/* Title + link */}
           <div className="flex items-center gap-2 mb-4">
-            <h3 className="text-white font-bold text-2xl leading-tight">
-              {project.title}
-            </h3>
+            <h3 className="text-white font-bold text-xl leading-tight">{project.title}</h3>
             {project.url && (
               <a
                 href={project.url}
@@ -133,42 +229,34 @@ function ProjectExpandedModal({
                 className="text-blue-400 hover:text-blue-300 transition-colors shrink-0 mt-0.5"
                 aria-label={`Ver ${project.title}`}
               >
-                <FiExternalLink size={16} />
+                <FiExternalLink size={15} />
               </a>
             )}
           </div>
 
-          {/* Long description blocks */}
-          <div className="space-y-4 flex-1">
+          {/* Description blocks */}
+          <div className="space-y-3 flex-1">
             {blocks.map((block, i) => {
               const lines = block.split("\n");
               return (
                 <div key={i} className="space-y-1">
                   {lines.map((line, j) => {
-                    const isBullet = line.startsWith("•");
-                    const isResult = /^[📦✅🚀]/.test(line);
-                    if (isBullet) {
+                    if (line.startsWith("•")) {
                       return (
                         <div key={j} className="flex gap-2 items-start">
                           <span className="text-blue-400 mt-0.5 shrink-0">•</span>
-                          <p className="text-white/70 text-sm leading-relaxed">
-                            {line.slice(1).trim()}
-                          </p>
+                          <p className="text-white/70 text-sm leading-relaxed">{line.slice(1).trim()}</p>
                         </div>
                       );
                     }
-                    if (isResult) {
+                    if (/^[📦✅🚀]/.test(line)) {
                       return (
-                        <p key={j} className="text-white/90 text-sm font-medium leading-relaxed">
-                          {line}
-                        </p>
+                        <p key={j} className="text-white/90 text-sm font-semibold leading-relaxed">{line}</p>
                       );
                     }
-                    return (
-                      <p key={j} className={`text-sm leading-relaxed ${line === "" ? "hidden" : "text-white/70"}`}>
-                        {line}
-                      </p>
-                    );
+                    return line ? (
+                      <p key={j} className="text-white/70 text-sm leading-relaxed">{line}</p>
+                    ) : null;
                   })}
                 </div>
               );
@@ -177,7 +265,7 @@ function ProjectExpandedModal({
 
           {/* Tech tags */}
           {project.tech && project.tech.length > 0 && (
-            <div className="flex flex-wrap gap-1.5 mt-6 pt-6 border-t border-white/10">
+            <div className="flex flex-wrap gap-1.5 mt-5 pt-5 border-t border-white/10">
               {project.tech.map((tag) => (
                 <span
                   key={tag}
@@ -190,114 +278,13 @@ function ProjectExpandedModal({
             </div>
           )}
         </div>
-
-        {/* ══════════════════════════════════════════
-            RIGHT — image carousel
-        ══════════════════════════════════════════ */}
-        {images.length > 0 && (
-          <div
-            className="w-full md:w-[58%] shrink-0 flex flex-col min-h-0 border-t md:border-t-0 md:border-l border-white/10"
-            onMouseEnter={() => setPaused(true)}
-            onMouseLeave={() => setPaused(false)}
-          >
-            {/* Main image */}
-            <div className="flex-1 relative flex items-center justify-center bg-black/20 overflow-hidden min-h-0">
-              {images.map((src, i) => (
-                <img
-                  key={src}
-                  src={src}
-                  alt={`Screenshot ${i + 1}`}
-                  draggable={false}
-                  className="absolute inset-0 w-full h-full object-contain select-none p-4"
-                  style={{
-                    opacity: i === active ? 1 : 0,
-                    transition: "opacity 0.4s ease",
-                    pointerEvents: i === active ? "auto" : "none",
-                  }}
-                />
-              ))}
-
-              {/* Counter */}
-              <span
-                className="absolute top-3 right-3 text-white/40 text-xs tabular-nums z-10 px-2 py-0.5 rounded-full"
-                style={{ background: "rgba(0,0,0,0.4)" }}
-              >
-                {active + 1} / {images.length}
-              </span>
-
-              {/* Prev / Next */}
-              {images.length > 1 && (
-                <>
-                  <button
-                    onClick={prev}
-                    className="absolute left-3 z-10 w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
-                    style={{ background: "rgba(255,255,255,0.08)" }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "rgba(80,80,255,0.5)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
-                    }
-                    aria-label="Imagen anterior"
-                  >
-                    <FiChevronLeft size={18} />
-                  </button>
-                  <button
-                    onClick={next}
-                    className="absolute right-3 z-10 w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
-                    style={{ background: "rgba(255,255,255,0.08)" }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.background = "rgba(80,80,255,0.5)")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.background = "rgba(255,255,255,0.08)")
-                    }
-                    aria-label="Imagen siguiente"
-                  >
-                    <FiChevronRight size={18} />
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Thumbnail strip */}
-            {images.length > 1 && (
-              <div
-                ref={thumbRef}
-                className="shrink-0 flex gap-2 px-4 py-3 overflow-x-auto border-t border-white/10"
-                style={{ scrollbarWidth: "none" }}
-              >
-                {images.map((src, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActive(i)}
-                    className="shrink-0 rounded-lg overflow-hidden transition-all duration-200 hover:scale-105"
-                    style={{
-                      width: 48,
-                      height: 68,
-                      border: `2px solid ${i === active ? "#5555ff" : "transparent"}`,
-                      opacity: i === active ? 1 : 0.4,
-                    }}
-                    aria-label={`Ver imagen ${i + 1}`}
-                  >
-                    <img
-                      src={src}
-                      alt={`thumb-${i + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
       </motion.div>
     </motion.div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────────────
-   PROJECT CARD — shows only the logo, click anywhere to expand
+   PROJECT CARD
 ───────────────────────────────────────────────────────────────── */
 function ProjectCard({
   project,
@@ -329,9 +316,9 @@ function ProjectCard({
       onKeyDown={(e) => e.key === "Enter" && onExpand()}
       aria-label={`Ver detalles de ${project.title}`}
     >
-      {/* Subtle grid texture */}
+      {/* Grid texture */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
           backgroundImage:
             "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)",
@@ -339,39 +326,44 @@ function ProjectCard({
         }}
       />
 
-      {/* Glow orb on hover */}
+      {/* Hover glow */}
       <div
         className="absolute inset-0 pointer-events-none transition-opacity duration-500"
         style={{
           opacity: hovered ? 1 : 0,
-          background:
-            "radial-gradient(circle at 50% 40%, rgba(80,80,255,0.18) 0%, transparent 65%)",
+          background: "radial-gradient(circle at 50% 40%, rgba(80,80,255,0.18) 0%, transparent 65%)",
         }}
       />
 
-      {/* Logo centered */}
-      <div className="absolute inset-0 flex items-center justify-center px-8">
-        {project.logo ? (
-          <img
-            src={project.logo}
-            alt={project.title}
-            draggable={false}
-            className="max-w-[85%] max-h-[62%] object-contain select-none transition-transform duration-500"
-            style={{ transform: hovered ? "scale(1.05)" : "scale(1)" }}
-          />
-        ) : (
-          <span className="text-white/60 font-semibold text-xl">{project.title}</span>
-        )}
-      </div>
+      {/* Logo — fills the upper ~58% of the card, centered */}
+      {project.logo && (
+        <div
+          className="absolute left-0 right-0 top-0"
+          style={{ bottom: "42%", padding: "8% 12% 0" }}
+        >
+          <div
+            className="relative w-full h-full transition-transform duration-500"
+            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
+          >
+            <Image
+              src={project.logo}
+              alt={project.title}
+              fill
+              className="object-contain"
+              sizes="(max-width: 480px) 300px, (max-width: 768px) 380px, 487px"
+              priority
+            />
+          </div>
+        </div>
+      )}
 
       {/* Bottom info overlay */}
       <div
         className="absolute bottom-0 left-0 right-0 z-10 px-4 pt-12 pb-4"
         style={{
-          background: "linear-gradient(to top, rgba(3,3,55,0.97) 55%, transparent 100%)",
+          background: "linear-gradient(to top, rgba(3,3,55,0.97) 60%, transparent 100%)",
         }}
       >
-        {/* Title + external link */}
         <div className="flex items-center gap-1.5 mb-1.5">
           <span className="text-white font-semibold text-[clamp(14px,1.5vw,20px)]">
             {project.title}
@@ -390,14 +382,12 @@ function ProjectCard({
           )}
         </div>
 
-        {/* Short description */}
         {project.description && (
           <p className="text-white/55 text-[clamp(9px,0.85vw,11px)] leading-snug mb-2 line-clamp-2">
             {project.description}
           </p>
         )}
 
-        {/* Tech tags */}
         {project.tech && project.tech.length > 0 && (
           <div className="flex flex-wrap gap-1">
             {project.tech.slice(0, 6).map((tag) => (
@@ -417,7 +407,6 @@ function ProjectCard({
           </div>
         )}
 
-        {/* Click hint */}
         <p
           className="mt-2 text-white/30 text-[10px] tracking-wide transition-opacity duration-300"
           style={{ opacity: hovered ? 1 : 0 }}
