@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import { useTranslations } from "next-intl";
 import { projects, type Project } from "@/data/projects";
 import CarouselComponent from "@/components/Carousel/Carousel";
@@ -79,12 +80,14 @@ function ProjectExpandedModal({
       onClick={onClose}
     >
       <motion.div
-        className="relative w-full max-w-6xl rounded-3xl overflow-hidden flex flex-col md:flex-row"
+        className="relative w-full max-w-6xl rounded-3xl flex flex-col md:flex-row overflow-y-auto md:overflow-hidden"
         style={{
           maxHeight: "92vh",
           background: "linear-gradient(135deg, #08082a 0%, #030318 100%)",
           boxShadow: "0 0 0 1px rgba(100,100,255,0.15), 0 32px 80px rgba(0,0,0,0.7)",
-        }}
+          overscrollBehavior: "contain",
+          WebkitOverflowScrolling: "touch",
+        } as React.CSSProperties}
         initial={{ scale: 0.94, y: 20 }}
         animate={{ scale: 1, y: 0 }}
         exit={{ scale: 0.94, y: 20 }}
@@ -106,8 +109,7 @@ function ProjectExpandedModal({
         ══════════════════════════════════════════ */}
         {images.length > 0 && (
           <div
-            className="order-1 md:order-2 w-full md:w-[58%] shrink-0 flex flex-col border-b md:border-b-0 md:border-l border-white/10"
-            style={{ height: "45vw", minHeight: 220, maxHeight: "55vh" }}
+            className="order-1 md:order-2 w-full md:w-[58%] shrink-0 flex flex-col border-b md:border-b-0 md:border-l border-white/10 h-[58vh] md:h-auto"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
           >
@@ -202,20 +204,18 @@ function ProjectExpandedModal({
             DESCRIPTION — order-2 on mobile (bottom), order-1 on desktop (left)
         ══════════════════════════════════════════ */}
         <div
-          className="order-2 md:order-1 w-full md:w-[42%] shrink-0 flex flex-col px-6 py-6 md:px-8 md:py-8 overflow-y-auto"
-          style={{ scrollbarWidth: "none", maxHeight: "92vh" }}
+          className="order-2 md:order-1 w-full md:w-[42%] shrink-0 flex flex-col px-6 py-6 md:px-8 md:py-8 md:overflow-y-auto"
+          style={{ scrollbarWidth: "none" } as React.CSSProperties}
         >
           {/* Logo */}
           {project.logo && (
-            <div className="relative h-10 w-32 mb-5 self-start">
-              <Image
-                src={project.logo}
-                alt={project.title}
-                fill
-                className="object-contain object-left"
-                sizes="128px"
-              />
-            </div>
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={project.logo}
+              alt={project.title}
+              className="h-10 w-auto object-contain mb-5 self-start"
+              draggable={false}
+            />
           )}
 
           {/* Title + link */}
@@ -335,25 +335,23 @@ function ProjectCard({
         }}
       />
 
-      {/* Logo — fills the upper ~58% of the card, centered */}
+      {/* Logo — fills the upper ~58% of the card */}
       {project.logo && (
         <div
-          className="absolute left-0 right-0 top-0"
-          style={{ bottom: "42%", padding: "8% 12% 0" }}
+          className="absolute left-0 right-0 top-0 flex items-center justify-center"
+          style={{ bottom: "42%", padding: "6% 10%" }}
         >
-          <div
-            className="relative w-full h-full transition-transform duration-500"
-            style={{ transform: hovered ? "scale(1.06)" : "scale(1)" }}
-          >
-            <Image
-              src={project.logo}
-              alt={project.title}
-              fill
-              className="object-contain"
-              sizes="(max-width: 480px) 300px, (max-width: 768px) 380px, 487px"
-              priority
-            />
-          </div>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={project.logo}
+            alt={project.title}
+            draggable={false}
+            className="max-w-full max-h-full object-contain select-none"
+            style={{
+              transform: hovered ? "scale(1.06)" : "scale(1)",
+              transition: "transform 0.5s ease",
+            }}
+          />
         </div>
       )}
 
