@@ -1,10 +1,10 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 import Linkedin from "@/images/linkedin.svg";
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { FaGithub } from "react-icons/fa";
+import Image from "next/image";
 
 interface TeamCardProps {
   imageSrc: string | undefined;
@@ -107,10 +107,14 @@ const TeamCard: React.FC<TeamCardProps> = ({
               }}
             >
               {imageSrc ? (
-                <img
+                <Image
                   src={imageSrc}
                   alt={name}
+                  width={400}
+                  height={500}
                   className="transform translate-y-[15%]"
+                  style={{ width: "100%", height: "auto" }}
+                  sizes="(max-width: 768px) 50vw, 300px"
                 />
               ) : (
                 <span

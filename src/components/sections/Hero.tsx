@@ -1,13 +1,13 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useRef, useState } from "react";
 import BackgroundShape from "../../images/background-shape.svg";
 import DavidTop from "../../images/david-top.png";
 import DavidBottom from "../../images/david-bottom.png";
 import styles from "./Hero.module.css";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 
 interface HeroProps {
   scrollToSection: (sectionId: string) => void;
@@ -21,29 +21,11 @@ export default function Hero({ scrollToSection }: HeroProps) {
     ? (descriptionLinesRaw as string[])
     : [String(descriptionLinesRaw)];
 
-  useEffect(() => {
-    const topImg = new Image();
-    const bottomImg = new Image();
-
-    let loadedCount = 0;
-    const checkAllLoaded = () => {
-      loadedCount++;
-      if (loadedCount === 2) {
-        setImagesLoaded(true);
-      }
-    };
-
-    topImg.onload = checkAllLoaded;
-    bottomImg.onload = checkAllLoaded;
-
-    topImg.src = DavidTop.src;
-    bottomImg.src = DavidBottom.src;
-
-    return () => {
-      topImg.onload = null;
-      bottomImg.onload = null;
-    };
-  }, []);
+  const loadedCount = useRef(0);
+  const handleImageLoad = () => {
+    loadedCount.current++;
+    if (loadedCount.current >= 2) setImagesLoaded(true);
+  };
 
   const handleContactClick = () => {
     scrollToSection("contact");
@@ -178,11 +160,11 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 >
                   <div className="w-full h-full bg-gradient-to-b from-[#08089D] to-[#030337] rounded-full absolute overflow-hidden">
                     <div className="w-[90%] h-[90%] absolute top-[17.5%] left-[5%] flex items-center justify-center">
-                      <img src={DavidBottom.src} alt="David Bottom" />
+                      <Image src={DavidBottom} alt="David Bottom" style={{ width: "100%", height: "auto" }} sizes="(max-width: 768px) 90vw, 40vw" onLoad={handleImageLoad} priority />
                     </div>
                   </div>
                   <div className="w-[90%] h-[90%] absolute top-[-30.5%] left-[5%] flex items-center justify-center">
-                    <img src={DavidTop.src} alt="David Top" />
+                    <Image src={DavidTop} alt="David Top" style={{ width: "100%", height: "auto" }} sizes="(max-width: 768px) 90vw, 40vw" onLoad={handleImageLoad} priority />
                   </div>
                 </motion.div>
               )}
