@@ -14,7 +14,7 @@ interface HeroProps {
 }
 
 export default function Hero({ scrollToSection }: HeroProps) {
-  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(true);
   const t = useTranslations("Hero");
   const descriptionLinesRaw = t.raw("description.lines");
   const descriptionLines = Array.isArray(descriptionLinesRaw)
