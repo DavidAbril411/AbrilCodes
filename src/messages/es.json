@@ -1,4 +1,8 @@
 {
+    "Meta": {
+        "title": "David Abril Perrig — Desarrollador Full-Stack",
+        "description": "Portfolio personal de David Abril Perrig, desarrollador web full-stack. Sitios y productos digitales de alto rendimiento: diseño, desarrollo y soporte continuo."
+    },
     "Header": {
         "nav": {
             "home": "Inicio",

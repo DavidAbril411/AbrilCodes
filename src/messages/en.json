@@ -1,4 +1,8 @@
 {
+    "Meta": {
+        "title": "David Abril Perrig — Full-Stack Developer",
+        "description": "Personal portfolio of David Abril Perrig, full-stack web developer. High-performance websites and digital products: design, development, and ongoing support."
+    },
     "Header": {
         "nav": {
             "home": "Home",
