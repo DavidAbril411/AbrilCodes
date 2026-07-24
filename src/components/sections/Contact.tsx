@@ -1,7 +1,7 @@
 "use client";
 
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { useTranslations } from "next-intl";
 
 export default function Contact() {
@@ -15,6 +15,13 @@ export default function Contact() {
   const [errorMsg, setErrorMsg] = useState("");
   const t = useTranslations("Contact");
   const defaultErrorMessage = t("error");
+
+  const nameId = useId();
+  const emailId = useId();
+  const messageId = useId();
+
+  const fieldClassName =
+    "w-full h-[45px] md:h-[50px] px-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none text-[14px] md:text-base rounded-field border border-white/15 focus:border-blue-400 transition-colors";
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -52,32 +59,30 @@ export default function Contact() {
   }
 
   return (
-    <section className="w-full flex flex-col md:flex-row items-center md:items-start justify-center mt-10 md:mt-20 relative z-10 gap-8 md:gap-16 lg:gap-28 max-w-[1200px] mx-auto px-5">
+    <section className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-8 px-6 py-(--spacing-section) md:flex-row md:items-start md:gap-16 lg:gap-28">
       <div className="flex flex-col items-center md:items-start">
-        <h2
-          className="text-[clamp(28px,6vw,64px)] text-gradient-accent w-full md:w-[clamp(300px,40vw,465px)] text-center md:text-start font-semibold leading-tight"
-        >
+        <h2 className="w-full text-center font-display text-[clamp(28px,6vw,64px)] font-semibold leading-tight text-gradient-accent md:w-[clamp(300px,40vw,465px)] md:text-start">
           {t("title")}
         </h2>
-        <div className="flex flex-col items-start mt-4 md:mt-6 space-y-3 md:space-y-4 w-full">
+        <div className="mt-4 flex w-full flex-col items-start space-y-3 md:mt-6 md:space-y-4">
           <div className="flex items-center space-x-3 md:space-x-4">
-            <FaPhoneAlt className="text-ink-100 text-[18px] md:text-[24px] bg-blue-700 w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
+            <FaPhoneAlt className="h-[45px] w-[45px] rounded-full bg-blue-700 p-3 text-[18px] text-ink-100 md:h-[63px] md:w-[63px] md:p-4 md:text-[24px]" />
             <span className="text-ink-100 text-[clamp(14px,1.5vw,18px)]">
               {t("phone")}
             </span>
           </div>
           <div className="flex items-center space-x-3 md:space-x-4">
-            <FaEnvelope className="text-ink-100 text-[18px] md:text-[24px] bg-blue-700 w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
+            <FaEnvelope className="h-[45px] w-[45px] rounded-full bg-blue-700 p-3 text-[18px] text-ink-100 md:h-[63px] md:w-[63px] md:p-4 md:text-[24px]" />
             <span className="text-ink-100 text-[clamp(14px,1.5vw,18px)]">
               {t("email")}
             </span>
           </div>
         </div>
       </div>
-      <div className="w-full max-w-[600px] h-full flex flex-col items-center justify-center mt-6">
+      <div className="mt-6 flex h-full w-full max-w-[600px] flex-col items-center justify-center">
         <form
           onSubmit={handleSubmit}
-          className="w-full flex flex-col space-y-3 md:space-y-4"
+          className="flex w-full flex-col space-y-3 md:space-y-4"
         >
           {/* Honeypot — must stay empty; bots fill it, humans don't see it */}
           <input
@@ -90,7 +95,12 @@ export default function Contact() {
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
           />
+
+          <label htmlFor={nameId} className="sr-only">
+            {t("placeholders.name")}
+          </label>
           <input
+            id={nameId}
             type="text"
             placeholder={t("placeholders.name")}
             value={name}
@@ -98,9 +108,14 @@ export default function Contact() {
               setName(e.target.value)
             }
             required
-            className="w-full h-[45px] md:h-[50px] px-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none text-[14px] md:text-base rounded-[30px] border border-white/15 focus:border-blue-400 transition-colors"
+            className={fieldClassName}
           />
+
+          <label htmlFor={emailId} className="sr-only">
+            {t("placeholders.email")}
+          </label>
           <input
+            id={emailId}
             type="email"
             placeholder={t("placeholders.email")}
             value={email}
@@ -108,21 +123,27 @@ export default function Contact() {
               setEmail(e.target.value)
             }
             required
-            className="w-full h-[45px] md:h-[50px] px-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none text-[14px] md:text-base rounded-[30px] border border-white/15 focus:border-blue-400 transition-colors"
+            className={fieldClassName}
           />
+
+          <label htmlFor={messageId} className="sr-only">
+            {t("placeholders.message")}
+          </label>
           <textarea
+            id={messageId}
             placeholder={t("placeholders.message")}
             value={message}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setMessage(e.target.value)
             }
             required
-            className="w-full h-[120px] md:h-[150px] px-4 py-3 md:py-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none resize-none text-[14px] md:text-base rounded-[30px] border border-white/15 focus:border-blue-400 transition-colors"
+            className={`${fieldClassName} h-[120px] resize-none py-3 md:h-[150px] md:py-4`}
           />
+
           <button
             type="submit"
             disabled={status === "sending"}
-            className="w-full h-[45px] md:h-[50px] bg-gradient-to-r from-blue-600 to-blue-700 text-ink-100 rounded-[30px] text-[14px] md:text-base mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="mt-2 h-[45px] w-full rounded-field bg-gradient-to-r from-blue-600 to-blue-700 text-[14px] text-ink-100 transition-opacity disabled:cursor-not-allowed disabled:opacity-60 md:h-[50px] md:text-base"
           >
             {status === "sending"
               ? t("sending")
@@ -130,6 +151,7 @@ export default function Contact() {
               ? t("sent")
               : t("submit")}
           </button>
+
           {(status === "error" || status === "success") && (
             <p
               role="status"
