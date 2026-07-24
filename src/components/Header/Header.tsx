@@ -3,22 +3,21 @@
 import { Fragment, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { usePathname, useRouter } from "@/i18n/routing";
+import { useActiveSection } from "@/hooks/useActiveSection";
 import styles from "./Header.module.css";
 
 import Icon from "../../images/icon-blue.svg";
 import IconText from "../../images/icon-text.svg";
 
-interface HeaderProps {
-  scrollToSection: (sectionId: string) => void;
-  activeSection: string;
-}
+const SECTION_IDS = ["home", "about", "services", "projects", "contact"];
 
-const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
+const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("Header");
   const locale = useLocale();
+  const activeSection = useActiveSection(SECTION_IDS);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -26,21 +25,6 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
 
   const closeMenu = () => {
     setIsMenuOpen(false);
-  };
-
-  const handleNavClick = (sectionId: string) => {
-    closeMenu();
-
-    // If we're on the homepage, scroll to section
-    const normalizedPath = pathname || "/";
-    const isHome = normalizedPath === "/" || normalizedPath === `/${locale}`;
-
-    if (isHome) {
-      scrollToSection(sectionId);
-    } else {
-      // If we're on another page, navigate to homepage and then scroll
-      router.push(`/${locale}#${sectionId}`);
-    }
   };
 
   const handleLanguageChange = (targetLocale: "en" | "es") => {
@@ -89,7 +73,6 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
     { id: "home", label: t("nav.home") },
     { id: "about", label: t("nav.about") },
     { id: "services", label: t("nav.services") },
-    { id: "team", label: t("nav.team") },
     { id: "projects", label: t("nav.projects") },
     { id: "contact", label: t("nav.contact") },
   ];
@@ -103,8 +86,8 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
     <header className={styles.header}>
       <div className={styles.headerContent}>
         <div className={styles.logoContainer}>
-          <img src={Icon.src} alt="Icon" className={styles.logoIcon} />
-          <img src={IconText.src} alt="IconText" className={styles.logoText} />
+          <img src={Icon.src} alt="" className={styles.logoIcon} />
+          <img src={IconText.src} alt="AbrilCodes" className={styles.logoText} />
         </div>
 
         <nav
@@ -114,15 +97,17 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
         >
           <div className={styles.menu}>
             {navItems.map((item) => (
-              <button
+              <a
                 key={item.id}
-                onClick={() => handleNavClick(item.id)}
+                href={`#${item.id}`}
+                onClick={closeMenu}
+                aria-current={activeSection === item.id ? "true" : undefined}
                 className={`${styles.navButton} ${
                   activeSection === item.id ? styles.navButtonActive : ""
                 }`}
               >
                 {item.label}
-              </button>
+              </a>
             ))}
           </div>
         </nav>
@@ -132,7 +117,7 @@ const Header: React.FC<HeaderProps> = ({ scrollToSection, activeSection }) => {
               <button
                 type="button"
                 onClick={() => handleLanguageChange(option.locale)}
-                aria-label={t("language.aria")}
+                aria-label={t("language.aria", { locale: option.label })}
                 aria-pressed={locale === option.locale}
                 className={`${styles.languageButton} ${
                   locale === option.locale ? styles.languageButtonActive : ""

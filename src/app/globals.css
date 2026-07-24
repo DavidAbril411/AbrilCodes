@@ -16,6 +16,18 @@
   }
 }
 
+html {
+  scroll-behavior: smooth;
+  /* Keep anchored sections clear of the fixed header */
+  scroll-padding-top: calc(4vw + 77px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
 html,
 body {
   max-width: 100vw;

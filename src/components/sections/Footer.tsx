@@ -5,7 +5,6 @@ import Icon from "../../images/icon-white.svg";
 import IconText from "../../images/icon-text-white.svg";
 import styles from "./Footer.module.css";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 
 export default function Footer() {
   const t = useTranslations("Footer");
@@ -13,7 +12,6 @@ export default function Footer() {
     { id: "home", label: t("nav.home") },
     { id: "about", label: t("nav.about") },
     { id: "services", label: t("nav.services") },
-    { id: "team", label: t("nav.team") },
     { id: "projects", label: t("nav.projects") },
   ];
 
@@ -29,10 +27,10 @@ export default function Footer() {
         {/* Logo y descripción */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
           <div className={styles.logoContainer}>
-            <img src={Icon.src} alt="Icon" className={styles.logoIcon} />
+            <img src={Icon.src} alt="" className={styles.logoIcon} />
             <img
               src={IconText.src}
-              alt="IconText"
+              alt="AbrilCodes"
               className={styles.logoText}
             />
           </div>
@@ -49,12 +47,12 @@ export default function Footer() {
           <ul className="space-y-2 text-[clamp(12px,1.2vw,16px)]">
             {navItems.map((item) => (
               <li key={item.id}>
-                <Link
-                  href={{ pathname: "/", hash: item.id }}
+                <a
+                  href={`#${item.id}`}
                   className="transition-opacity hover:opacity-80"
                 >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -63,7 +61,9 @@ export default function Footer() {
 
       {/* Derechos reservados */}
       <div className="w-full flex items-center justify-center mt-6 px-[clamp(16px,4vw,32px)] text-center">
-        <p className="text-[clamp(12px,1.2vw,16px)]">{t("copyright")}</p>
+        <p className="text-[clamp(12px,1.2vw,16px)]">
+          © {new Date().getFullYear()} · {t("copyright")}
+        </p>
       </div>
     </footer>
   );

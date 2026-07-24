@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useRef, useState } from "react";
+import { Fragment } from "react";
 import BackgroundShape from "../../images/background-shape.svg";
 import DavidTop from "../../images/david-top.png";
 import DavidBottom from "../../images/david-bottom.png";
@@ -9,27 +9,12 @@ import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 
-interface HeroProps {
-  scrollToSection: (sectionId: string) => void;
-}
-
-export default function Hero({ scrollToSection }: HeroProps) {
-  const [imagesLoaded, setImagesLoaded] = useState(true);
+export default function Hero() {
   const t = useTranslations("Hero");
   const descriptionLinesRaw = t.raw("description.lines");
   const descriptionLines = Array.isArray(descriptionLinesRaw)
     ? (descriptionLinesRaw as string[])
     : [String(descriptionLinesRaw)];
-
-  const loadedCount = useRef(0);
-  const handleImageLoad = () => {
-    loadedCount.current++;
-    if (loadedCount.current >= 2) setImagesLoaded(true);
-  };
-
-  const handleContactClick = () => {
-    scrollToSection("contact");
-  };
 
   return (
     <>
@@ -128,9 +113,9 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 {t("description.mobile")}
               </motion.p>
 
-              <motion.button
-                className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] hidden md:block cursor-pointer"
-                onClick={handleContactClick}
+              <motion.a
+                href="#contact"
+                className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] hidden md:flex items-center justify-center cursor-pointer"
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.7 }}
@@ -138,13 +123,11 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 whileTap={{ scale: 0.95 }}
               >
                 {t("cta")}
-              </motion.button>
+              </motion.a>
             </motion.div>
 
             <div className="relative pt-10 md:pt-0">
-              {!imagesLoaded && <></>}
-              {imagesLoaded && (
-                <motion.div
+              <motion.div
                   className={`w-[clamp(230px,45vw,470px)] h-[clamp(230px,45vw,470px)] rounded-full relative transform translate-y-4
                 }`}
                   style={{
@@ -160,19 +143,18 @@ export default function Hero({ scrollToSection }: HeroProps) {
                 >
                   <div className="w-full h-full bg-gradient-to-b from-[#08089D] to-[#030337] rounded-full absolute overflow-hidden">
                     <div className="w-[90%] h-[90%] absolute top-[17.5%] left-[5%] flex items-center justify-center">
-                      <Image src={DavidBottom} alt="David Bottom" style={{ width: "100%", height: "auto" }} sizes="(max-width: 768px) 90vw, 40vw" onLoad={handleImageLoad} priority />
+                      <Image src={DavidBottom} alt="David Bottom" style={{ width: "100%", height: "auto" }} sizes="(max-width: 768px) 90vw, 40vw" priority />
                     </div>
                   </div>
                   <div className="w-[90%] h-[90%] absolute top-[-30.5%] left-[5%] flex items-center justify-center">
-                    <Image src={DavidTop} alt="David Top" style={{ width: "100%", height: "auto" }} sizes="(max-width: 768px) 90vw, 40vw" onLoad={handleImageLoad} priority />
+                    <Image src={DavidTop} alt="David Top" style={{ width: "100%", height: "auto" }} sizes="(max-width: 768px) 90vw, 40vw" priority />
                   </div>
                 </motion.div>
-              )}
             </div>
 
-            <motion.button
-              className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] block md:hidden translate-y-4 mt-5"
-              onClick={handleContactClick}
+            <motion.a
+              href="#contact"
+              className="w-[clamp(111px,17vw,188px)] h-[clamp(30px,4vw,43px)] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-full text-[clamp(10px,1.5vw,18px)] flex md:hidden items-center justify-center translate-y-4 mt-5"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5, delay: 0.7 }}
@@ -180,7 +162,7 @@ export default function Hero({ scrollToSection }: HeroProps) {
               whileTap={{ scale: 0.95 }}
             >
               {t("cta")}
-            </motion.button>
+            </motion.a>
           </div>
         </div>
         <div className={styles.headerShape}></div>

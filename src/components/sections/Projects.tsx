@@ -21,6 +21,7 @@ function ProjectExpandedModal({
   project: Project;
   onClose: () => void;
 }) {
+  const t = useTranslations("Projects");
   const images = project.images ?? [];
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -67,7 +68,10 @@ function ProjectExpandedModal({
     return () => { document.body.style.overflow = ""; };
   }, []);
 
-  const blocks = (project.longDescription ?? project.description ?? "").split("\n\n");
+  const longDescriptionKey = `items.${project.id}.longDescription`;
+  const blocks = (
+    t.has(longDescriptionKey) ? t(longDescriptionKey) : ""
+  ).split("\n\n");
 
   return (
     <motion.div
@@ -99,7 +103,7 @@ function ProjectExpandedModal({
           onClick={onClose}
           className="absolute top-3 right-3 z-30 w-9 h-9 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
           style={{ background: "rgba(255,255,255,0.08)" }}
-          aria-label="Cerrar"
+          aria-label={t("modal.close")}
         >
           <FiX size={18} />
         </button>
@@ -150,7 +154,7 @@ function ProjectExpandedModal({
                     onClick={prev}
                     className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
                     style={{ background: "rgba(255,255,255,0.1)" }}
-                    aria-label="Anterior"
+                    aria-label={t("modal.prev")}
                   >
                     <FiChevronLeft size={16} />
                   </button>
@@ -158,7 +162,7 @@ function ProjectExpandedModal({
                     onClick={next}
                     className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
                     style={{ background: "rgba(255,255,255,0.1)" }}
-                    aria-label="Siguiente"
+                    aria-label={t("modal.next")}
                   >
                     <FiChevronRight size={16} />
                   </button>
@@ -185,7 +189,7 @@ function ProjectExpandedModal({
                       border: `2px solid ${i === active ? "#5555ff" : "transparent"}`,
                       opacity: i === active ? 1 : 0.4,
                     }}
-                    aria-label={`Ver imagen ${i + 1}`}
+                    aria-label={t("modal.viewImage", { index: i + 1 })}
                   >
                     <img
                       src={src}
@@ -227,7 +231,7 @@ function ProjectExpandedModal({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 transition-colors shrink-0 mt-0.5"
-                aria-label={`Ver ${project.title}`}
+                aria-label={t("visit", { title: project.title })}
               >
                 <FiExternalLink size={15} />
               </a>
@@ -293,7 +297,10 @@ function ProjectCard({
   project: Project;
   onExpand: () => void;
 }) {
+  const t = useTranslations("Projects");
   const [hovered, setHovered] = useState(false);
+  const descriptionKey = `items.${project.id}.description`;
+  const description = t.has(descriptionKey) ? t(descriptionKey) : null;
 
   return (
     <div
@@ -314,7 +321,7 @@ function ProjectCard({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && onExpand()}
-      aria-label={`Ver detalles de ${project.title}`}
+      aria-label={t("viewDetails", { title: project.title })}
     >
       {/* Grid texture */}
       <div
@@ -373,16 +380,16 @@ function ProjectCard({
               rel="noopener noreferrer"
               className="text-white/50 hover:text-blue-300 transition-colors"
               onClick={(e) => e.stopPropagation()}
-              aria-label={`Ver ${project.title}`}
+              aria-label={t("visit", { title: project.title })}
             >
               <FiExternalLink size={13} />
             </a>
           )}
         </div>
 
-        {project.description && (
+        {description && (
           <p className="text-white/55 text-[clamp(9px,0.85vw,11px)] leading-snug mb-2 line-clamp-2">
-            {project.description}
+            {description}
           </p>
         )}
 
@@ -409,7 +416,7 @@ function ProjectCard({
           className="mt-2 text-white/30 text-[10px] tracking-wide transition-opacity duration-300"
           style={{ opacity: hovered ? 1 : 0 }}
         >
-          Click para ver más →
+          {t("viewMore")}
         </p>
       </div>
     </div>
