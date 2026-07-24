@@ -23,14 +23,9 @@
             "intro": "Soy David",
             "name": "Abril Perrig"
         },
-        "description": {
-            "lines": [
-                "Desarrollo web de alto rendimiento.",
-                "Convierto ideas en productos digitales que escalan."
-            ],
-            "mobile": "Desarrollo web de alto rendimiento. Convierto ideas en productos digitales que escalan."
-        },
-        "cta": "Contactame"
+        "description": "Desarrollo web de alto rendimiento. Convierto ideas en productos digitales que escalan.",
+        "cta": "Contactame",
+        "viewProjects": "Ver proyectos"
     },
     "About": {
         "heading": {

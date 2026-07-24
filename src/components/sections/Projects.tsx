@@ -444,7 +444,7 @@ export default function Projects() {
         }}
       />
 
-      <h2 className="text-[clamp(30px,4vw,50px)] text-[#000] font-normal relative z-10">
+      <h2 className="text-[clamp(30px,4vw,50px)] text-ink-100 font-normal relative z-10">
         {t("title")}
       </h2>
 
@@ -458,14 +458,14 @@ export default function Projects() {
             transition={{ duration: 0.6 }}
           >
             <svg width="64" height="64" viewBox="0 0 64 64" fill="none" aria-hidden="true">
-              <rect x="4" y="12" width="56" height="40" rx="6" stroke="#08089D" strokeWidth="2.5" fill="none" />
-              <path d="M4 20h56" stroke="#08089D" strokeWidth="2" />
-              <circle cx="13" cy="16" r="2" fill="#08089D" />
-              <circle cx="21" cy="16" r="2" fill="#08089D" />
-              <circle cx="29" cy="16" r="2" fill="#08089D" />
-              <path d="M22 34l6 6 14-14" stroke="#0A0AE4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+              <rect x="4" y="12" width="56" height="40" rx="6" stroke="#8f90ff" strokeWidth="2.5" fill="none" />
+              <path d="M4 20h56" stroke="#8f90ff" strokeWidth="2" />
+              <circle cx="13" cy="16" r="2" fill="#8f90ff" />
+              <circle cx="21" cy="16" r="2" fill="#8f90ff" />
+              <circle cx="29" cy="16" r="2" fill="#8f90ff" />
+              <path d="M22 34l6 6 14-14" stroke="#0a0ae4" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <p className="text-[clamp(18px,2.5vw,28px)] text-[#08089D] font-medium">
+            <p className="text-[clamp(18px,2.5vw,28px)] text-blue-300 font-medium">
               {t("empty")}
             </p>
           </motion.div>

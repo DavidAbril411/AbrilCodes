@@ -23,14 +23,9 @@
             "intro": "I'm David",
             "name": "Abril Perrig"
         },
-        "description": {
-            "lines": [
-                "High-performance web development.",
-                "I turn ideas into digital products that scale."
-            ],
-            "mobile": "High-performance web development. I turn ideas into digital products that scale."
-        },
-        "cta": "Contact Me"
+        "description": "High-performance web development. I turn ideas into digital products that scale.",
+        "cta": "Contact Me",
+        "viewProjects": "View Projects"
     },
     "About": {
         "heading": {

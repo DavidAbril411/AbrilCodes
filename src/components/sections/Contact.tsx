@@ -55,29 +55,20 @@ export default function Contact() {
     <section className="w-full flex flex-col md:flex-row items-center md:items-start justify-center mt-10 md:mt-20 relative z-10 gap-8 md:gap-16 lg:gap-28 max-w-[1200px] mx-auto px-5">
       <div className="flex flex-col items-center md:items-start">
         <h2
-          className="text-[clamp(28px,6vw,64px)] text-[#000] w-full md:w-[clamp(300px,40vw,465px)] text-center md:text-start"
-          style={{
-            fontWeight: "600",
-            lineHeight: "1.2",
-            background:
-              "linear-gradient(252deg, #03033B 37.6%, #080898 87.25%)",
-            backgroundClip: "text",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-          }}
+          className="text-[clamp(28px,6vw,64px)] text-gradient-accent w-full md:w-[clamp(300px,40vw,465px)] text-center md:text-start font-semibold leading-tight"
         >
           {t("title")}
         </h2>
         <div className="flex flex-col items-start mt-4 md:mt-6 space-y-3 md:space-y-4 w-full">
           <div className="flex items-center space-x-3 md:space-x-4">
-            <FaPhoneAlt className="text-white text-[18px] md:text-[24px] bg-[#06067E] w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
-            <span className="text-[#08089D] text-[clamp(14px,1.5vw,18px)]">
+            <FaPhoneAlt className="text-ink-100 text-[18px] md:text-[24px] bg-blue-700 w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
+            <span className="text-ink-100 text-[clamp(14px,1.5vw,18px)]">
               {t("phone")}
             </span>
           </div>
           <div className="flex items-center space-x-3 md:space-x-4">
-            <FaEnvelope className="text-white text-[18px] md:text-[24px] bg-[#06067E] w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
-            <span className="text-[#08089D] text-[clamp(14px,1.5vw,18px)]">
+            <FaEnvelope className="text-ink-100 text-[18px] md:text-[24px] bg-blue-700 w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
+            <span className="text-ink-100 text-[clamp(14px,1.5vw,18px)]">
               {t("email")}
             </span>
           </div>
@@ -107,11 +98,7 @@ export default function Contact() {
               setName(e.target.value)
             }
             required
-            className="w-full h-[45px] md:h-[50px] px-4 bg-transparent text-[#08089D] placeholder-[#08089D6B] outline-none text-[14px] md:text-base"
-            style={{
-              borderRadius: "30px",
-              border: "2px solid #0A0AE4",
-            }}
+            className="w-full h-[45px] md:h-[50px] px-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none text-[14px] md:text-base rounded-[30px] border border-white/15 focus:border-blue-400 transition-colors"
           />
           <input
             type="email"
@@ -121,11 +108,7 @@ export default function Contact() {
               setEmail(e.target.value)
             }
             required
-            className="w-full h-[45px] md:h-[50px] px-4 bg-transparent text-[#08089D] placeholder-[#08089D6B] outline-none text-[14px] md:text-base"
-            style={{
-              borderRadius: "30px",
-              border: "2px solid #0A0AE4",
-            }}
+            className="w-full h-[45px] md:h-[50px] px-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none text-[14px] md:text-base rounded-[30px] border border-white/15 focus:border-blue-400 transition-colors"
           />
           <textarea
             placeholder={t("placeholders.message")}
@@ -134,16 +117,12 @@ export default function Contact() {
               setMessage(e.target.value)
             }
             required
-            className="w-full h-[120px] md:h-[150px] px-4 py-3 md:py-4 bg-transparent text-[#08089D] placeholder-[#08089D6B] outline-none resize-none text-[14px] md:text-base"
-            style={{
-              borderRadius: "30px",
-              border: "2px solid #0A0AE4",
-            }}
+            className="w-full h-[120px] md:h-[150px] px-4 py-3 md:py-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none resize-none text-[14px] md:text-base rounded-[30px] border border-white/15 focus:border-blue-400 transition-colors"
           />
           <button
             type="submit"
             disabled={status === "sending"}
-            className="w-full h-[45px] md:h-[50px] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-[30px] text-[14px] md:text-base mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
+            className="w-full h-[45px] md:h-[50px] bg-gradient-to-r from-blue-600 to-blue-700 text-ink-100 rounded-[30px] text-[14px] md:text-base mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {status === "sending"
               ? t("sending")
@@ -151,11 +130,16 @@ export default function Contact() {
               ? t("sent")
               : t("submit")}
           </button>
-          {status === "error" && (
-            <p className="text-red-600 text-sm">{errorMsg}</p>
-          )}
-          {status === "success" && (
-            <p className="text-green-600 text-sm">{t("success")}</p>
+          {(status === "error" || status === "success") && (
+            <p
+              role="status"
+              aria-live="polite"
+              className={`text-sm ${
+                status === "error" ? "text-red-400" : "text-emerald-400"
+              }`}
+            >
+              {status === "error" ? errorMsg : t("success")}
+            </p>
           )}
         </form>
       </div>

@@ -1,5 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { AUTHOR, SITE_URL, SOCIAL } from "@/lib/site";
+import MotionRoot from "@/components/MotionRoot";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/sections/Footer";
 import Services from "@/components/sections/Services";
@@ -25,34 +26,36 @@ export default async function Home({
   };
 
   return (
-    <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
-      />
-      <Header />
+    <MotionRoot>
+      <main>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        <Header />
 
-      <section id="home">
-        <Hero />
-      </section>
+        <section id="home">
+          <Hero />
+        </section>
 
-      <section id="about">
-        <About />
-      </section>
+        <section id="about">
+          <About />
+        </section>
 
-      <section id="services">
-        <Services />
-      </section>
+        <section id="services">
+          <Services />
+        </section>
 
-      <section id="projects">
-        <Projects />
-      </section>
+        <section id="projects">
+          <Projects />
+        </section>
 
-      <section id="contact">
-        <Contact />
-      </section>
+        <section id="contact">
+          <Contact />
+        </section>
 
-      <Footer />
-    </main>
+        <Footer />
+      </main>
+    </MotionRoot>
   );
 }

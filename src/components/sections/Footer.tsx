@@ -3,7 +3,6 @@
 
 import Icon from "../../images/icon-white.svg";
 import IconText from "../../images/icon-text-white.svg";
-import styles from "./Footer.module.css";
 import { useTranslations } from "next-intl";
 
 export default function Footer() {
@@ -16,40 +15,28 @@ export default function Footer() {
   ];
 
   return (
-    <footer
-      className="w-full flex flex-col items-center justify-center text-white py-[clamp(20px,5vw,40px)] mt-[clamp(20px,5vw,40px)]"
-      style={{
-        background:
-          "linear-gradient(270.04deg, #2626AA -10.57%, #08089D 48.56%, #2626AA 111.01%)",
-      }}
-    >
-      <div className="w-full max-w-[1200px] flex flex-col md:flex-row items-center justify-between px-[clamp(16px,4vw,32px)] gap-6">
-        {/* Logo y descripción */}
-        <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <div className={styles.logoContainer}>
-            <img src={Icon.src} alt="" className={styles.logoIcon} />
-            <img
-              src={IconText.src}
-              alt="AbrilCodes"
-              className={styles.logoText}
-            />
+    <footer className="mt-(--spacing-section) w-full border-t border-white/8 bg-surface">
+      <div className="mx-auto flex w-full max-w-5xl flex-col items-center gap-8 px-6 py-12 text-center md:flex-row md:items-start md:justify-between md:text-left">
+        <div className="flex flex-col items-center md:items-start">
+          <div className="flex items-center gap-2">
+            <img src={Icon.src} alt="" className="h-6 w-6" />
+            <img src={IconText.src} alt="AbrilCodes" className="h-4 w-auto" />
           </div>
-          <p className="text-[clamp(12px,1.2vw,16px)] max-w-[300px] mt-4">
+          <p className="mt-4 max-w-[280px] text-sm text-ink-500">
             {t("description")}
           </p>
         </div>
 
-        {/* Enlaces de navegación */}
         <div className="flex flex-col items-center md:items-start">
-          <h4 className="text-[clamp(14px,1.5vw,18px)] font-semibold mb-2">
+          <h4 className="mb-2 text-sm font-semibold text-ink-100">
             {t("explore")}
           </h4>
-          <ul className="space-y-2 text-[clamp(12px,1.2vw,16px)]">
+          <ul className="space-y-2 text-sm text-ink-500">
             {navItems.map((item) => (
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
-                  className="transition-opacity hover:opacity-80"
+                  className="transition-colors hover:text-ink-100"
                 >
                   {item.label}
                 </a>
@@ -59,11 +46,8 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Derechos reservados */}
-      <div className="w-full flex items-center justify-center mt-6 px-[clamp(16px,4vw,32px)] text-center">
-        <p className="text-[clamp(12px,1.2vw,16px)]">
-          © {new Date().getFullYear()} · {t("copyright")}
-        </p>
+      <div className="border-t border-white/8 px-6 py-5 text-center text-xs text-ink-500">
+        © {new Date().getFullYear()} · {t("copyright")}
       </div>
     </footer>
   );
