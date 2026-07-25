@@ -1,17 +1,20 @@
 {
+    "Meta": {
+        "title": "David Abril Perrig — Full-Stack Developer",
+        "description": "Personal portfolio of David Abril Perrig, full-stack web developer. High-performance websites and digital products: design, development, and ongoing support."
+    },
     "Header": {
         "nav": {
             "home": "Home",
             "about": "About me",
             "services": "Services",
-            "team": "My team",
             "projects": "Projects",
             "contact": "Contact"
         },
         "language": {
             "en": "EN",
             "es": "ES",
-            "aria": "Change language"
+            "aria": "Change language to {locale}"
         }
     },
     "Hero": {
@@ -20,14 +23,9 @@
             "intro": "I'm David",
             "name": "Abril Perrig"
         },
-        "description": {
-            "lines": [
-                "High-performance web development.",
-                "We turn ideas into digital products that scale."
-            ],
-            "mobile": "High-performance web development. We turn ideas into digital products that scale."
-        },
-        "cta": "Contact Me"
+        "description": "High-performance web development. I turn ideas into digital products that scale.",
+        "cta": "Contact Me",
+        "viewProjects": "View Projects"
     },
     "About": {
         "heading": {
@@ -36,10 +34,10 @@
         },
         "paragraphs": [
             "I'm David Abril, a full-stack developer with a 8.75/10 GPA in Computer Science. I founded Abril Codes to build real software: no templates, no shortcuts.",
-            "We work with Dana and Teo, mobile and frontend developers. We cover every front to deliver complete products."
+            "When a project calls for it, I team up with trusted mobile and frontend developers, covering every front to deliver complete products."
         ],
-        "aiTitle": "Our AI Philosophy",
-        "aiBody": "We use AI as a tool, not a crutch. Every technical decision is ours. AI handles implementation details; architectural judgment and quality always remain with us."
+        "aiTitle": "My AI Philosophy",
+        "aiBody": "I use AI as a tool, not a crutch. Every technical decision is mine. AI handles implementation details; architectural judgment and quality always remain with me."
     },
     "Services": {
         "title": "My Services",
@@ -48,7 +46,7 @@
             "design": {
                 "title": "Custom Design",
                 "description": "Unique designs that reflect your brand and engage your audience across every device.",
-                "fullDescription": "We don't use generic templates. We create an exclusive experience based on your brand image, values, and specific needs.",
+                "fullDescription": "I don't use generic templates. I craft an exclusive experience based on your brand image, values, and specific needs.",
                 "bottomRightDescription": "Your digital presence stands out from competitors with memorable experiences that reinforce your brand's unique positioning.",
                 "items": [
                     {
@@ -72,7 +70,7 @@
             "development": {
                 "title": "Web Development",
                 "description": "Responsive websites with clean, efficient code that works flawlessly across all devices.",
-                "fullDescription": "We build with modern technology, prioritizing speed, security, and scalability. No reliance on third-party templates or plugins.",
+                "fullDescription": "I build with modern technology, prioritizing speed, security, and scalability. No reliance on third-party templates or plugins.",
                 "subtitle": "What does this mean for your business?",
                 "bottomRightDescription": "Professional development ensures your site operates without limitations and adapts to present and future needs.",
                 "items": [
@@ -97,9 +95,9 @@
             "support": {
                 "title": "Support & Maintenance",
                 "description": "Ongoing technical support and updates to keep your site secure, fast, and aligned with your goals.",
-                "fullDescription": "Our relationship doesn't end at launch. We provide ongoing maintenance: technical support, updates, security monitoring, and continuous optimization.",
+                "fullDescription": "My work doesn't end at launch. I provide ongoing maintenance: technical support, updates, security monitoring, and continuous optimization.",
                 "subtitle": "How does this benefit your business?",
-                "bottomRightDescription": "Focus on your business while we handle the technical side. We prevent issues before they impact your users.",
+                "bottomRightDescription": "Focus on your business while I handle the technical side. I prevent issues before they impact your users.",
                 "items": [
                     {
                         "title": "Continuous monitoring",
@@ -120,26 +118,6 @@
                 ]
             }
         }
-    },
-    "Team": {
-        "title": "Meet my team",
-        "members": {
-            "dana": {
-                "name": "Dana Perrig Ragona",
-                "role": "Mobile & Frontend Developer"
-            },
-            "david": {
-                "name": "David Abril Perrig",
-                "role": "FullStack Developer"
-            },
-            "teo": {
-                "name": "Teo Abril Perrig",
-                "role": "Mobile & Frontend Developer"
-            }
-        }
-    },
-    "TeamCard": {
-        "about": "We value close collaboration, transparent communication, and continuous improvement to deliver products that genuinely impact your business."
     },
     "Contact": {
         "title": "Get in touch with me",
@@ -163,13 +141,27 @@
             "home": "Home",
             "about": "About me",
             "services": "Services",
-            "team": "My team",
             "projects": "Projects"
         },
-        "copyright": "© 2026 - David Ignacio Abril Perrig - Responsive design & frontend"
+        "copyright": "David Ignacio Abril Perrig — Full-stack web development"
     },
     "Projects": {
         "title": "My Projects",
-        "empty": "Projects coming soon"
+        "empty": "Projects coming soon",
+        "viewMore": "Click to see more →",
+        "viewDetails": "View details of {title}",
+        "visit": "Visit {title}",
+        "modal": {
+            "close": "Close",
+            "prev": "Previous",
+            "next": "Next",
+            "viewImage": "View image {index}"
+        },
+        "items": {
+            "orion-logistics": {
+                "description": "End-to-end logistics management platform: native Android app (Kotlin/MVVM/Hilt), NestJS backend on a self-hosted VPS with MySQL, route optimization with OSRM, and a Next.js web dashboard.",
+                "longDescription": "Are your drivers running routes by feel, losing time, with no way to know what was actually delivered? OrionLogistics solves that.\n\nAn Android app every driver carries in their pocket that:\n• Organizes and optimizes routes automatically\n• Records every delivery with photos, signatures and notes as irrefutable evidence\n• Captures all customer activity: who, what, when, where\n• Prints billing tickets on the street with portable printers\n• Turns the whole operation into clear metrics from day one\n\nThe system syncs orders automatically, manages roles (Admin, Driver, Merchandiser) and keeps a complete record of who did what and when — no paper, no excuses.\n\nReal results in active operations:\n📦 40% less time on routes\n✅ 25% fewer operational errors\n🚀 +50 deliveries per day"
+            }
+        }
     }
 }

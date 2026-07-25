@@ -1,117 +1,86 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import "./About.css";
+import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  show: (delay = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut" as const, delay },
+  }),
+};
+
 export default function About() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const textElements = useRef<HTMLParagraphElement[]>([]);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const t = useTranslations("About");
   const paragraphsRaw = t.raw("paragraphs");
   const paragraphs = Array.isArray(paragraphsRaw)
     ? (paragraphsRaw as string[])
     : [String(paragraphsRaw)];
 
-  // Add elements to the textElements array
-  const addToRefs = (el: HTMLParagraphElement | null) => {
-    if (el && !textElements.current.includes(el)) {
-      textElements.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    const elementsSnapshot = [...textElements.current];
-    const handleMouseMove = (e: MouseEvent) => {
-      if (sectionRef.current) {
-        const { left, top, width, height } =
-          sectionRef.current.getBoundingClientRect();
-        const x = (e.clientX - left) / width - 0.5;
-        const y = (e.clientY - top) / height - 0.5;
-        setMousePosition({ x, y });
-      }
-    };
-
-    // Scroll animation observer
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -100px 0px" }
-    );
-
-    // Observe all text elements
-    elementsSnapshot.forEach((el) => observer.observe(el));
-
-    window.addEventListener("mousemove", handleMouseMove);
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      elementsSnapshot.forEach((el) => observer.unobserve(el));
-    };
-  }, []);
-
   return (
-    <div className="relative">
-      <div className="about-background-primary"></div>
-      <div className="about-background-secondary"></div>
+    <div className="relative overflow-hidden bg-surface py-(--spacing-section)">
+      <div
+        className="glow-blob"
+        style={{
+          width: "min(45vw, 460px)",
+          height: "min(45vw, 460px)",
+          top: "10%",
+          right: "-10%",
+          background: "rgba(10,10,228,0.14)",
+        }}
+        aria-hidden="true"
+      />
 
-      <section className="about-section" id="about" ref={sectionRef}>
-        <div
-          className="about-content-container"
-          style={{
-            transform: `translate(${mousePosition.x * 5}px, ${
-              mousePosition.y * 5
-            }px)`,
-            transition: "transform 0.5s ease-out",
-          }}
-        >
-          <div className="about-text-container">
-            <h2 className="about-heading">
-              {t("heading.primary")}{" "}
-              <span className="about-heading-accent">
-                {t("heading.accent")}
-              </span>
-            </h2>
-
-            <div className="about-bio">
-              {paragraphs.map((paragraph, index) => (
-                <p
-                  key={index}
-                  className={`scroll-reveal ${
-                    index === paragraphs.length - 1
-                      ? "about-academic-emphasis"
-                      : ""
-                  }`}
-                  ref={addToRefs}
-                >
-                  {paragraph}
-                </p>
-              ))}
-            </div>
-          </div>
-
-          <div
-            className="about-goals"
-            style={{
-              transform: `translate(${mousePosition.x * -7}px, ${
-                mousePosition.y * -7
-              }px)`,
-              transition: "transform 0.5s ease-out",
-            }}
+      <div className="relative mx-auto grid w-full max-w-5xl gap-12 px-6 md:grid-cols-[1.5fr_1fr] md:items-start">
+        <div>
+          <motion.h2
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-10% 0px" }}
+            variants={fadeUp}
+            className="font-display text-h2 font-semibold text-ink-100"
           >
-            <h3>{t("aiTitle")}</h3>
-            <p className="scroll-reveal" ref={addToRefs}>
-              {t("aiBody")}
-            </p>
+            {t("heading.primary")}{" "}
+            <span className="text-blue-300">{t("heading.accent")}</span>
+          </motion.h2>
+
+          <div className="mt-6 space-y-4">
+            {paragraphs.map((paragraph, index) => (
+              <motion.p
+                key={paragraph}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-10% 0px" }}
+                custom={0.1 + index * 0.12}
+                variants={fadeUp}
+                className={
+                  index === paragraphs.length - 1
+                    ? "border-l-2 border-blue-500 bg-blue-500/[0.07] py-3 pl-4 text-ink-300 italic"
+                    : "text-lead text-ink-300"
+                }
+              >
+                {paragraph}
+              </motion.p>
+            ))}
           </div>
         </div>
-      </section>
+
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-10% 0px" }}
+          custom={0.3}
+          variants={fadeUp}
+          className="glass rounded-card p-6"
+        >
+          <h3 className="mb-3 border-b border-white/10 pb-3 text-h3 font-semibold text-blue-300">
+            {t("aiTitle")}
+          </h3>
+          <p className="text-sm leading-relaxed text-ink-300">{t("aiBody")}</p>
+        </motion.div>
+      </div>
     </div>
   );
 }

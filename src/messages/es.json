@@ -1,17 +1,20 @@
 {
+    "Meta": {
+        "title": "David Abril Perrig — Desarrollador Full-Stack",
+        "description": "Portfolio personal de David Abril Perrig, desarrollador web full-stack. Sitios y productos digitales de alto rendimiento: diseño, desarrollo y soporte continuo."
+    },
     "Header": {
         "nav": {
             "home": "Inicio",
             "about": "Sobre mí",
             "services": "Servicios",
-            "team": "Mi equipo",
             "projects": "Proyectos",
             "contact": "Contacto"
         },
         "language": {
             "en": "EN",
             "es": "ES",
-            "aria": "Cambiar idioma"
+            "aria": "Cambiar idioma a {locale}"
         }
     },
     "Hero": {
@@ -20,14 +23,9 @@
             "intro": "Soy David",
             "name": "Abril Perrig"
         },
-        "description": {
-            "lines": [
-                "Desarrollo web de alto rendimiento.",
-                "Convertimos ideas en productos digitales que escalan."
-            ],
-            "mobile": "Desarrollo web de alto rendimiento. Convertimos ideas en productos digitales que escalan."
-        },
-        "cta": "Contactame"
+        "description": "Desarrollo web de alto rendimiento. Convierto ideas en productos digitales que escalan.",
+        "cta": "Contactame",
+        "viewProjects": "Ver proyectos"
     },
     "About": {
         "heading": {
@@ -36,10 +34,10 @@
         },
         "paragraphs": [
             "Soy David Abril, desarrollador full-stack con promedio 8,75/10 en Ingeniería Informática. Fundé Abril Codes para construir software real: sin plantillas, sin atajos.",
-            "Trabajamos con Dana y Teo, developers mobile y frontend. Cubrimos todos los frentes para entregar productos completos."
+            "Cuando el proyecto lo necesita, sumo developers mobile y frontend de confianza para cubrir todos los frentes y entregar productos completos."
         ],
-        "aiTitle": "Nuestra filosofía sobre IA",
-        "aiBody": "Usamos IA como herramienta, no como muleta. Cada decisión técnica la tomamos nosotros. La IA resuelve detalles de implementación; el criterio de arquitectura y calidad es siempre nuestro."
+        "aiTitle": "Mi filosofía sobre IA",
+        "aiBody": "Uso IA como herramienta, no como muleta. Cada decisión técnica la tomo yo. La IA resuelve detalles de implementación; el criterio de arquitectura y calidad es siempre mío."
     },
     "Services": {
         "title": "Mis servicios",
@@ -48,7 +46,7 @@
             "design": {
                 "title": "Diseño a medida",
                 "description": "Diseños únicos que reflejan tu marca y conectan con tu audiencia en cualquier dispositivo.",
-                "fullDescription": "No usamos plantillas genéricas. Diseñamos una experiencia exclusiva basada en tu imagen, valores y necesidades específicas.",
+                "fullDescription": "No uso plantillas genéricas. Diseño una experiencia exclusiva basada en tu imagen, valores y necesidades específicas.",
                 "bottomRightDescription": "Tu presencia digital se destaca de la competencia con experiencias memorables que refuerzan el posicionamiento de tu marca.",
                 "items": [
                     {
@@ -72,7 +70,7 @@
             "development": {
                 "title": "Desarrollo web",
                 "description": "Sitios responsivos con código limpio y eficiente que funciona perfecto en cualquier dispositivo.",
-                "fullDescription": "Desarrollamos con tecnología moderna priorizando velocidad, seguridad y escalabilidad. Sin depender de plantillas o plugins de terceros.",
+                "fullDescription": "Desarrollo con tecnología moderna priorizando velocidad, seguridad y escalabilidad. Sin depender de plantillas o plugins de terceros.",
                 "subtitle": "¿Qué significa esto para tu negocio?",
                 "bottomRightDescription": "Un desarrollo profesional garantiza que tu sitio funcione sin limitaciones y se adapte a las necesidades presentes y futuras.",
                 "items": [
@@ -97,9 +95,9 @@
             "support": {
                 "title": "Soporte y mantenimiento",
                 "description": "Soporte técnico continuo y actualizaciones para mantener tu sitio seguro, veloz y alineado a tus objetivos.",
-                "fullDescription": "Nuestra relación no termina en el lanzamiento. Brindamos mantenimiento constante: soporte técnico, actualizaciones, monitoreo de seguridad y optimización continua.",
+                "fullDescription": "Mi trabajo no termina en el lanzamiento. Brindo mantenimiento constante: soporte técnico, actualizaciones, monitoreo de seguridad y optimización continua.",
                 "subtitle": "¿Cómo beneficia esto a tu negocio?",
-                "bottomRightDescription": "Enfocate en tu negocio mientras nos ocupamos de la parte técnica. Prevenimos problemas antes de que afecten a tus usuarios.",
+                "bottomRightDescription": "Enfocate en tu negocio mientras me ocupo de la parte técnica. Prevengo problemas antes de que afecten a tus usuarios.",
                 "items": [
                     {
                         "title": "Monitoreo continuo",
@@ -120,26 +118,6 @@
                 ]
             }
         }
-    },
-    "Team": {
-        "title": "Conocé a mi equipo",
-        "members": {
-            "dana": {
-                "name": "Dana Perrig Ragona",
-                "role": "Mobile & Frontend Developer"
-            },
-            "david": {
-                "name": "David Abril Perrig",
-                "role": "Desarrollador FullStack"
-            },
-            "teo": {
-                "name": "Teo Abril Perrig",
-                "role": "Mobile & Frontend Developer"
-            }
-        }
-    },
-    "TeamCard": {
-        "about": "Valoramos la colaboración cercana, la comunicación transparente y la mejora continua para entregar productos que realmente impactan en tu negocio."
     },
     "Contact": {
         "title": "Ponete en contacto conmigo",
@@ -163,13 +141,27 @@
             "home": "Inicio",
             "about": "Sobre mí",
             "services": "Servicios",
-            "team": "Mi equipo",
             "projects": "Proyectos"
         },
-        "copyright": "© 2026 - David Ignacio Abril Perrig - Diseño y frontend responsive"
+        "copyright": "David Ignacio Abril Perrig — Desarrollo web full-stack"
     },
     "Projects": {
         "title": "Mis proyectos",
-        "empty": "Proyectos en camino"
+        "empty": "Proyectos en camino",
+        "viewMore": "Click para ver más →",
+        "viewDetails": "Ver detalles de {title}",
+        "visit": "Ver {title}",
+        "modal": {
+            "close": "Cerrar",
+            "prev": "Anterior",
+            "next": "Siguiente",
+            "viewImage": "Ver imagen {index}"
+        },
+        "items": {
+            "orion-logistics": {
+                "description": "Plataforma completa de gestión logística: app Android nativa (Kotlin/MVVM/Hilt), backend NestJS en VPS propio con MySQL, optimización de rutas con OSRM y panel web Next.js.",
+                "longDescription": "¿Tus repartidores manejan rutas a ojo, pierden tiempo y no hay forma de saber qué se entregó realmente? OrionLogistics resuelve eso.\n\nUna app Android que cada repartidor lleva en el bolsillo y que:\n• Organiza y optimiza las rutas automáticamente\n• Registra cada entrega con fotos, firmas y notas como evidencia irrefutable\n• Captura toda la actividad de los clientes: quién, qué, cuándo, dónde\n• Imprime tickets de facturación en la calle con impresoras portátiles\n• Convierte toda la operación en métricas claras desde el primer día\n\nEl sistema sincroniza pedidos automáticamente, gestiona roles (Admin, Repartidor, Exhibidor) y mantiene un registro completo de quién hizo qué y cuándo, sin papel, sin excusas.\n\nResultados reales en operaciones activas:\n📦 40% menos tiempo en los recorridos\n✅ 25% menos errores operativos\n🚀 +50 entregas por día"
+            }
+        }
     }
 }
