@@ -8,10 +8,57 @@ import { notFound } from "next/navigation";
 import { ReactNode } from "react";
 import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
-import { SITE_URL } from "@/lib/site";
+import { AUTHOR, SITE_URL, SOCIAL } from "@/lib/site";
+
+type Locale = (typeof routing.locales)[number];
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
+}
+
+// The studio is one engineer, so the Person and the ProfessionalService are the
+// same operation seen from two angles: they reference each other by @id instead
+// of describing a company with staff.
+const PERSON_ID = `${SITE_URL}/#person`;
+const STUDIO_ID = `${SITE_URL}/#studio`;
+
+const AREA_SERVED: Record<Locale, string[]> = {
+  en: ["Argentina", "United States", "Europe"],
+  es: ["Argentina", "Estados Unidos", "Europa"],
+};
+
+function buildStructuredData(locale: Locale, description: string) {
+  const url = `${SITE_URL}/${locale}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": PERSON_ID,
+        name: AUTHOR.fullName,
+        jobTitle: AUTHOR.jobTitle[locale],
+        url,
+        email: `mailto:${AUTHOR.email}`,
+        sameAs: [SOCIAL.linkedin, SOCIAL.github],
+        worksFor: { "@id": STUDIO_ID },
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": STUDIO_ID,
+        name: "Abril Codes",
+        url,
+        description,
+        areaServed: AREA_SERVED[locale],
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Córdoba",
+          addressCountry: "AR",
+        },
+        founder: { "@id": PERSON_ID },
+      },
+    ],
+  };
 }
 
 export async function generateMetadata({
@@ -60,9 +107,7 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
-  const isValidLocale = routing.locales.includes(
-    locale as (typeof routing.locales)[number]
-  );
+  const isValidLocale = routing.locales.includes(locale as Locale);
 
   if (!isValidLocale) {
     notFound();
@@ -70,9 +115,15 @@ export default async function LocaleLayout({
 
   setRequestLocale(locale);
   const messages = await getMessages({ locale });
+  const t = await getTranslations({ locale, namespace: "Meta" });
+  const structuredData = buildStructuredData(locale as Locale, t("description"));
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       {children}
     </NextIntlClientProvider>
   );
