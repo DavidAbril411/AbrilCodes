@@ -12,11 +12,12 @@ import orion11 from "@/images/OrionLogistics/orion-11.png";
 import orion12 from "@/images/OrionLogistics/orion-12.png";
 import orionLogo from "@/images/OrionLogistics/orion-logo.png";
 
+/**
+ * Project metadata only. Every string the visitor reads (title, description,
+ * longDescription) lives in src/messages/{en,es}.json under `Projects.items.<id>`.
+ */
 export interface Project {
   id: string;
-  title: string;
-  description?: string;
-  longDescription?: string;
   logo?: string;
   images?: string[];
   url?: string;
@@ -26,11 +27,6 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "orion-logistics",
-    title: "OrionLogistics",
-    description:
-      "Ecosistema B2B de logística: app Android nativa offline-first (Kotlin/MVVM/Hilt), backend NestJS en VPS propio con MySQL, panel web Next.js y motor de ruteo propio en C++20 (Vroom + OSRM) que resuelve VRPTW en milisegundos.",
-    longDescription:
-      "¿Tus repartidores manejan rutas a ojo, pierden tiempo y no hay forma de saber qué se entregó realmente? OrionLogistics resuelve eso.\n\nUna app Android que cada repartidor lleva en el bolsillo y que:\n• Organiza y optimiza las rutas automáticamente\n• Registra cada entrega con fotos, firmas y notas como evidencia irrefutable\n• Captura toda la actividad de los clientes: quién, qué, cuándo, dónde\n• Imprime tickets de facturación en la calle con impresoras portátiles\n• Convierte toda la operación en métricas claras desde el primer día\n\nEl sistema sincroniza pedidos automáticamente, gestiona roles (Admin, Repartidor, Exhibidor) y mantiene un registro completo de quién hizo qué y cuándo, sin papel, sin excusas.\n\nResultados reales en operaciones activas:\n📦 40% menos tiempo en los recorridos\n✅ 25% menos errores operativos\n🚀 +50 entregas por día\n\nBajo el capó: la app es 100% offline-first, así que los choferes no pierden datos en zonas sin señal. Persistencia local con Room y un sincronizador reactivo con Coroutines y Flow que encola las operaciones y las descarga en orden cronológico apenas detecta conectividad. El ruteo lo resuelve un motor propio en C++20 sobre Vroom y OSRM, que ataca problemas de TSP y de ruteo con ventanas horarias (CVRP/VRPTW) en milisegundos.",
     logo: orionLogo.src,
     url: "https://calei.com.ar",
     tech: [
@@ -64,6 +60,104 @@ export const projects: Project[] = [
       orion10.src,
       orion11.src,
       orion12.src,
+    ],
+  },
+  {
+    id: "cappy",
+    tech: [
+      "React Native",
+      "Expo SDK 52",
+      "Expo Router",
+      "Zustand",
+      "NativeWind",
+      "Mapbox",
+      "Node.js",
+      "Express",
+      "PostgreSQL",
+      "PostGIS",
+      "Drizzle ORM",
+      "Clerk",
+      "MercadoPago",
+      "Cloudinary",
+      "Docker",
+    ],
+  },
+  {
+    id: "nightdesk",
+    tech: [
+      "Python 3.11",
+      "Pydantic v2",
+      "Event Bus",
+      "DAG Scheduler",
+      "FSM",
+      "SQLite FTS5",
+      "Watchdog",
+      "Circuit Breaker",
+    ],
+  },
+  {
+    id: "pos",
+    tech: [
+      "Java 21",
+      "Spring Boot 3.2",
+      "Spring Data JPA",
+      "Spring Security",
+      "JWT",
+      "MySQL",
+      "OpenAPI",
+      "Next.js",
+      "Material UI",
+      "TypeScript",
+      "GCP",
+      "Azure",
+    ],
+  },
+  {
+    id: "hipolito",
+    tech: [
+      "Transformers.js",
+      "WebAssembly",
+      "TensorFlow.js",
+      "RenPyWeb",
+      "HTML5 Canvas",
+      "Node.js",
+      "Express",
+      "Caddy",
+    ],
+  },
+  {
+    id: "simpleloc",
+    tech: [
+      "Swift",
+      "SwiftUI",
+      "CoreLocation",
+      "GPX",
+      "iOS SDK",
+      "Kotlin",
+      "Android",
+    ],
+  },
+  {
+    id: "miscuentas",
+    tech: [
+      "Python 3.11",
+      "Flask",
+      "SQLAlchemy 2",
+      "SQLite WAL",
+      "Triggers",
+      "pytest",
+    ],
+  },
+  {
+    id: "web-epica",
+    tech: [
+      "Astro",
+      "React 19",
+      "Three.js",
+      "React Three Fiber",
+      "GSAP",
+      "Framer Motion",
+      "Tailwind CSS v4",
     ],
   },
 ];

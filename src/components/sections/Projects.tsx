@@ -9,6 +9,16 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { FiExternalLink, FiChevronLeft, FiChevronRight, FiX } from "react-icons/fi";
 import Image from "next/image";
 
+/**
+ * A project merged with its translated copy. Metadata lives in
+ * src/data/projects.ts; every visible string comes from the messages files.
+ */
+type ProjectView = Project & {
+  title: string;
+  description: string;
+  longDescription?: string;
+};
+
 /* ─────────────────────────────────────────────────────────────────
    EXPANDED MODAL
    Mobile:  carousel top (fixed height) → description bottom (scroll)
@@ -18,9 +28,10 @@ function ProjectExpandedModal({
   project,
   onClose,
 }: {
-  project: Project;
+  project: ProjectView;
   onClose: () => void;
 }) {
+  const t = useTranslations("Projects.ui");
   const images = project.images ?? [];
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -83,7 +94,9 @@ function ProjectExpandedModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={`project-modal-title-${project.id}`}
-        className="relative w-full max-w-6xl rounded-3xl flex flex-col md:flex-row overflow-y-auto md:overflow-hidden"
+        className={`relative w-full ${
+          images.length > 0 ? "max-w-6xl" : "max-w-2xl"
+        } rounded-3xl flex flex-col md:flex-row overflow-y-auto md:overflow-hidden`}
         style={{
           maxHeight: "92vh",
           background: "linear-gradient(135deg, #08082a 0%, #030318 100%)",
@@ -102,7 +115,7 @@ function ProjectExpandedModal({
           onClick={onClose}
           className="absolute top-3 right-3 z-30 w-9 h-9 rounded-full flex items-center justify-center text-white/60 hover:text-white transition-colors"
           style={{ background: "rgba(255,255,255,0.08)" }}
-          aria-label="Cerrar"
+          aria-label={t("close")}
         >
           <FiX size={18} />
         </button>
@@ -130,7 +143,7 @@ function ProjectExpandedModal({
                 >
                   <Image
                     src={src}
-                    alt={`Screenshot ${i + 1}`}
+                    alt={t("screenshot", { index: i + 1, title: project.title })}
                     fill
                     className="object-contain"
                     sizes="(max-width: 768px) 100vw, 650px"
@@ -153,7 +166,7 @@ function ProjectExpandedModal({
                     onClick={prev}
                     className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
                     style={{ background: "rgba(255,255,255,0.1)" }}
-                    aria-label="Anterior"
+                    aria-label={t("previous")}
                   >
                     <FiChevronLeft size={16} />
                   </button>
@@ -161,7 +174,7 @@ function ProjectExpandedModal({
                     onClick={next}
                     className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors"
                     style={{ background: "rgba(255,255,255,0.1)" }}
-                    aria-label="Siguiente"
+                    aria-label={t("next")}
                   >
                     <FiChevronRight size={16} />
                   </button>
@@ -187,7 +200,7 @@ function ProjectExpandedModal({
                       border: `2px solid ${i === active ? "#5555ff" : "transparent"}`,
                       opacity: i === active ? 1 : 0.4,
                     }}
-                    aria-label={`Ver imagen ${i + 1}`}
+                    aria-label={t("goToImage", { index: i + 1 })}
                   >
                     <Image
                       src={src}
@@ -207,7 +220,9 @@ function ProjectExpandedModal({
             DESCRIPTION — order-2 on mobile (bottom), order-1 on desktop (left)
         ══════════════════════════════════════════ */}
         <div
-          className="order-2 md:order-1 w-full md:w-[42%] shrink-0 flex flex-col px-6 py-6 md:px-8 md:py-8 md:overflow-y-auto"
+          className={`order-2 md:order-1 w-full ${
+            images.length > 0 ? "md:w-[42%]" : "md:w-full"
+          } shrink-0 flex flex-col px-6 py-6 md:px-8 md:py-8 md:overflow-y-auto`}
           style={{ scrollbarWidth: "none" } as React.CSSProperties}
         >
           {/* Logo */}
@@ -235,7 +250,7 @@ function ProjectExpandedModal({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-400 hover:text-blue-300 transition-colors shrink-0 mt-0.5"
-                aria-label={`Ver ${project.title}`}
+                aria-label={t("visit", { title: project.title })}
               >
                 <FiExternalLink size={15} />
               </a>
@@ -298,9 +313,10 @@ function ProjectCard({
   project,
   onExpand,
 }: {
-  project: Project;
+  project: ProjectView;
   onExpand: () => void;
 }) {
+  const t = useTranslations("Projects.ui");
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -321,7 +337,7 @@ function ProjectCard({
       onClick={onExpand}
       tabIndex={0}
       onKeyDown={(e) => e.key === "Enter" && onExpand()}
-      aria-label={`Ver detalles de ${project.title}`}
+      aria-label={t("viewDetails", { title: project.title })}
     >
       {/* Grid texture */}
       <div
@@ -342,13 +358,14 @@ function ProjectCard({
         }}
       />
 
-      {/* Logo — fills the upper ~58% of the card */}
-      {project.logo && (
-        <div
-          className="absolute left-0 right-0 top-0 flex items-center justify-center"
-          style={{ bottom: "42%", padding: "6% 10%" }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
+      {/* Logo — fills the upper ~58% of the card.
+          Projects without artwork fall back to a typographic wordmark. */}
+      <div
+        className="absolute left-0 right-0 top-0 flex items-center justify-center"
+        style={{ bottom: "42%", padding: "6% 10%" }}
+      >
+        {project.logo ? (
+          // eslint-disable-next-line @next/next/no-img-element
           <img
             src={project.logo}
             alt={project.title}
@@ -359,8 +376,21 @@ function ProjectCard({
               transition: "transform 0.5s ease",
             }}
           />
-        </div>
-      )}
+        ) : (
+          <span
+            aria-hidden="true"
+            className="select-none text-center font-semibold tracking-tight text-[clamp(22px,3.2vw,42px)] leading-tight"
+            style={{
+              color: "rgba(255,255,255,0.92)",
+              textShadow: "0 0 40px rgba(80,80,255,0.45)",
+              transform: hovered ? "scale(1.06)" : "scale(1)",
+              transition: "transform 0.5s ease",
+            }}
+          >
+            {project.title}
+          </span>
+        )}
+      </div>
 
       {/* Bottom info overlay */}
       <div
@@ -380,7 +410,7 @@ function ProjectCard({
               rel="noopener noreferrer"
               className="text-white/50 hover:text-blue-300 transition-colors"
               onClick={(e) => e.stopPropagation()}
-              aria-label={`Ver ${project.title}`}
+              aria-label={t("visit", { title: project.title })}
             >
               <FiExternalLink size={13} />
             </a>
@@ -416,7 +446,7 @@ function ProjectCard({
           className="mt-2 text-white/30 text-[10px] tracking-wide transition-opacity duration-300"
           style={{ opacity: hovered ? 1 : 0 }}
         >
-          Click para ver más →
+          {t("expand")}
         </p>
       </div>
     </div>
@@ -428,7 +458,18 @@ function ProjectCard({
 ───────────────────────────────────────────────────────────────── */
 export default function Projects() {
   const t = useTranslations("Projects");
-  const [expanded, setExpanded] = useState<Project | null>(null);
+  const [expanded, setExpanded] = useState<ProjectView | null>(null);
+
+  const copy = t.raw("items") as Record<
+    string,
+    { title: string; description: string; longDescription?: string }
+  >;
+
+  // Only render projects that actually have copy in the active locale.
+  const localizedProjects: ProjectView[] = projects.flatMap((project) => {
+    const text = copy[project.id];
+    return text ? [{ ...project, ...text }] : [];
+  });
 
   return (
     <section className="w-full flex flex-col items-center justify-center mt-20 relative overflow-hidden">
@@ -449,7 +490,7 @@ export default function Projects() {
       </h2>
 
       <div className="w-full max-w-[100vw] px-4 lg:max-w-[1100px] h-full flex items-center justify-center mt-6 relative z-10">
-        {projects.length === 0 ? (
+        {localizedProjects.length === 0 ? (
           <motion.div
             className="flex flex-col items-center justify-center gap-4 py-20"
             initial={{ opacity: 0, y: 20 }}
@@ -471,7 +512,7 @@ export default function Projects() {
           </motion.div>
         ) : (
           <CarouselComponent>
-            {projects.map((project) => (
+            {localizedProjects.map((project) => (
               <ProjectCard
                 key={project.id}
                 project={project}

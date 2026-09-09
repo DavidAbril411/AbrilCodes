@@ -1,9 +1,9 @@
 "use client";
 import { useRef, useState, useEffect } from "react";
 import styles from "./services.module.css";
-import DesignIcon from "../../images/Web.png";
-import DevelopmentIcon from "../../images/Code.png";
-import SupportIcon from "../../images/Manteinence.png";
+import ProductsIcon from "../../images/Web.png";
+import MobileIcon from "../../images/Code.png";
+import EngineeringIcon from "../../images/Manteinence.png";
 import {
   ExpandProvider,
   ServicesCardContainer,
@@ -35,7 +35,7 @@ export default function Services() {
     };
   }, []);
 
-  type CardKey = "design" | "development" | "support";
+  type CardKey = "products" | "mobile" | "engineering";
   type CardContent = {
     title: string;
     description: string;
@@ -55,22 +55,22 @@ export default function Services() {
     iconAlt: string;
   }> = [
     {
-      key: "design",
+      key: "products",
       direction: "left-to-right",
-      iconSrc: DesignIcon.src,
-      iconAlt: t("cards.design.title"),
+      iconSrc: ProductsIcon.src,
+      iconAlt: t("cards.products.title"),
     },
     {
-      key: "development",
+      key: "mobile",
       direction: "center",
-      iconSrc: DevelopmentIcon.src,
-      iconAlt: t("cards.development.title"),
+      iconSrc: MobileIcon.src,
+      iconAlt: t("cards.mobile.title"),
     },
     {
-      key: "support",
+      key: "engineering",
       direction: "right-to-left",
-      iconSrc: SupportIcon.src,
-      iconAlt: t("cards.support.title"),
+      iconSrc: EngineeringIcon.src,
+      iconAlt: t("cards.engineering.title"),
     },
   ];
 

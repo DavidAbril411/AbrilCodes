@@ -3,6 +3,7 @@
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { CONTACT_ENDPOINT } from "@/lib/site";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -22,7 +23,7 @@ export default function Contact() {
     setStatus("sending");
     setErrorMsg("");
     try {
-      const res = await fetch("/api/contact", {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message, website }),

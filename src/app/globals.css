@@ -63,48 +63,6 @@ body {
 
 /* Asegurarse de que los elementos internos no causen desbordamiento horizontal */
 
-/* Add these for team card animations */
-.scroll-reveal-card {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-}
-
-.scroll-reveal-card.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Add a small delay to each consecutive card */
-.scroll-reveal-card.delay-1 {
-  transition-delay: 0.2s;
-}
-
-.scroll-reveal-card.delay-2 {
-  transition-delay: 0.4s;
-}
-
-/* ─── TeamCard shimmer effect ────────────────────────────────── */
-.team-card-shimmer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(
-    120deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.18) 50%,
-    transparent 70%
-  );
-  background-size: 200% 100%;
-  background-position: 200% 0;
-  transition: background-position 0s;
-}
-
-.team-card-wrapper:hover .team-card-shimmer {
-  background-position: -200% 0;
-  transition: background-position 0.6s ease;
-}
-
 /* ─── Floating particles (Hero / About backgrounds) ──────────── */
 .float-particle {
   position: absolute;
@@ -152,8 +110,5 @@ body {
   .float-particle,
   .hero-aurora {
     animation: none;
-  }
-  .team-card-wrapper:hover .team-card-shimmer {
-    transition: none;
   }
 }

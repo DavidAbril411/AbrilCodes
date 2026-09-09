@@ -2,7 +2,6 @@
 import { useRef, useState, useEffect } from "react";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/sections/Footer";
-import Team from "@/components/sections/Team";
 import Services from "@/components/sections/Services";
 import About from "@/components/sections/About";
 import Hero from "@/components/sections/Hero";
@@ -15,7 +14,6 @@ export default function Home() {
   const homeRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const servicesRef = useRef<HTMLDivElement>(null);
-  const teamRef = useRef<HTMLDivElement>(null);
   const projectsRef = useRef<HTMLDivElement>(null);
   const contactRef = useRef<HTMLDivElement>(null);
 
@@ -27,7 +25,6 @@ export default function Home() {
       home: homeRef,
       about: aboutRef,
       services: servicesRef,
-      team: teamRef,
       projects: projectsRef,
       contact: contactRef,
     };
@@ -53,7 +50,6 @@ export default function Home() {
         { id: "home", ref: homeRef },
         { id: "about", ref: aboutRef },
         { id: "services", ref: servicesRef },
-        { id: "team", ref: teamRef },
         { id: "projects", ref: projectsRef },
         { id: "contact", ref: contactRef },
       ];
@@ -116,10 +112,6 @@ export default function Home() {
 
       <div ref={servicesRef} id="services">
         <Services />
-      </div>
-
-      <div ref={teamRef} id="team">
-        <Team />
       </div>
 
       <div ref={projectsRef} id="projects">
