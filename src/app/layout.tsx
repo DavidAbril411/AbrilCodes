@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { Inter } from "next/font/google";
 import { getLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const displayFace = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-display-face",
-});
+const inter = Inter({ subsets: ["latin"] });
 
 // The root URL is a redirect stub, but it is the link people actually share.
 // Without these tags a shared `abrilcodes.com` renders no preview card at all.
@@ -75,8 +70,8 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang={locale} className={`${inter.variable} ${displayFace.variable}`}>
-      <body className="font-sans">{children}</body>
+    <html lang={locale}>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

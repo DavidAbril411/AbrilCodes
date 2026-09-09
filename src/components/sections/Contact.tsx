@@ -1,7 +1,7 @@
 "use client";
 
 import { FaEnvelope, FaPhoneAlt } from "react-icons/fa";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 
 export default function Contact() {
@@ -16,20 +16,13 @@ export default function Contact() {
   const t = useTranslations("Contact");
   const defaultErrorMessage = t("error");
 
-  const nameId = useId();
-  const emailId = useId();
-  const messageId = useId();
-
-  const fieldClassName =
-    "w-full h-[45px] md:h-[50px] px-4 bg-white/5 text-ink-100 placeholder-ink-500 outline-none text-[14px] md:text-base rounded-field border border-white/15 focus:border-blue-400 transition-colors";
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (status === "sending") return;
     setStatus("sending");
     setErrorMsg("");
     try {
-      const res = await fetch("https://api.abrilcodes.com/api/contact", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, email, message, website }),
@@ -59,30 +52,41 @@ export default function Contact() {
   }
 
   return (
-    <section className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center justify-center gap-8 px-6 py-(--spacing-section) md:flex-row md:items-start md:gap-16 lg:gap-28">
+    <section className="w-full flex flex-col md:flex-row items-center md:items-start justify-center mt-10 md:mt-20 relative z-10 gap-8 md:gap-16 lg:gap-28 max-w-[1200px] mx-auto px-5">
       <div className="flex flex-col items-center md:items-start">
-        <h2 className="w-full text-center font-display text-[clamp(28px,6vw,64px)] font-semibold leading-tight text-gradient-accent md:w-[clamp(300px,40vw,465px)] md:text-start">
+        <h2
+          className="text-[clamp(28px,6vw,64px)] text-[#000] w-full md:w-[clamp(300px,40vw,465px)] text-center md:text-start"
+          style={{
+            fontWeight: "600",
+            lineHeight: "1.2",
+            background:
+              "linear-gradient(252deg, #03033B 37.6%, #080898 87.25%)",
+            backgroundClip: "text",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+          }}
+        >
           {t("title")}
         </h2>
-        <div className="mt-4 flex w-full flex-col items-start space-y-3 md:mt-6 md:space-y-4">
+        <div className="flex flex-col items-start mt-4 md:mt-6 space-y-3 md:space-y-4 w-full">
           <div className="flex items-center space-x-3 md:space-x-4">
-            <FaPhoneAlt className="h-[45px] w-[45px] rounded-full bg-blue-700 p-3 text-[18px] text-ink-100 md:h-[63px] md:w-[63px] md:p-4 md:text-[24px]" />
-            <span className="text-ink-100 text-[clamp(14px,1.5vw,18px)]">
+            <FaPhoneAlt className="text-white text-[18px] md:text-[24px] bg-[#06067E] w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
+            <span className="text-[#08089D] text-[clamp(14px,1.5vw,18px)]">
               {t("phone")}
             </span>
           </div>
           <div className="flex items-center space-x-3 md:space-x-4">
-            <FaEnvelope className="h-[45px] w-[45px] rounded-full bg-blue-700 p-3 text-[18px] text-ink-100 md:h-[63px] md:w-[63px] md:p-4 md:text-[24px]" />
-            <span className="text-ink-100 text-[clamp(14px,1.5vw,18px)]">
+            <FaEnvelope className="text-white text-[18px] md:text-[24px] bg-[#06067E] w-[45px] h-[45px] md:w-[63px] md:h-[63px] rounded-full p-3 md:p-4" />
+            <span className="text-[#08089D] text-[clamp(14px,1.5vw,18px)]">
               {t("email")}
             </span>
           </div>
         </div>
       </div>
-      <div className="mt-6 flex h-full w-full max-w-[600px] flex-col items-center justify-center">
+      <div className="w-full max-w-[600px] h-full flex flex-col items-center justify-center mt-6">
         <form
           onSubmit={handleSubmit}
-          className="flex w-full flex-col space-y-3 md:space-y-4"
+          className="w-full flex flex-col space-y-3 md:space-y-4"
         >
           {/* Honeypot — must stay empty; bots fill it, humans don't see it */}
           <input
@@ -95,12 +99,11 @@ export default function Contact() {
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
           />
-
-          <label htmlFor={nameId} className="sr-only">
+          <label htmlFor="contact-name" className="sr-only">
             {t("placeholders.name")}
           </label>
           <input
-            id={nameId}
+            id="contact-name"
             type="text"
             placeholder={t("placeholders.name")}
             value={name}
@@ -108,14 +111,17 @@ export default function Contact() {
               setName(e.target.value)
             }
             required
-            className={fieldClassName}
+            className="w-full h-[45px] md:h-[50px] px-4 bg-transparent text-[#08089D] placeholder-[#08089D6B] outline-none text-[14px] md:text-base"
+            style={{
+              borderRadius: "30px",
+              border: "2px solid #0A0AE4",
+            }}
           />
-
-          <label htmlFor={emailId} className="sr-only">
+          <label htmlFor="contact-email" className="sr-only">
             {t("placeholders.email")}
           </label>
           <input
-            id={emailId}
+            id="contact-email"
             type="email"
             placeholder={t("placeholders.email")}
             value={email}
@@ -123,27 +129,33 @@ export default function Contact() {
               setEmail(e.target.value)
             }
             required
-            className={fieldClassName}
+            className="w-full h-[45px] md:h-[50px] px-4 bg-transparent text-[#08089D] placeholder-[#08089D6B] outline-none text-[14px] md:text-base"
+            style={{
+              borderRadius: "30px",
+              border: "2px solid #0A0AE4",
+            }}
           />
-
-          <label htmlFor={messageId} className="sr-only">
+          <label htmlFor="contact-message" className="sr-only">
             {t("placeholders.message")}
           </label>
           <textarea
-            id={messageId}
+            id="contact-message"
             placeholder={t("placeholders.message")}
             value={message}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
               setMessage(e.target.value)
             }
             required
-            className={`${fieldClassName} h-[120px] resize-none py-3 md:h-[150px] md:py-4`}
+            className="w-full h-[120px] md:h-[150px] px-4 py-3 md:py-4 bg-transparent text-[#08089D] placeholder-[#08089D6B] outline-none resize-none text-[14px] md:text-base"
+            style={{
+              borderRadius: "30px",
+              border: "2px solid #0A0AE4",
+            }}
           />
-
           <button
             type="submit"
             disabled={status === "sending"}
-            className="mt-2 h-[45px] w-full rounded-field bg-gradient-to-r from-blue-600 to-blue-700 text-[14px] text-ink-100 transition-opacity disabled:cursor-not-allowed disabled:opacity-60 md:h-[50px] md:text-base"
+            className="w-full h-[45px] md:h-[50px] bg-gradient-to-r from-[#08089D] to-[#030337] text-white rounded-[30px] text-[14px] md:text-base mt-2 disabled:opacity-60 disabled:cursor-not-allowed"
           >
             {status === "sending"
               ? t("sending")
@@ -151,18 +163,14 @@ export default function Contact() {
               ? t("sent")
               : t("submit")}
           </button>
-
-          {(status === "error" || status === "success") && (
-            <p
-              role="status"
-              aria-live="polite"
-              className={`text-sm ${
-                status === "error" ? "text-red-400" : "text-emerald-400"
-              }`}
-            >
-              {status === "error" ? errorMsg : t("success")}
-            </p>
-          )}
+          <div role="alert" aria-live="polite">
+            {status === "error" && (
+              <p className="text-red-600 text-sm">{errorMsg}</p>
+            )}
+            {status === "success" && (
+              <p className="text-green-600 text-sm">{t("success")}</p>
+            )}
+          </div>
         </form>
       </div>
     </section>
