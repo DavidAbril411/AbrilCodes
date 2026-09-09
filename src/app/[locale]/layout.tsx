@@ -61,6 +61,13 @@ function buildStructuredData(locale: Locale, description: string) {
   };
 }
 
+// JSON.stringify leaves "<" untouched, so a translation containing "</script>"
+// would close the tag early. The \u003c escape parses back to "<" inside a
+// JSON string, so crawlers still read the same graph.
+function serializeStructuredData(data: object) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -122,7 +129,7 @@ export default async function LocaleLayout({
     <NextIntlClientProvider locale={locale} messages={messages}>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{ __html: serializeStructuredData(structuredData) }}
       />
       {children}
     </NextIntlClientProvider>
