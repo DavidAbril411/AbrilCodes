@@ -11,6 +11,10 @@ import orion10 from "@/images/OrionLogistics/orion-10.png";
 import orion11 from "@/images/OrionLogistics/orion-11.png";
 import orion12 from "@/images/OrionLogistics/orion-12.png";
 import orionLogo from "@/images/OrionLogistics/orion-logo.png";
+import cappy01 from "@/images/Cappy/cappy-01.webp";
+import cappy02 from "@/images/Cappy/cappy-02.webp";
+import cappy03 from "@/images/Cappy/cappy-03.webp";
+import cappy04 from "@/images/Cappy/cappy-04.webp";
 
 /**
  * Project metadata only. Every string the visitor reads (title, description,
@@ -80,6 +84,12 @@ export const projects: Project[] = [
       "MercadoPago",
       "Cloudinary",
       "Docker",
+    ],
+    images: [
+      cappy01.src,
+      cappy02.src,
+      cappy03.src,
+      cappy04.src,
     ],
   },
   {
