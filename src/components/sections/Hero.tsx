@@ -2,8 +2,8 @@
 
 import { Fragment, useRef, useState } from "react";
 import BackgroundShape from "../../images/background-shape.svg";
-import DavidTop from "../../images/david-top.png";
-import DavidBottom from "../../images/david-bottom.png";
+import DavidTop from "../../images/david-top.webp";
+import DavidBottom from "../../images/david-bottom.webp";
 import styles from "./Hero.module.css";
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
