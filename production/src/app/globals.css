@@ -1,0 +1,42 @@
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  overflow-x: clip;
+  background: #E5E5E5;
+  color: #23232D;
+  font-family: 'Geist', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, p, pre {
+  margin: 0;
+}
+
+a {
+  color: #08089D;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #0A0AE4;
+}
+
+::selection {
+  background: #0A0AE4;
+  color: #fff;
+}
+
+/* Custom square cursor replaces the system one on mouse/trackpad devices */
+@media (pointer: fine) {
+  html.xh,
+  html.xh * {
+    cursor: none !important;
+  }
+}

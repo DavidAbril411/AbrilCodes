@@ -1,11 +1,8 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { getLocale, getTranslations } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"] });
 
 // The root URL is a redirect stub, but it is the link people actually share.
 // Without these tags a shared `abrilcodes.com` renders no preview card at all.
@@ -45,10 +42,6 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export interface LayoutProps {
-  children: React.ReactNode;
-}
-
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -71,7 +64,17 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body className={inter.className}>{children}</body>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* eslint-disable-next-line @next/next/no-page-custom-font */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap"
+        />
+        <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" />
+      </head>
+      <body>{children}</body>
     </html>
   );
 }

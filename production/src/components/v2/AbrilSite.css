@@ -1,0 +1,15 @@
+/* hover states (inline styles need !important to be overridden) */
+.ac-h1:hover{color:#0A0AE4 !important}
+.ac-h2:hover{color:#0A0AE4 !important}
+.ac-h3:hover{color:#0A0AE4 !important}
+.ac-h4:hover{background:#0A0AE4 !important;color:#fff !important}
+.ac-h5:hover{color:#0A0AE4 !important}
+.ac-h6:hover{background:#08089D !important;color:#fff !important}
+.ac-h7:hover{border-color:#0A0AE4 !important}
+.ac-h8:hover{color:#08089D !important;border-bottom-color:#08089D !important}
+.ac-h9:hover{background:#0A0AE4 !important;color:#fff !important}
+.ac-h10:hover{color:#0A0AE4 !important}
+.ac-h11:hover{background:#08089D !important;color:#fff !important}
+.ac-h12:hover{border-color:#0A0AE4 !important;color:#23232D !important}
+.ac-h13:hover{color:#0A0AE4 !important}
+.ac-h14:hover{color:#0A0AE4 !important}
